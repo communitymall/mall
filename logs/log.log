@@ -1,0 +1,89 @@
+2019-08-05 10:00:46,292 INFO [restartedMain] org.linlinjava.litemall.Application [StartupInfoLogger.java : 50] Starting Application on duoyundeMacBook-Pro.local with PID 17249 (/Users/duoyun/work/shop/litemall/litemall-all/target/classes started by duoyun in /Users/duoyun/work/shop/litemall)
+2019-08-05 10:00:46,296 DEBUG [restartedMain] org.linlinjava.litemall.Application [StartupInfoLogger.java : 53] Running with Spring Boot v2.1.5.RELEASE, Spring v5.1.7.RELEASE
+2019-08-05 10:00:46,297 INFO [restartedMain] org.linlinjava.litemall.Application [SpringApplication.java : 679] The following profiles are active: staging,debug
+2019-08-05 10:00:49,426 ERROR [restartedMain] o.s.b.d.LoggingFailureAnalysisReporter [LoggingFailureAnalysisReporter.java : 42] 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Failed to configure a DataSource: 'url' attribute is not specified and no embedded datasource could be configured.
+
+Reason: Failed to determine a suitable driver class
+
+
+Action:
+
+Consider the following:
+	If you want an embedded database (H2, HSQL or Derby), please put it on the classpath.
+	If you have database settings to be loaded from a particular profile you may need to activate it (the profiles staging,debug are currently active).
+
+2019-08-05 11:27:31,405 INFO [main] org.linlinjava.litemall.Application [StartupInfoLogger.java : 50] Starting Application v0.1.0 on duoyundeMacBook-Pro.local with PID 17924 (/Users/duoyun/work/shop/litemall/litemall-all/target/litemall-all-0.1.0-exec.jar started by duoyun in /Users/duoyun/work/shop/litemall)
+2019-08-05 11:27:31,418 DEBUG [main] org.linlinjava.litemall.Application [StartupInfoLogger.java : 53] Running with Spring Boot v2.1.5.RELEASE, Spring v5.1.7.RELEASE
+2019-08-05 11:27:31,419 INFO [main] org.linlinjava.litemall.Application [SpringApplication.java : 679] The following profiles are active: staging,debug
+2019-08-05 11:27:35,832 ERROR [main] o.s.b.d.LoggingFailureAnalysisReporter [LoggingFailureAnalysisReporter.java : 42] 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Failed to configure a DataSource: 'url' attribute is not specified and no embedded datasource could be configured.
+
+Reason: Failed to determine a suitable driver class
+
+
+Action:
+
+Consider the following:
+	If you want an embedded database (H2, HSQL or Derby), please put it on the classpath.
+	If you have database settings to be loaded from a particular profile you may need to activate it (the profiles staging,debug are currently active).
+
+2019-08-05 14:41:43,996 INFO [restartedMain] org.linlinjava.litemall.Application [StartupInfoLogger.java : 50] Starting Application on duoyundeMacBook-Pro.local with PID 19865 (/Users/duoyun/work/shop/litemall/litemall-all/target/classes started by duoyun in /Users/duoyun/work/shop/litemall)
+2019-08-05 14:41:44,002 DEBUG [restartedMain] org.linlinjava.litemall.Application [StartupInfoLogger.java : 53] Running with Spring Boot v2.1.5.RELEASE, Spring v5.1.7.RELEASE
+2019-08-05 14:41:44,003 INFO [restartedMain] org.linlinjava.litemall.Application [SpringApplication.java : 679] The following profiles are active: staging,debug
+2019-08-05 14:41:48,729 ERROR [restartedMain] o.s.b.d.LoggingFailureAnalysisReporter [LoggingFailureAnalysisReporter.java : 42] 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Failed to configure a DataSource: 'url' attribute is not specified and no embedded datasource could be configured.
+
+Reason: Failed to determine a suitable driver class
+
+
+Action:
+
+Consider the following:
+	If you want an embedded database (H2, HSQL or Derby), please put it on the classpath.
+	If you have database settings to be loaded from a particular profile you may need to activate it (the profiles staging,debug are currently active).
+
+2019-08-05 14:43:30,453 INFO [restartedMain] org.linlinjava.litemall.Application [StartupInfoLogger.java : 50] Starting Application on duoyundeMacBook-Pro.local with PID 19879 (/Users/duoyun/work/shop/litemall/litemall-all/target/classes started by duoyun in /Users/duoyun/work/shop/litemall)
+2019-08-05 14:43:30,461 DEBUG [restartedMain] org.linlinjava.litemall.Application [StartupInfoLogger.java : 53] Running with Spring Boot v2.1.5.RELEASE, Spring v5.1.7.RELEASE
+2019-08-05 14:43:30,462 INFO [restartedMain] org.linlinjava.litemall.Application [SpringApplication.java : 679] The following profiles are active: staging,debug
+2019-08-05 14:43:34,155 INFO [restartedMain] c.a.d.s.b.a.DruidDataSourceAutoConfigure [DruidDataSourceAutoConfigure.java : 56] Init DruidDataSource
+2019-08-05 14:43:34,532 ERROR [restartedMain] o.s.b.d.LoggingFailureAnalysisReporter [LoggingFailureAnalysisReporter.java : 42] 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Failed to configure a DataSource: 'url' attribute is not specified and no embedded datasource could be configured.
+
+Reason: Failed to determine a suitable driver class
+
+
+Action:
+
+Consider the following:
+	If you want an embedded database (H2, HSQL or Derby), please put it on the classpath.
+	If you have database settings to be loaded from a particular profile you may need to activate it (the profiles staging,debug are currently active).
+

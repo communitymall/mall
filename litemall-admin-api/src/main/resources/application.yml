@@ -1,0 +1,16 @@
+spring:
+  profiles:
+    active: db, core, admin
+  messages:
+    encoding: UTF-8
+
+server:
+  port: 8083
+
+logging:
+  level:
+    root:  INFO
+    org.springframework:  INFO
+    org.mybatis:  INFO
+    org.linlinjava.litemall.admin:  INFO
+    org.linlinjava.litemall:  INFO
