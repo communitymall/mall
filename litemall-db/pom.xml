@@ -53,6 +53,14 @@
                     <overwrite>true</overwrite>
                     <verbose>true</verbose>
                 </configuration>
+                <executions>
+                    <execution>
+                        <id>Generate MyBatis Artifacts</id>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                    </execution>
+                </executions>
                 <dependencies>
                     <dependency>
                         <groupId>mysql</groupId>
