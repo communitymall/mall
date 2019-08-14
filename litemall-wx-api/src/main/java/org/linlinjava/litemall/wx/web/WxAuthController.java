@@ -231,7 +231,7 @@ public class WxAuthController {
 
     /*帐号注册分H5及小程序注册，采用不同的接口进行注册*/
 
-    @PostMapping("registerH5")
+    @PostMapping("/registerH5")
     public Object register_h5(HttpServletRequest request,
                               @RequestParam(value = "mobile") String mobile,
                               @RequestParam(value = "code") String code,
@@ -240,7 +240,7 @@ public class WxAuthController {
         return null;
     }
 
-    @PostMapping("registerWx")
+    @PostMapping("/registerWx")
     public Object register_wx(HttpServletRequest request,
                               @RequestParam(value = "mobile") String mobile,
                               @RequestParam(value = "wxCode") String wxCode){
