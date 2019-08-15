@@ -5,10 +5,7 @@ package org.linlinjava.litemall.admin.web;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.linlinjava.litemall.admin.annotation.RequiresPermissionsDesc;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -53,7 +50,21 @@ public class AdminLogisticsController {
     @RequestMapping("/listCompany")
     @ResponseBody
     public Object logisticsCompanyList(HttpServletRequest request,
-                                       @RequestParam(value = "id", required = false) long id){
+                                       @RequestParam(value = "id", required = false) long id,
+                                       @RequestParam(value = "name", required = false)String name,
+                                       @RequestParam(value = "page" ,defaultValue = "1") int page,
+                                       @RequestParam(value = "limit", defaultValue = "10") int limit){
+        return null;
+    }
+
+    /*删除物流公司时，需验证此物流公司是否使用，当前自有物流需验证是否挂有车辆信息*/
+    @RequiresPermissions("admin:logistics:del")
+    @RequiresPermissionsDesc(menu ={"物流管理","物流公司管理"},button = "删除")
+    @RequestMapping("/delCompany")
+    @ResponseBody
+    public Object delLogisticsCompany(HttpServletRequest request,
+                                       @RequestParam(value = "id", required = false) long id,
+                                       @RequestParam(value = "name", required = false)String name){
         return null;
     }
 
@@ -96,8 +107,8 @@ public class AdminLogisticsController {
     public Object delTruck(HttpServletRequest request,
                            @RequestParam(value = "companyId") long comanpyId,
                            @RequestParam(value = "id") long id,
-                           @RequestParam(value = "licensePlateNumber") String licensePlateNumber,
-                           @RequestParam(value = "driver") String driver){
+                           @RequestParam(value = "licensePlateNumber") String licensePlateNumber
+                            ){
         return null;
     }
 
@@ -109,9 +120,13 @@ public class AdminLogisticsController {
                             @RequestParam(value = "companyId" ,required = false) long comanpyId,
                             @RequestParam(value = "id" ,required = false) long id,
                             @RequestParam(value = "licensePlateNumber", required = false) String licensePlateNumber,
-                            @RequestParam(value = "driver",required = false) String driver){
+                            @RequestParam(value = "driver",required = false) String driver,
+                            @RequestParam(value = "phone", required = false) String phone,
+                            @RequestParam(value = "page",defaultValue = "1") int page,
+                            @RequestParam(value = "limit", defaultValue = "10") int limit){
         return null;
     }
+
 
 
     /*物流订单管理 订单生成、订单状态更新、物流定单状态*/
@@ -120,12 +135,7 @@ public class AdminLogisticsController {
     @ResponseBody
     @RequestMapping("/createOrder")
     public Object createLogisticsOrder(HttpServletRequest request,
-                                       @RequestParam (value = "orders") String orders,
-                                       @RequestParam(value = "transitId") String transitId,
-                                       @RequestParam(value="companyId") long companyId,
-                                       @RequestParam(value = "ThirdOrder",required = false) String ThirdOrder,
-                                       @RequestParam(value = "licensePlateNumber") String licensePlateNumber,
-                                       @RequestParam(value = "freight",defaultValue = "0") int freight){
+                                       @RequestBody String body){
         return null;
     }
 
@@ -146,16 +156,29 @@ public class AdminLogisticsController {
         return null;
     }
 
-    @RequiresPermissions("admin:logistics:createOrder")
+    @RequiresPermissions("admin:logistics:queryorderlist")
     @RequiresPermissionsDesc(menu = {"物流管理","物流进度"},button = "查询")
     @ResponseBody
-    @RequestMapping("/queryOrder")
+    @RequestMapping("/queryOrderList")
     public Object logisticsOrderList(HttpServletRequest request,
-                                     @RequestParam(value = "order", required = false) String order,
+                                     @RequestParam(value = "orderId", required = false) String order,
                                      @RequestParam(value = "transitId", required = false) String transitId,
                                      @RequestParam(value = "companyId", required = false) long companyId,
-                                     @RequestParam(value = "ThirdOrder", required = false) String ThirdOrder,
-                                     @RequestParam(value = "licensePlateNumber", required = false) String licensePlateNumber){
+                                     @RequestParam(value = "thirdOrder", required = false) String ThirdOrder,
+                                     @RequestParam(value = "licensePlateNumber", required = false) String licensePlateNumber,
+                                     @RequestParam(value = "page",defaultValue = "1") int page,
+                                     @RequestParam(value = "limit",defaultValue = "10") int limit){
+
+        return null;
+    }
+
+
+    @RequiresPermissions("admin:logistics:queryTransit")
+    @RequiresPermissionsDesc(menu = {"物流管理","物流进度"},button = "详情")
+    @ResponseBody
+    @RequestMapping("/queryTransit")
+    public Object logisticsOrderDetail(HttpServletRequest request,
+                                     @RequestParam(value = "transitId", required = false) String transitId){
         return null;
     }
 }
