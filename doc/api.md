@@ -504,26 +504,73 @@ API应该存在版本控制，以保证兼容性。
     略
     
 #### 2.1.3 注册
+##### 2.1.3.1 手机号注册
 
 应用场景
 
-    xxx
+    web的手机商城或公众号的注册登录
     
 接口链接
 
-    xxx
+    /wx/auth/registerH5
     
 请求参数
 
-    xxx
+    mobile ---手机号
+    password ----密码
+    code ------短信验证码
     
 响应内容
 
-    xxx
+    成功则
+      {
+        errno: 0,
+        errmsg: '成功',
+        data:
+            {
+                token: xxx,
+                tokenExpire: xxx,
+                userInfo: xxx
+            }
+     }
+     失败则 { errno: XXX, errmsg: XXX }
     
 错误码
 
     xxx
+
+#### 2.1.3.2 微信注册
+应用场景
+
+    用户微信小程序的注册
+    
+接口链接
+
+     /wx/auth/regitsterWx
+    
+请求参数
+
+    mobile ---手机号
+    wxcode ----微信的登录验证码
+    
+响应内容
+
+    成功则
+      {
+        errno: 0,
+        errmsg: '成功',
+        data:
+            {
+                token: xxx,
+                tokenExpire: xxx,
+                userInfo: xxx
+            }
+     }
+     失败则 { errno: XXX, errmsg: XXX }
+    
+错误码
+
+    xxx    
     
 #### 2.1.4 退出
 
@@ -3375,8 +3422,79 @@ API应该存在版本控制，以保证兼容性。
     }
     
 ### 2.19 对象存储服务
+### 2.20 门店服务
+#### 2.20.1 门店创建
+应用场景
 
-### 2.20 其他服务
+    因最终用户群体是餐厅或企事业单位食堂，所以需要填写企业信息，以避免帐号有虚假性；
+
+接口链接
+    /wx/store/create
+
+请求参数
+    userid  ---用户id
+
+返回结果  
+    {
+        errno:0,
+        data:{
+            "storeid":""
+        }
+        errmsg:""
+    }  
+
+#### 2.20.2 门店数据更新
+
+应用场景
+    创建门店后，用于更新门店的基础信息    
+    
+接口链接
+
+     /wx/store/update
+
+请求参数
+    
+    {
+         "id":0
+         "merchantName":"商户名称",
+         "merchantCode":"营业执照",
+         "merchantAddress":"商户地址",
+         "merchantPic":"门店照片",
+         "merchantPhone":"门店电话",
+         "merchantLeader":"门店负责人",
+         "createTime":"创建时间"
+         "editTime":"修改时间",
+         "createDate":"创建日期"
+      }
+    
+响应内容
+    {
+        errno:0
+        errmsg:""
+    }
+
+#### 2.20.2 人员管理
+应用场景
+
+    
+    
+接口链接
+
+    GET /wx/store/addRelation
+
+请求参数
+    
+    userid ---用户id
+    storeid ---门店id
+    roleType  --用户类型
+    
+响应内容
+    {
+        errno:0
+        errmsg:""    
+    }
+
+### 2.21 其他服务
 
 
 ## 3 管理后台API服务
