@@ -2,9 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="01e2c81c-d496-482c-9309-2fadd2852134" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/doc/api.md" beforeDir="false" afterPath="$PROJECT_DIR$/doc/api.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/litemall-wx-api/src/main/java/org/linlinjava/litemall/wx/web/WxAuthController.java" beforeDir="false" afterPath="$PROJECT_DIR$/litemall-wx-api/src/main/java/org/linlinjava/litemall/wx/web/WxAuthController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/litemall-wx-api/src/main/java/org/linlinjava/litemall/wx/web/WxStoreController.java" beforeDir="false" afterPath="$PROJECT_DIR$/litemall-wx-api/src/main/java/org/linlinjava/litemall/wx/web/WxStoreController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/litemall-admin-api/src/main/java/org/linlinjava/litemall/admin/web/AdminLogisticsController.java" beforeDir="false" afterPath="$PROJECT_DIR$/litemall-admin-api/src/main/java/org/linlinjava/litemall/admin/web/AdminLogisticsController.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/classes/" />
     <ignored path="$PROJECT_DIR$/litemall-all/target/" />
@@ -67,17 +68,17 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/litemall-wx-api/src/main/java/org/linlinjava/litemall/wx/web/WxAuthController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-141">
-              <caret line="229" column="7" lean-forward="true" selection-start-line="229" selection-start-column="7" selection-end-line="229" selection-end-column="7" />
+            <state relative-caret-position="150">
+              <caret line="38" column="29" selection-start-line="38" selection-start-column="13" selection-end-line="38" selection-end-column="29" />
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/litemall-admin-api/src/main/java/org/linlinjava/litemall/admin/web/AdminLogisticsController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-160">
-              <caret line="132" column="17" lean-forward="true" selection-start-line="132" selection-start-column="17" selection-end-line="132" selection-end-column="17" />
+            <state relative-caret-position="342">
+              <caret line="175" column="54" selection-start-line="175" selection-start-column="42" selection-end-line="175" selection-end-column="54" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -89,8 +90,8 @@
         <entry file="file://$PROJECT_DIR$/doc/api.md">
           <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
             <state split_layout="SPLIT">
-              <first_editor relative-caret-position="-1657">
-                <caret line="1746" column="5" lean-forward="true" selection-start-line="1746" selection-start-column="5" selection-end-line="1746" selection-end-column="5" />
+              <first_editor relative-caret-position="26190">
+                <caret line="1746" column="5" selection-start-line="1746" selection-start-column="5" selection-end-line="1746" selection-end-column="5" />
               </first_editor>
               <second_editor />
             </state>
@@ -100,7 +101,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/litemall-admin-api/src/main/java/org/linlinjava/litemall/admin/web/AdminProfileController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-233">
+            <state relative-caret-position="105">
               <caret line="25" column="13" selection-start-line="25" selection-start-column="13" selection-end-line="25" selection-end-column="13" />
             </state>
           </provider>
@@ -109,17 +110,17 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/litemall-admin-api/src/main/java/org/linlinjava/litemall/admin/web/AdminRoleController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="21">
+            <state relative-caret-position="105">
               <caret line="35" column="13" selection-start-line="35" selection-start-column="13" selection-end-line="35" selection-end-column="13" />
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/litemall-wx-api/src/main/java/org/linlinjava/litemall/wx/web/WxStoreController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="285">
-              <caret line="41" column="20" selection-start-line="41" selection-start-column="20" selection-end-line="41" selection-end-column="20" />
+            <state relative-caret-position="195">
+              <caret line="18" selection-start-line="18" selection-end-line="18" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -130,7 +131,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/litemall-wx-api/src/main/java/org/linlinjava/litemall/wx/web/WxTopicController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-580">
+            <state relative-caret-position="150">
               <caret line="30" column="13" selection-start-line="30" selection-start-column="13" selection-end-line="30" selection-end-column="13" />
             </state>
           </provider>
@@ -139,7 +140,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/litemall-db/src/main/java/org/linlinjava/litemall/db/domain/LitemallUserStore.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-34">
+            <state relative-caret-position="585">
               <caret line="41" column="26" selection-start-line="41" selection-start-column="18" selection-end-line="41" selection-end-column="26" />
             </state>
           </provider>
@@ -148,8 +149,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/litemall-db/src/main/java/org/linlinjava/litemall/db/domain/LitemallMerchant.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="243">
-              <caret line="97" lean-forward="true" selection-start-line="97" selection-end-line="97" />
+            <state relative-caret-position="1410">
+              <caret line="97" selection-start-line="97" selection-end-line="97" />
             </state>
           </provider>
         </entry>
@@ -199,9 +200,9 @@
         <option value="$PROJECT_DIR$/litemall-db/src/main/resources/application.yml" />
         <option value="$PROJECT_DIR$/litemall-db/pom.xml" />
         <option value="$PROJECT_DIR$/litemall-db/mybatis-generator/generatorConfig.xml" />
-        <option value="$PROJECT_DIR$/litemall-admin-api/src/main/java/org/linlinjava/litemall/admin/web/AdminLogisticsController.java" />
         <option value="$PROJECT_DIR$/litemall-wx-api/src/main/java/org/linlinjava/litemall/wx/web/WxAuthController.java" />
         <option value="$PROJECT_DIR$/litemall-wx-api/src/main/java/org/linlinjava/litemall/wx/web/WxStoreController.java" />
+        <option value="$PROJECT_DIR$/litemall-admin-api/src/main/java/org/linlinjava/litemall/admin/web/AdminLogisticsController.java" />
       </list>
     </option>
   </component>
@@ -214,7 +215,12 @@
   </component>
   <component name="MavenProjectNavigator">
     <treeState>
-      <expand />
+      <expand>
+        <path>
+          <item name="" type="16c1761:MavenProjectsStructure$RootNode" />
+          <item name="litemall-db" type="9519ce18:MavenProjectsStructure$ProjectNode" />
+        </path>
+      </expand>
       <select />
     </treeState>
   </component>
@@ -591,18 +597,19 @@
       <option name="presentableId" value="Default" />
       <updated>1565581304471</updated>
       <workItem from="1565581312130" duration="10792000" />
-      <workItem from="1565667396253" duration="19764000" />
+      <workItem from="1565667396253" duration="22822000" />
+      <workItem from="1565840020124" duration="6834000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="30556000" />
+    <option name="totallyTimeSpent" value="40448000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1280" height="709" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.2540453" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.25809062" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Designer" order="2" />
       <window_info id="Image Layers" order="3" />
@@ -628,7 +635,7 @@
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
-      <window_info anchor="right" id="Maven" order="3" visible="true" weight="0.14239483" />
+      <window_info active="true" anchor="right" id="Maven" order="3" visible="true" weight="0.14239483" />
       <window_info anchor="right" id="Palette" order="4" />
       <window_info anchor="right" id="Capture Analysis" order="5" />
       <window_info anchor="right" id="Mybatis datasource" order="6" side_tool="true" />
@@ -928,44 +935,65 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/litemall-admin-api/src/main/java/org/linlinjava/litemall/admin/web/AdminProfileController.java">
+    <entry file="file://$PROJECT_DIR$/litemall-wx-api/src/main/java/org/linlinjava/litemall/wx/web/WxAuthController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-233">
-          <caret line="25" column="13" selection-start-line="25" selection-start-column="13" selection-end-line="25" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/litemall-admin-api/src/main/java/org/linlinjava/litemall/admin/web/AdminRoleController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="21">
-          <caret line="35" column="13" selection-start-line="35" selection-start-column="13" selection-end-line="35" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/litemall-admin-api/src/main/java/org/linlinjava/litemall/admin/web/AdminLogisticsController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-160">
-          <caret line="132" column="17" lean-forward="true" selection-start-line="132" selection-start-column="17" selection-end-line="132" selection-end-column="17" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+        <state relative-caret-position="150">
+          <caret line="38" column="29" selection-start-line="38" selection-start-column="13" selection-end-line="38" selection-end-column="29" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/doc/api.md">
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
         <state split_layout="SPLIT">
-          <first_editor relative-caret-position="-1657">
-            <caret line="1746" column="5" lean-forward="true" selection-start-line="1746" selection-start-column="5" selection-end-line="1746" selection-end-column="5" />
+          <first_editor relative-caret-position="26190">
+            <caret line="1746" column="5" selection-start-line="1746" selection-start-column="5" selection-end-line="1746" selection-end-column="5" />
           </first_editor>
           <second_editor />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/litemall-wx-api/src/main/java/org/linlinjava/litemall/wx/web/WxAuthController.java">
+    <entry file="file://$PROJECT_DIR$/litemall-admin-api/src/main/java/org/linlinjava/litemall/admin/web/AdminProfileController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-141">
-          <caret line="229" column="7" lean-forward="true" selection-start-line="229" selection-start-column="7" selection-end-line="229" selection-end-column="7" />
+        <state relative-caret-position="105">
+          <caret line="25" column="13" selection-start-line="25" selection-start-column="13" selection-end-line="25" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/litemall-admin-api/src/main/java/org/linlinjava/litemall/admin/web/AdminRoleController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="105">
+          <caret line="35" column="13" selection-start-line="35" selection-start-column="13" selection-end-line="35" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/litemall-wx-api/src/main/java/org/linlinjava/litemall/wx/web/WxStoreController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="195">
+          <caret line="18" selection-start-line="18" selection-end-line="18" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/litemall-wx-api/src/main/java/org/linlinjava/litemall/wx/web/WxTopicController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="150">
+          <caret line="30" column="13" selection-start-line="30" selection-start-column="13" selection-end-line="30" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/litemall-db/src/main/java/org/linlinjava/litemall/db/domain/LitemallUserStore.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="585">
+          <caret line="41" column="26" selection-start-line="41" selection-start-column="18" selection-end-line="41" selection-end-column="26" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/litemall-db/src/main/java/org/linlinjava/litemall/db/domain/LitemallMerchant.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1410">
+          <caret line="97" selection-start-line="97" selection-end-line="97" />
         </state>
       </provider>
     </entry>
@@ -976,31 +1004,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/litemall-db/src/main/java/org/linlinjava/litemall/db/domain/LitemallMerchant.java">
+    <entry file="file://$PROJECT_DIR$/litemall-admin-api/src/main/java/org/linlinjava/litemall/admin/web/AdminLogisticsController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="243">
-          <caret line="97" lean-forward="true" selection-start-line="97" selection-end-line="97" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/litemall-db/src/main/java/org/linlinjava/litemall/db/domain/LitemallUserStore.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-34">
-          <caret line="41" column="26" selection-start-line="41" selection-start-column="18" selection-end-line="41" selection-end-column="26" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/litemall-wx-api/src/main/java/org/linlinjava/litemall/wx/web/WxTopicController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-580">
-          <caret line="30" column="13" selection-start-line="30" selection-start-column="13" selection-end-line="30" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/litemall-wx-api/src/main/java/org/linlinjava/litemall/wx/web/WxStoreController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="285">
-          <caret line="41" column="20" selection-start-line="41" selection-start-column="20" selection-end-line="41" selection-end-column="20" />
+        <state relative-caret-position="342">
+          <caret line="175" column="54" selection-start-line="175" selection-start-column="42" selection-end-line="175" selection-end-column="54" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
