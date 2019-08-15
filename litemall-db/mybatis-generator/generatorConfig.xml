@@ -180,8 +180,23 @@
 <!--        <table tableName="litemall_merchant">-->
 <!--            <generatedKey column="id" sqlStatement="MySql" identity="true"/>-->
 <!--        </table>-->
-            <table tableName="litemall_user_store">
+<!--            <table tableName="litemall_user_store">-->
+<!--                <generatedKey column="id" sqlStatement="MySql" identity="true"/>-->
+<!--            </table>-->
+            <table tableName="litemall_logicstics_transport">
                 <generatedKey column="id" sqlStatement="MySql" identity="true"/>
             </table>
+            <table tableName="litemall_logictics_transport_detail">
+                <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+            </table>
+            <table tableName="litemall_logistics_company">
+                <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+            </table>
+            <table tableName="litemall_logistics_trucks">
+                <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+            </table>
+<!--            <table tableName="">-->
+<!--                <generatedKey column="id" sqlStatement="MySql" identity="true"/>-->
+<!--            </table>-->
     </context>
 </generatorConfiguration>

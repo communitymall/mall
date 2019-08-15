@@ -3476,7 +3476,7 @@ API应该存在版本控制，以保证兼容性。
 #### 2.20.2 人员管理
 应用场景
 
-    
+    主要用于门店人员的管理 ，用于采购下单
     
 接口链接
 
@@ -3499,7 +3499,284 @@ API应该存在版本控制，以保证兼容性。
 
 ## 3 管理后台API服务
 
-略
+### 3.1 物流公司管理
+#### 3.1.1 物流公司添加
+应用场景
+    对于物流配送，采用自营与第三方物流相结合的方式
+接口地址
+    /admin/logistics/addCompany
+请求参数
+    {
+    "name":"公司名称",
+    "type":"快递公司类型见数据库设计",
+    "address":"公司地址",
+    "phone":"公司电话",
+    "contact":"联系人",
+    "serviceTel":"客服电话"
+    }
+响应内容
+    {
+        errno:0
+        errmsg:""    
+    }
+#### 3.1.2 物流公司修改
+应用场景
+    物流公司的信息更新
+接口地址
+    /admin/logistics/updateCompany
+请求参数
+    {
+    "name":"公司名称",
+    "type":"快递公司类型见数据库设计",
+    "address":"公司地址",
+    "phone":"公司电话",
+    "contact":"联系人",
+    "serviceTel":"客服电话",
+    "id":0
+    }
+响应内容
+    {
+        errno:0
+        errmsg:""    
+    }
+#### 3.1.3 物流公司删除
+应用场景
+接口地址
+    /admin/logistics/delCompany
+请求参数
+    id ----物流公司编号
+    name ----物流公司名称
+响应内容
+    {
+        errno:0,
+        errmsg:""
+    }    
+#### 3.1.4 物流公司查询
+应用场景
+
+接口地址
+    /admin/logistics/listCompany
+请求参数
+    id --- 公司编号
+    name ----公司名称
+    page ----第几页
+    limit ----每页显示几个
+响应内容
+    {
+        errno:0,
+        errmsg:"",
+        data:{
+            "total": 19,
+            "pages": 5,
+            "limit": 4,
+            "page": 1,
+            "list": [
+                {
+                    "name":"公司名称",
+                    "type":"快递公司类型见数据库设计",
+                    "address":"公司地址",
+                    "phone":"公司电话",
+                    "contact":"联系人",
+                    "serviceTel":"客服电话",
+                    "createTime":"创建时间",
+                    "id":0
+                }   
+              ] 
+        }
+    }
+
+### 3.2 物流车辆管理
+#### 3.2.1 车辆新增
+应用场景
+接口地址
+    /admin/logistics/addTruck
+请求参数
+    companyId ---公司编号
+    licensePlateNumber ---车牌号
+    driver --司机
+    phone  --手机号
+    load   --车辆载重
+响应内容
+    {
+        errno:0,
+        errmsg:""
+    }
+#### 3.2.2 车辆修改
+应用场景
+接口地址
+    /admin/logistics/
+请求参数
+    companyId ---公司编号
+    licensePlateNumber ---车牌号
+    driver --司机
+    phone  --手机号
+    load   --车辆载重
+    id     --车辆的编号
+响应内容
+    {
+        errno:0,
+        errmsg:""
+    }
+#### 3.2.3 车辆列表
+应用场景
+接口地址
+    /admin/logistics/listTruck
+请求参数
+    companyId ---公司编号
+    licensePlateNumber ---车牌号
+    driver --司机
+    phone  --手机号
+    id     --车辆的编号
+    page   --显示的页数
+    limit  --每页显示的条数
+响应内容
+    {
+      errno:0,
+        errmsg:"",
+        data:{
+            "total": 19,
+            "pages": 5,
+            "limit": 4,
+            "page": 1,
+            "list": [
+                {
+                    "companyId":"",
+                    "licensePlateNumber":"",
+                    "driver":"",
+                    "id":"车辆编号",
+                    "phone":"",
+                    "load":""
+                }
+             ]
+        }   
+    }
+#### 3.2.4 车辆删除
+应用场景
+
+接口地址
+    /admin/logistics/delTruck        
+请求参数
+    id ---车辆编号
+    companyid --公司名称id
+    licenseplatenumber --车牌号
+响应内容
+    {
+        errno:0,
+        errmsg:""
+    }
+### 3.3 订单物流配送
+#### 3.3.1 物流订单创建
+应用场景
+接口地址
+    /admin/logistics/createOrder
+请求参数
+    {
+        "orders":[
+            {
+             "orderid":""
+            },
+        ],
+        "companyId":"公司编号",
+        "ThirdOrder":"第三方物流订单编号", ---自营时，填写transitid 
+        "licensePlateNumber":"车辆牌照",
+        "freight":"运费，单位分"
+    }
+响应内容
+    {
+        errno:0,
+        errmsg:"",
+        data:{
+            "transitId":"物流配送订单"
+        }
+    }
+#### 3.3.2 配送订单状态更新
+应用场景
+    更新配送物流中各个订单的配置状态
+接口地址
+    /admin/logistics/updateOrderStatus
+请求参数
+    orderid ---用户订单
+    status  ---配置状态
+响应内容
+    {
+        errno:0,
+        errmsg:""
+    }
+
+
+#### 3.3.3 物流配送订单状态更新
+应用场景
+接口地址
+    /admin/updateLogisticsOrderStatus
+请求参数
+    transitId   ---物流配送订单号
+    status      ---物流配送状态
+响应内容
+    {
+        errno:0,
+        errmsg:""
+    }
+#### 3.3.4 物流配送查询
+应用场景
+
+接口地址
+    /admin/logistics/queryOrderList
+请求参数
+    orderId -- 用户订单
+    transitId  --物流订单
+    companyId  --物流公司编号
+    thirdOrder  --第三方订单编号
+    licensePlateNumber --车牌照
+    page        --第几页
+    limit       --一页显示多条
+
+响应内容
+    {
+        errno:0,
+        errmsg:"",
+        data:{
+            "total": 19,
+            "pages": 5,
+            "limit": 4,
+            "page": 1,
+            "list": [
+                {
+                    "id":"id",
+                    "transit_id":"订单编号",
+                    "licensePlateNumber":"车牌号",
+                    "driver":"司机",
+                    "freight":"运费",
+                    "transit_status":"物流配送状态",
+                    "createTime":"创建时间",
+                    "createUser":"创建人"
+                }
+            ]
+            }    
+
+        }
+    }
+#### 3.3.5 物流配送详情
+应用场景
+接口地址
+    /admin/logistics/queryTransit
+接口参数
+    transitId --物流配置订单编号
+响应内容
+    {
+        errno:0,
+        errmsg:"",
+        data:{
+            "list":[
+                {
+                    "id":"",
+                    "transitId":"物流配送订单编号",
+                    "orderSn":"用户订单编号",
+                    "shipStatus":"物流配送状态",
+                    "createTime":"创建时间"
+                }
+            ]
+        }   
+    }    
 
 ## 4 更新日志
 
