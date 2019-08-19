@@ -38,6 +38,8 @@ public class LitemallUserService {
     public void add(LitemallUser user) {
         user.setAddTime(LocalDateTime.now());
         user.setUpdateTime(LocalDateTime.now());
+        user.setUsername("cs");
+
         userMapper.insertSelective(user);
     }
 
