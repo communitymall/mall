@@ -75,6 +75,12 @@
             <groupId>org.linlinjava</groupId>
             <artifactId>litemall-db</artifactId>
         </dependency>
+
+        <dependency>
+            <groupId>com.IztoListener</groupId>
+            <artifactId>sms</artifactId>
+            <version>1.0.0</version>
+        </dependency>
     </dependencies>
 
 </project>

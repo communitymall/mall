@@ -81,11 +81,23 @@ public class LitemallLogisticsTrucksService {
         return trucksMapper.selectByExample(example);
     }
 
-    public Object deleteByPrimaryKey(String id){
+    public Object deleteByPrimaryKey(String id,String comanpyId,String licensePlateNumber){
         int i = Integer.parseInt(id);
+        int cid = Integer.parseInt(comanpyId);
         //trucksMapper.updateByExampleSelective();
+        LitemallLogisticsTrucks trucks = new LitemallLogisticsTrucks();
+        //默认0删除
+        trucks.setDeleted(0);
+        trucks.setId(i);
+        trucks.setCompanyId(cid);
+        trucks.setLicensePlateNumber(licensePlateNumber);
+        System.out.println(trucks);
+//        //trucksMapper.deleteByPrimaryKey(i)
+//        LitemallLogisticsTrucksExample example = new LitemallLogisticsTrucksExample();
+//        LitemallLogisticsTrucksExample.Criteria criteria = example.createCriteria();
+//        criteria.andIdEqualTo(i);
 
-        return trucksMapper.deleteByPrimaryKey(i);
+        return trucksMapper.updateByPrimaryKeySelective(trucks);
     }
 
     /*

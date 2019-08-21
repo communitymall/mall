@@ -64,7 +64,8 @@ public class AdminLogisticsService {
         List<LitemallLogisticsTrucks> litemallLogisticsTrucks = trucksService.querySelectiveByLinNumber(s);
         //车牌号没有输入对
         if(litemallLogisticsTrucks.size()==0){
-            return  ResponseUtil.fail();
+             return  -1;
+
         }
         LitemallLogisticsTrucks trucks = litemallLogisticsTrucks.get(0);
         String driver = trucks.getDriver();

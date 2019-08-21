@@ -9,10 +9,12 @@ import org.apache.commons.logging.LogFactory;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.linlinjava.litemall.admin.annotation.RequiresPermissionsDesc;
 import org.linlinjava.litemall.admin.service.AdminLogisticsService;
+import org.linlinjava.litemall.core.notify.IztoListenerSmsSender;
 import org.linlinjava.litemall.core.util.ResponseUtil;
 import org.linlinjava.litemall.db.domain.LitemallLogicsticsTransport;
 import org.linlinjava.litemall.db.domain.LitemallLogisticsCompany;
 import org.linlinjava.litemall.db.domain.LitemallLogisticsTrucks;
+import org.linlinjava.litemall.db.service.LitemallLogicticsTransportDetailService;
 import org.linlinjava.litemall.db.service.LitemallLogisticsCompanyService;
 import org.linlinjava.litemall.db.service.LitemallLogisticsTrucksService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,6 +43,9 @@ public class AdminLogisticsController {
 
     @Autowired
     private AdminLogisticsService adminLogisticsService;
+
+    @Autowired
+    private LitemallLogicticsTransportDetailService detailService;
     /*公司管理更新、新增*/
     @RequiresPermissions("admin:logistics:add")
     @RequiresPermissionsDesc(menu = {"物流管理","物流公司管理"},button = "新增")
@@ -183,7 +188,8 @@ public class AdminLogisticsController {
                            @RequestParam(value = "id") String id,
                            @RequestParam(value = "licensePlateNumber") String licensePlateNumber
                             ){
-        return trucksService.deleteByPrimaryKey(id);
+         trucksService.deleteByPrimaryKey(id,comanpyId,licensePlateNumber);
+        return ResponseUtil.ok();
     }
 
     @RequiresPermissions("admin:logistics:listtruck")
@@ -212,9 +218,12 @@ public class AdminLogisticsController {
     public Object createLogisticsOrder(HttpServletRequest request,
                                        @RequestBody String body){
         Object transitId = adminLogisticsService.addOrder(body);
+        if(transitId.equals(-1)){
+            return ResponseUtil.fail();
+        }
 //        Map<Object, Object> data = new HashMap<String, Object>();
 //        data.put(transitId,"物流配送订单");
-        List list = new ArrayList();
+        List<Object> list = new ArrayList();
         list.add(transitId);
         return ResponseUtil.transportOk(list);
     }
@@ -225,7 +234,8 @@ public class AdminLogisticsController {
     public Object updateOrderStatus(HttpServletRequest request,
                                     @RequestParam(value = "orderId") String orderId,
                                     @RequestParam(value = "status") int status){
-        return null;
+        detailService.add(orderId,status);
+        return ResponseUtil.ok();
     }
 
     @ResponseBody
@@ -260,7 +270,8 @@ public class AdminLogisticsController {
     @RequestMapping("/queryTransit")
     public Object logisticsOrderDetail(HttpServletRequest request,
                                      @RequestParam(value = "transitId", required = false) String transitId){
-        //List<LitemallLogicsticsTransport> list = adminLogisticsService.list(transitId);
-        return null;
+
+        return ResponseUtil.transportListOk(detailService.list(transitId));
     }
+
 }
