@@ -248,16 +248,20 @@ public class WxAuthController {
                               @RequestParam(value = "mobile",required=false) String mobile,
                               @RequestParam(value = "code") String code,
                               @RequestParam(value = "password") String password) {
-        //
         List<LitemallUser> litemallUsers = userService.queryByMobile(mobile);
-
         if(!(litemallUsers.isEmpty())){
             return ResponseUtil.fail(AUTH_CAPTCHA_UNSUPPORT, "手机号已经被注册了！");
         }
         LitemallUser user = new LitemallUser();
         user.setMobile(mobile);
-        user.setPassword(password);
-
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        //给密码加密
+        String encode = encoder.encode(password);
+        System.out.println(encode);
+        user.setPassword(encode);
+        //设置账号可用
+        byte b =0;
+        user.setStatus(b);
         userService.add(user);
         return ResponseUtil.ok();
     }
@@ -272,6 +276,9 @@ public class WxAuthController {
         }
         LitemallUser user = new LitemallUser();
         user.setMobile(mobile);
+        //设置账号可用
+        byte b =0;
+        user.setStatus(b);
         userService.add(user);
         return ResponseUtil.ok();
     }

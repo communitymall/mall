@@ -118,8 +118,17 @@ public class AdminLogisticsController {
     public Object delLogisticsCompany(HttpServletRequest request,
                                        @RequestParam(value = "id", required = false) String id,
                                        @RequestParam(value = "name", required = false)String name){
-        if(StringUtil.isEmpty(id)||StringUtil.isEmpty(name)){
+        System.out.println(id);
+        System.out.println(name);
+        if(StringUtil.isEmpty(id)&&StringUtil.isEmpty(name)){
             return ResponseUtil.fail(402,"没有物流公司编号与物流公司名称");
+        }
+        //判断当前自有物流需验证是否挂有车辆信息
+        LitemallLogisticsTrucks trucks = new LitemallLogisticsTrucks();
+        trucks.setCompanyId(Integer.parseInt(id));
+        List<LitemallLogisticsTrucks> litemallLogisticsTrucks = trucksService.querySelectiveByCompanyId(id);
+        if(litemallLogisticsTrucks.size()>0){
+            return ResponseUtil.fail(402,"该公司挂有车辆信息，不能删除！");
         }
         companyService.deleteOne(id,name);
         return ResponseUtil.ok();
@@ -144,6 +153,8 @@ public class AdminLogisticsController {
         truck.setDriver(driver);
         truck.setPhone(phone);
         truck.setLoad(load);
+        //设置逻辑删除的没有删除
+        truck.setDeleted(1);
         truck.setCreateTime(LocalDateTime.now());
         trucksService.add(truck);
         return ResponseUtil.ok();
@@ -169,11 +180,11 @@ public class AdminLogisticsController {
         truck.setPhone(phone);
         truck.setLoad(load);
         int update = trucksService.update(truck);
-        if(update==0){
+        if(update==888){
             return ResponseUtil.fail(499,"没有物流派送，不能修改");
         }
-        if(update==1){
-            return ResponseUtil.fail(489,"物流订单没有超过一个月，不能修改");
+        if(update==999){
+            return ResponseUtil.fail(489,"最近的物流订单超过一个月，不能修改");
         }
         return trucksService.update(truck);
     }
@@ -219,7 +230,7 @@ public class AdminLogisticsController {
                                        @RequestBody String body){
         Object transitId = adminLogisticsService.addOrder(body);
         if(transitId.equals(-1)){
-            return ResponseUtil.fail();
+            return ResponseUtil.fail(408,"请输入正确的车牌号！");
         }
 //        Map<Object, Object> data = new HashMap<String, Object>();
 //        data.put(transitId,"物流配送订单");
@@ -234,7 +245,10 @@ public class AdminLogisticsController {
     public Object updateOrderStatus(HttpServletRequest request,
                                     @RequestParam(value = "orderId") String orderId,
                                     @RequestParam(value = "status") int status){
-        detailService.add(orderId,status);
+        int add = detailService.add(orderId, status);
+        if(add==-1){
+            return ResponseUtil.fail(403,"该订单已经开始运输了！");
+        }
         return ResponseUtil.ok();
     }
 

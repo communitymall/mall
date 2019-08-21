@@ -8,6 +8,7 @@ import org.linlinjava.litemall.db.domain.*;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
@@ -40,10 +41,11 @@ public class LitemallLogisticsTrucksService {
         String order = "desc";
         example.setOrderByClause(sort + " " + order);
         List<LitemallLogicsticsTransport> litemallLogicsticsTransports = transportMapper.selectByExample(example);
+        System.out.println(litemallLogicsticsTransports);
         if(litemallLogicsticsTransports.size()==0){
             //没有订单信息  不允许需改
             System.out.println("------没有订单不能修改----------------------------");
-            return 0;
+            return 888;
         }
         //获得最近创建的订单信息
         LitemallLogicsticsTransport litemallLogicsticsTransport1 = litemallLogicsticsTransports.get(0);
@@ -52,17 +54,17 @@ public class LitemallLogisticsTrucksService {
         //获得现在的时间
         LocalDateTime now = LocalDateTime.now();
         //比较时间差
-        long between = ChronoUnit.DAYS.between(now, createTime);
+        Duration duration = Duration.between(createTime,now);
+        //long between = ChronoUnit.DAYS.between(now, createTime);
+        long days = duration.toDays();
+        System.out.println("------------------------------------------------");
+        System.out.println(days);
         //最近30天没有派送订单，不能修改
-        if(between>30){
-            System.out.println(between);
-            System.out.println("------------------------------------------------");
-            return 1;
-        }
-
-        LitemallLogicsticsTransport litemallLogicsticsTransport = new LitemallLogicsticsTransport();
-
-
+        if(days>30l){
+            System.out.println(days);
+            System.out.println("*********************************************");
+           return 999;
+       }
        return trucksMapper.updateByPrimaryKey(trucks);
     }
 
@@ -108,6 +110,18 @@ public class LitemallLogisticsTrucksService {
         LitemallLogisticsTrucksExample example = new LitemallLogisticsTrucksExample();
         LitemallLogisticsTrucksExample.Criteria criteria = example.createCriteria();
         criteria.andLicensePlateNumberEqualTo(licenseNumber);
+        List<LitemallLogisticsTrucks> litemallLogisticsTrucks = trucksMapper.selectByExample(example);
+        return litemallLogisticsTrucks;
+    }
+
+    /*
+    根据CompanyId号查询
+     */
+
+    public  List<LitemallLogisticsTrucks> querySelectiveByCompanyId(String id){
+        LitemallLogisticsTrucksExample example = new LitemallLogisticsTrucksExample();
+        LitemallLogisticsTrucksExample.Criteria criteria = example.createCriteria();
+        criteria.andCompanyIdEqualTo(Integer.parseInt(id));
         List<LitemallLogisticsTrucks> litemallLogisticsTrucks = trucksMapper.selectByExample(example);
         return litemallLogisticsTrucks;
     }

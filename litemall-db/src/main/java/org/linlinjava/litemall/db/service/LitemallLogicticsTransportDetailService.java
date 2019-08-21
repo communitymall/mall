@@ -18,14 +18,22 @@ public class LitemallLogicticsTransportDetailService {
 
     LitemallLogicticsTransportDetail detail = new LitemallLogicticsTransportDetail();
 
-    public void add(String orderId,int status){
+    public int add(String orderId,int status){
         int transitId = UUID.randomUUID().hashCode();
         detail.setOrderSn(orderId);
         detail.setTransitId(String.valueOf(transitId));
         detail.setShipStatus(String.valueOf(status));
         String ctime = String.valueOf(LocalDateTime.now());
         detail.setCreateTime(ctime);
-        detailMapper.insertSelective(detail);
+        //判断orderid在数据是否存在
+        LitemallLogicticsTransportDetailExample example = new LitemallLogicticsTransportDetailExample();
+        LitemallLogicticsTransportDetailExample.Criteria criteria = example.createCriteria();
+        criteria.andOrderSnEqualTo(orderId);
+        List<LitemallLogicticsTransportDetail> details = detailMapper.selectByExampleSelective(example);
+        if(details.size()>0){
+            return -1;
+        }
+        return detailMapper.insertSelective(detail);
     }
 
     /*
