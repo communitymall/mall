@@ -3,6 +3,9 @@ spring:
     active: core, db
   messages:
     encoding: UTF-8
+  mvc:
+    servlet:
+      path:
 
 logging:
   level:
@@ -10,3 +13,5 @@ logging:
     org.springframework:  ERROR
     org.mybatis:  ERROR
     org.linlinjava.litemall.core:  DEBUG
+
+

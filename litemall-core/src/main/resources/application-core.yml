@@ -1,5 +1,11 @@
 litemall:
+  dxt:
+    smsUrl: http://139.129.107.160:8085/sendsms.php
+    userid: 110183
+    password: 9e38a91f2c3f89fca69a7594fed67cb1
+    ext: 2033
   # 开发者应该设置成自己的wx相关信息
+
   wx:
     app-id: wxa5b486c6b918ecfb
     app-secret: e04004829d4c383b4db7769d88dfbca1
@@ -112,3 +118,4 @@ litemall:
       accessKey: 111111
       secretKey: xxxxxx
       bucketName: litemall
+

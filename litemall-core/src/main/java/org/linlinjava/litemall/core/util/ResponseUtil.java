@@ -2,6 +2,7 @@ package org.linlinjava.litemall.core.util;
 
 import com.github.pagehelper.Page;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -53,6 +54,22 @@ public class ResponseUtil {
         obj.put("errmsg", "成功");
         obj.put("data", data);
         return obj;
+    }
+
+    //物流订单创建的返回
+    public  static Object transportOk(List list){
+        Map<Object, Object> data = new HashMap<Object, Object>();
+       // data.put("data", list);
+
+        data.put("transitId",list.get(0));
+        return ok(data);
+    }
+    //物流订单的详情
+    public static Object transportListOk(List list){
+        Map<Object, Object> data = new HashMap<Object, Object>();
+
+        data.put("list",list);
+        return  ok(data);
     }
 
     public static Object okList(List list) {

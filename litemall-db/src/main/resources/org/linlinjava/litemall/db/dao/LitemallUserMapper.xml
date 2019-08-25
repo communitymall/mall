@@ -23,6 +23,7 @@
     <result column="add_time" jdbcType="TIMESTAMP" property="addTime" />
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
     <result column="deleted" jdbcType="BIT" property="deleted" />
+    <result column="name" jdbcType="VARCHAR" property="name"/>
   </resultMap>
   <sql id="Example_Where_Clause">
     <!--
@@ -97,7 +98,7 @@
     -->
     id, username, `password`, gender, birthday, last_login_time, last_login_ip, user_level, 
     nickname, mobile, avatar, weixin_openid, session_key, `status`, add_time, update_time, 
-    deleted
+    deleted,name
   </sql>
   <select id="selectByExample" parameterType="org.linlinjava.litemall.db.domain.LitemallUserExample" resultMap="BaseResultMap">
     <!--
@@ -289,6 +290,9 @@
       <if test="deleted != null">
         deleted,
       </if>
+      <if test="name != null">
+        name,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="username != null">
@@ -338,6 +342,9 @@
       </if>
       <if test="deleted != null">
         #{deleted,jdbcType=BIT},
+      </if>
+      <if test="name != null">
+        #{name ,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>

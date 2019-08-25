@@ -60,25 +60,32 @@ public class WxAuthController {
      */
     @PostMapping("login")
     public Object login(@RequestBody String body, HttpServletRequest request) {
-        String username = JacksonUtil.parseString(body, "username");
+        String mobile = JacksonUtil.parseString(body, "mobile");
         String password = JacksonUtil.parseString(body, "password");
-        if (username == null || password == null) {
+        if (mobile == null || password == null) {
             return ResponseUtil.badArgument();
         }
 
-        List<LitemallUser> userList = userService.queryByUsername(username);
+        List<LitemallUser> userList = userService.queryByMobile(mobile);
         LitemallUser user = null;
         if (userList.size() > 1) {
             return ResponseUtil.serious();
         } else if (userList.size() == 0) {
-            return ResponseUtil.fail(AUTH_INVALID_ACCOUNT, "账号不存在");
+            return ResponseUtil.fail(AUTH_INVALID_ACCOUNT, "手机号没有注册！");
         } else {
             user = userList.get(0);
         }
 
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         if (!encoder.matches(password, user.getPassword())) {
-            return ResponseUtil.fail(AUTH_INVALID_ACCOUNT, "账号密码不对");
+            return ResponseUtil.fail(AUTH_INVALID_ACCOUNT, "手机号或密码不对");
+        }
+        //判断账号是否可用
+        if(user.getStatus()==1){
+            return ResponseUtil.fail(AUTH_INVALID_ACCOUNT, "账号被禁用！");
+        }
+        if(user.getStatus()==2){
+            return ResponseUtil.fail(AUTH_INVALID_ACCOUNT, "账号被注销！");
         }
 
         // 更新登录情况
@@ -90,7 +97,7 @@ public class WxAuthController {
 
         // userInfo
         UserInfo userInfo = new UserInfo();
-        userInfo.setNickName(username);
+        userInfo.setNickName(mobile);
         userInfo.setAvatarUrl(user.getAvatar());
 
         // token
@@ -111,8 +118,14 @@ public class WxAuthController {
      */
     @PostMapping("login_by_weixin")
     public Object loginByWeixin(@RequestBody WxLoginInfo wxLoginInfo, HttpServletRequest request) {
+        //设置测试的验证码
+        String codeTset="888888";
+
         String code = wxLoginInfo.getCode();
         UserInfo userInfo = wxLoginInfo.getUserInfo();
+
+        //输出一下信息
+        System.out.println(userInfo);
         if (code == null || userInfo == null) {
             return ResponseUtil.badArgument();
         }
@@ -171,7 +184,7 @@ public class WxAuthController {
 
     /**
      * 请求注册验证码
-     *
+     * <p>
      * TODO
      * 这里需要一定机制防止短信验证码被滥用
      *
@@ -205,7 +218,7 @@ public class WxAuthController {
     /**
      * 账号注册
      *
-     * @param body    请求内容
+     * @param   //body 请求内容
      *                {
      *                username: xxx,
      *                password: xxx,
@@ -230,21 +243,44 @@ public class WxAuthController {
      */
 
     /*帐号注册分H5及小程序注册，采用不同的接口进行注册*/
-
-    @PostMapping("registerH5")
+    @PostMapping("/registerH5")
     public Object register_h5(HttpServletRequest request,
-                              @RequestParam(value = "mobile") String mobile,
+                              @RequestParam(value = "mobile",required=false) String mobile,
                               @RequestParam(value = "code") String code,
-                              @RequestParam(value = "password") String password){
-
-        return null;
+                              @RequestParam(value = "password") String password) {
+        List<LitemallUser> litemallUsers = userService.queryByMobile(mobile);
+        if(!(litemallUsers.isEmpty())){
+            return ResponseUtil.fail(AUTH_CAPTCHA_UNSUPPORT, "手机号已经被注册了！");
+        }
+        LitemallUser user = new LitemallUser();
+        user.setMobile(mobile);
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        //给密码加密
+        String encode = encoder.encode(password);
+        System.out.println(encode);
+        user.setPassword(encode);
+        //设置账号可用
+        byte b =0;
+        user.setStatus(b);
+        userService.add(user);
+        return ResponseUtil.ok();
     }
 
-    @PostMapping("registerWx")
+    @PostMapping("/registerWx")
     public Object register_wx(HttpServletRequest request,
                               @RequestParam(value = "mobile") String mobile,
-                              @RequestParam(value = "wxCode") String wxCode){
-        return null;
+                              @RequestParam(value = "wxCode") String wxCode) {
+        List<LitemallUser> litemallUsers = userService.queryByMobile(mobile);
+        if(!(litemallUsers.isEmpty())){
+            return ResponseUtil.fail(AUTH_CAPTCHA_UNSUPPORT, "手机号已经被注册了！");
+        }
+        LitemallUser user = new LitemallUser();
+        user.setMobile(mobile);
+        //设置账号可用
+        byte b =0;
+        user.setStatus(b);
+        userService.add(user);
+        return ResponseUtil.ok();
     }
 
 
@@ -327,7 +363,7 @@ public class WxAuthController {
 
         // token
         String token = UserTokenManager.generateToken(user.getId());
-        
+
         Map<Object, Object> result = new HashMap<Object, Object>();
         result.put("token", token);
         result.put("userInfo", userInfo);
@@ -337,7 +373,7 @@ public class WxAuthController {
 
     /**
      * 请求验证码
-     *
+     * <p>
      * TODO
      * 这里需要一定机制防止短信验证码被滥用
      *
@@ -346,7 +382,7 @@ public class WxAuthController {
      */
     @PostMapping("captcha")
     public Object captcha(@LoginUser Integer userId, @RequestBody String body) {
-        if(userId == null){
+        if (userId == null) {
             return ResponseUtil.unlogin();
         }
         String phoneNumber = JacksonUtil.parseString(body, "mobile");
@@ -398,14 +434,14 @@ public class WxAuthController {
         String mobile = JacksonUtil.parseString(body, "mobile");
         String code = JacksonUtil.parseString(body, "code");
 
-        if (mobile == null || code == null || password == null) {
-            return ResponseUtil.badArgument();
-        }
-
-        //判断验证码是否正确
-        String cacheCode = CaptchaCodeManager.getCachedCaptcha(mobile);
-        if (cacheCode == null || cacheCode.isEmpty() || !cacheCode.equals(code))
-            return ResponseUtil.fail(AUTH_CAPTCHA_UNMATCH, "验证码错误");
+//        if (mobile == null || code == null || password == null) {
+//            return ResponseUtil.badArgument();
+//        }
+//
+//        //判断验证码是否正确
+//        String cacheCode = CaptchaCodeManager.getCachedCaptcha(mobile);
+//        if (cacheCode == null || cacheCode.isEmpty() || !cacheCode.equals(code))
+//            return ResponseUtil.fail(AUTH_CAPTCHA_UNMATCH, "验证码错误");
 
         List<LitemallUser> userList = userService.queryByMobile(mobile);
         LitemallUser user = null;
@@ -445,7 +481,7 @@ public class WxAuthController {
      */
     @PostMapping("resetPhone")
     public Object resetPhone(@LoginUser Integer userId, @RequestBody String body, HttpServletRequest request) {
-        if(userId == null){
+        if (userId == null) {
             return ResponseUtil.unlogin();
         }
         String password = JacksonUtil.parseString(body, "password");
@@ -498,7 +534,7 @@ public class WxAuthController {
      */
     @PostMapping("profile")
     public Object profile(@LoginUser Integer userId, @RequestBody String body, HttpServletRequest request) {
-        if(userId == null){
+        if (userId == null) {
             return ResponseUtil.unlogin();
         }
         String avatar = JacksonUtil.parseString(body, "avatar");
@@ -506,13 +542,13 @@ public class WxAuthController {
         String nickname = JacksonUtil.parseString(body, "nickname");
 
         LitemallUser user = userService.findById(userId);
-        if(!StringUtils.isEmpty(avatar)){
+        if (!StringUtils.isEmpty(avatar)) {
             user.setAvatar(avatar);
         }
-        if(gender != null){
+        if (gender != null) {
             user.setGender(gender);
         }
-        if(!StringUtils.isEmpty(nickname)){
+        if (!StringUtils.isEmpty(nickname)) {
             user.setNickname(nickname);
         }
 
@@ -532,10 +568,10 @@ public class WxAuthController {
      */
     @PostMapping("bindPhone")
     public Object bindPhone(@LoginUser Integer userId, @RequestBody String body) {
-    	if (userId == null) {
+        if (userId == null) {
             return ResponseUtil.unlogin();
         }
-    	LitemallUser user = userService.findById(userId);
+        LitemallUser user = userService.findById(userId);
         String encryptedData = JacksonUtil.parseString(body, "encryptedData");
         String iv = JacksonUtil.parseString(body, "iv");
         WxMaPhoneNumberInfo phoneNumberInfo = this.wxService.getUserService().getPhoneNoInfo(user.getSessionKey(), encryptedData, iv);

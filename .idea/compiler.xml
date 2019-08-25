@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="litemall-admin-api" />
+        <module name="litemall-all" />
+        <module name="litemall-core" />
+        <module name="litemall-wx-api" />
+        <module name="litemall-db" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="litemall-admin-api" target="1.8" />
+      <module name="litemall-all" target="1.8" />
+      <module name="litemall-core" target="1.8" />
+      <module name="litemall-db" target="1.8" />
+      <module name="litemall-wx-api" target="1.8" />
+      <module name="mall" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="litemall-admin-api" options="-parameters" />
+      <module name="litemall-all" options="-parameters" />
+      <module name="litemall-core" options="-parameters" />
+      <module name="litemall-db" options="-parameters" />
+      <module name="litemall-wx-api" options="-parameters" />
+    </option>
+  </component>
+</project>
