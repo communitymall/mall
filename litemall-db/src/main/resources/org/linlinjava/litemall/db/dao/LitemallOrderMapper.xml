@@ -332,6 +332,16 @@
       <if test="deleted != null">
         deleted,
       </if>
+
+      <if test="shipStatus != null">
+        ship_status,
+      </if>
+      <if test="payStatus != null">
+        pay_status,
+      </if>
+      <if test="payType != null">
+        pay_type,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="userId != null">
@@ -408,6 +418,16 @@
       </if>
       <if test="deleted != null">
         #{deleted,jdbcType=BIT},
+      </if>
+
+      <if test="shipStatus != null">
+        #{shipStatus,jdbcType=SMALLINT},
+      </if>
+      <if test="payStatus != null">
+        #{payStatus,jdbcType=SMALLINT},
+      </if>
+      <if test="payType != null">
+        #{payType,jdbcType=SMALLINT},
       </if>
     </trim>
   </insert>

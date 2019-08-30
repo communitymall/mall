@@ -11,7 +11,7 @@ logging:
   level:
     root:  ERROR
     org.springframework:  ERROR
-    org.mybatis:  ERROR
+    org.mybatis:  debug
     org.linlinjava.litemall.core:  DEBUG
 
 

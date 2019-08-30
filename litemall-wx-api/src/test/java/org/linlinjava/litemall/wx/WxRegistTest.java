@@ -27,6 +27,6 @@ public class WxRegistTest {
         String code="888";
         request = new MockHttpServletRequest();
         request.setCharacterEncoding("UTF-8");
-        wxAuthController.register_h5(request,mobile,code,password);
+        //wxAuthController.register_h5(request,mobile,code,password);
     }
 }

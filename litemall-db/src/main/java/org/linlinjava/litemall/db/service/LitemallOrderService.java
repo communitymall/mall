@@ -69,14 +69,24 @@ public class LitemallOrderService {
         return orderSn;
     }
 
-    public List<LitemallOrder> queryByOrderStatus(Integer userId, List<Short> orderStatus, Integer page, Integer limit, String sort, String order) {
+    public List<LitemallOrder> queryByOrderStatus(Integer userId, List<Short> orderStatus,Integer payStatus,Integer page, Integer limit, String sort, String order) {
         LitemallOrderExample example = new LitemallOrderExample();
         example.setOrderByClause(LitemallOrder.Column.addTime.desc());
         LitemallOrderExample.Criteria criteria = example.or();
         criteria.andUserIdEqualTo(userId);
+
+        System.out.println(orderStatus);
+        System.out.println(payStatus);
+
         if (orderStatus != null) {
             criteria.andOrderStatusIn(orderStatus);
+       }
+
+        //添加支付方式的判断
+        if(payStatus!=null){
+           criteria.andPayTypeEqualTo(payStatus);
         }
+
         criteria.andDeletedEqualTo(false);
         if (!StringUtils.isEmpty(sort) && !StringUtils.isEmpty(order)) {
             example.setOrderByClause(sort + " " + order);
@@ -129,7 +139,7 @@ public class LitemallOrderService {
         LocalDateTime now = LocalDateTime.now();
         LocalDateTime expired = now.minusMinutes(minutes);
         LitemallOrderExample example = new LitemallOrderExample();
-        example.or().andOrderStatusEqualTo(OrderUtil.STATUS_CREATE).andAddTimeLessThan(expired).andDeletedEqualTo(false);
+        //example.or().andOrderStatusEqualTo(OrderUtil.STATUS_CREATE).andAddTimeLessThan(expired).andDeletedEqualTo(false);
         return litemallOrderMapper.selectByExample(example);
     }
 
@@ -137,7 +147,7 @@ public class LitemallOrderService {
         LocalDateTime now = LocalDateTime.now();
         LocalDateTime expired = now.minusDays(days);
         LitemallOrderExample example = new LitemallOrderExample();
-        example.or().andOrderStatusEqualTo(OrderUtil.STATUS_SHIP).andShipTimeLessThan(expired).andDeletedEqualTo(false);
+        //example.or().andOrderStatusEqualTo(OrderUtil.STATUS_SHIP).andShipTimeLessThan(expired).andDeletedEqualTo(false);
         return litemallOrderMapper.selectByExample(example);
     }
 
@@ -156,19 +166,19 @@ public class LitemallOrderService {
         int unship = 0;
         int unrecv = 0;
         int uncomment = 0;
-        for (LitemallOrder order : orders) {
-            if (OrderUtil.isCreateStatus(order)) {
-                unpaid++;
-            } else if (OrderUtil.isPayStatus(order)) {
-                unship++;
-            } else if (OrderUtil.isShipStatus(order)) {
-                unrecv++;
-            } else if (OrderUtil.isConfirmStatus(order) || OrderUtil.isAutoConfirmStatus(order)) {
-                uncomment += order.getComments();
-            } else {
-                // do nothing
-            }
-        }
+//        for (LitemallOrder order : orders) {
+//            if (OrderUtil.isCreateStatus(order)) {
+//                unpaid++;
+//            } else if (OrderUtil.isPayStatus(order)) {
+//                unship++;
+//            } else if (OrderUtil.isShipStatus(order)) {
+//                unrecv++;
+//            } else if (OrderUtil.isConfirmStatus(order) || OrderUtil.isAutoConfirmStatus(order)) {
+//                uncomment += order.getComments();
+//            } else {
+//                // do nothing
+//            }
+        //}
 
         Map<Object, Object> orderInfo = new HashMap<Object, Object>();
         orderInfo.put("unpaid", unpaid);

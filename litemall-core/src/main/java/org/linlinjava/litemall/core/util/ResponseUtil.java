@@ -157,5 +157,24 @@ public class ResponseUtil {
     public static Object unauthz() {
         return fail(506, "无操作权限");
     }
+
+
+    /*
+    自己添加的错误返回
+     */
+    public  static Object badGroupBuy(){
+        return fail(401,"找不到团购的活动记录");
+    }
+    public  static Object badReceiveAddress(){
+        return fail(401,"找不到正确的收货地址");
+    }
+
+    public  static Object badCommodity(){
+        return fail(401,"找不到正确的商品信息");
+    }
+
+    public  static Object badCoupon(){
+        return fail(401,"找不到正确的优惠券");
+    }
 }
 

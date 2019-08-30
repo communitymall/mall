@@ -1,10 +1,13 @@
 package org.linlinjava.litemall.wx.web;
 
+import com.alipay.api.AlipayApiException;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.linlinjava.litemall.core.notify.config.AlipayBean;
 import org.linlinjava.litemall.core.validator.Order;
 import org.linlinjava.litemall.core.validator.Sort;
 import org.linlinjava.litemall.wx.annotation.LoginUser;
+import org.linlinjava.litemall.wx.service.PayService;
 import org.linlinjava.litemall.wx.service.WxOrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
@@ -34,12 +37,13 @@ public class WxOrderController {
      */
     @GetMapping("list")
     public Object list(@LoginUser Integer userId,
-                       @RequestParam(defaultValue = "0") Integer showType,
+                       @RequestParam(defaultValue = "-1") Integer showType,
+                       @RequestParam(defaultValue = "1") Integer payType,
                        @RequestParam(defaultValue = "1") Integer page,
                        @RequestParam(defaultValue = "10") Integer limit,
                        @Sort @RequestParam(defaultValue = "add_time") String sort,
                        @Order @RequestParam(defaultValue = "desc") String order) {
-        return wxOrderService.list(userId, showType, page, limit, sort, order);
+        return wxOrderService.list(userId, showType,payType, page, limit, sort, order);
     }
 
     /**
@@ -168,4 +172,18 @@ public class WxOrderController {
         return wxOrderService.comment(userId, body);
     }
 
+
+
+
+    @PostMapping(value = "alipay")
+    public String alipay(String outTradeNo, String subject, String totalAmount, String body) throws AlipayApiException {
+        AlipayBean alipayBean = new AlipayBean();
+        alipayBean.setOut_trade_no(outTradeNo);
+        alipayBean.setSubject(subject);
+        alipayBean.setTotal_amount(totalAmount);
+        alipayBean.setBody(body);
+        return payService.aliPay(alipayBean);
+    }
+    @Autowired
+    private PayService payService;
 }
