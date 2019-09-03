@@ -64,6 +64,17 @@
 		    <version>3.4.1</version>
 		</dependency>
 
+        <dependency>
+            <groupId>com.newxtc</groupId>
+            <artifactId>nxt-finger-client</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>1.2.59</version>
+        </dependency>
     </dependencies>
 
 </project>

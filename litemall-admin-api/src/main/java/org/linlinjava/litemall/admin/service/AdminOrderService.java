@@ -107,9 +107,9 @@ public class AdminOrderService {
         }
 
         // 如果订单不是退款状态，则不能退款
-        if (!order.getOrderStatus().equals(OrderUtil.STATUS_REFUND)) {
-            return ResponseUtil.fail(ORDER_CONFIRM_NOT_ALLOWED, "订单不能确认收货");
-        }
+//        if (!order.getOrderStatus().equals(OrderUtil.STATUS_REFUND)) {
+//            return ResponseUtil.fail(ORDER_CONFIRM_NOT_ALLOWED, "订单不能确认收货");
+//        }
 
         // 微信退款
         WxPayRefundRequest wxPayRefundRequest = new WxPayRefundRequest();
@@ -137,7 +137,7 @@ public class AdminOrderService {
         }
 
         // 设置订单取消状态
-        order.setOrderStatus(OrderUtil.STATUS_REFUND_CONFIRM);
+        order.setOrderStatus(OrderUtil.STATUS_CANCELLATION);
         if (orderService.updateWithOptimisticLocker(order) == 0) {
             throw new RuntimeException("更新数据已失效");
         }
@@ -186,11 +186,11 @@ public class AdminOrderService {
         }
 
         // 如果订单不是已付款状态，则不能发货
-        if (!order.getOrderStatus().equals(OrderUtil.STATUS_PAY)) {
+        if (!order.getOrderStatus().equals(OrderUtil.STATUS_PAYMENT_COMPLETED)) {
             return ResponseUtil.fail(ORDER_CONFIRM_NOT_ALLOWED, "订单不能确认收货");
         }
 
-        order.setOrderStatus(OrderUtil.STATUS_SHIP);
+        order.setOrderStatus(OrderUtil.STATUS_DELIVERY);
         order.setShipSn(shipSn);
         order.setShipChannel(shipChannel);
         order.setShipTime(LocalDateTime.now());

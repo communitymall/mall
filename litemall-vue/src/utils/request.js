@@ -1,6 +1,8 @@
 import axios from 'axios'
 import { Dialog, Toast } from 'vant';
 
+axios.defaults.withCredentials = true;
+
 // create an axios instance
 const service = axios.create({
   baseURL: process.env.VUE_APP_BASE_API, // api 的 base_url

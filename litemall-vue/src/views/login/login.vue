@@ -19,7 +19,7 @@
                         <md-field
                                 v-model="account"
                                 icon="mobile"
-                                placeholder="请输入测试手机号 15110693641"
+                                placeholder="请输入测试手机号 "
                                 right-icon="clear-full"
                                 name="user"
                                 data-vv-as="帐号"
@@ -28,7 +28,7 @@
                         <md-field
                                 v-model="password"
                                 icon="lock"
-                                placeholder="请输入测试密码 123"
+                                placeholder="请输入测试密码"
                                 :type="visiblePass ? 'text' : 'password'"
                                 :right-icon="visiblePass ? 'eye-open' : 'eye-close'"
                                 data-vv-as="密码"
@@ -53,8 +53,8 @@
                     <md-field-group>
                         <md-field
                                 v-model="account"
-                                icon="account"
-                                placeholder="请输入测试手机号 15110693641"
+                                icon="mobile"
+                                placeholder="请输入测试手机号"
                                 right-icon="clear-full"
                                 name="user"
                                 data-vv-as="帐号"
@@ -108,7 +108,7 @@
 
     import {Toast} from 'vant';
 
-    import {authRegisterCaptcha} from '@/api/api';
+    import {authCaptcha} from '@/api/api';
     export default {
         name: 'login-request',
         components: {
@@ -139,7 +139,11 @@
             },
 
             getCode() {
-                authRegisterCaptcha(this.getMobile());
+                authCaptcha(this.getMobile()).then(res => {
+
+                }).catch(error => {
+                    Toast.fail(error.data.errmsg);
+                })
             },
             getMobile() {
                 return {

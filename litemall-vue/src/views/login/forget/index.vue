@@ -46,7 +46,17 @@
 
     import {authReset} from '@/api/api';
 
+    //导入错误的验证
+    import {Toast} from 'vant';
+
     export default {
+
+        components: {
+            [field.name]: field,
+            [fieldGroup.name]: fieldGroup,
+            Toast
+        },
+
         data() {
             return {
                 isLogining: false,
@@ -72,6 +82,7 @@
                         return
                     }).catch(error => {
                         Toast.fail(error.data.errmsg);
+
                     });
 
                     //this.$router.push({name: 'forgetReset'});

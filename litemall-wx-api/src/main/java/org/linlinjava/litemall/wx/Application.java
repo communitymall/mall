@@ -11,7 +11,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @MapperScan("org.linlinjava.litemall.db.dao")
 @EnableTransactionManagement
 @EnableScheduling
-@ServletComponentScan(basePackages = "com.izton.sms")
+@ServletComponentScan(basePackages = {"com.newxtc","com.izton.sms"})
 public class Application {
 
     public static void main(String[] args) {

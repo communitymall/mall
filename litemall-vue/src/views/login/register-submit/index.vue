@@ -5,11 +5,17 @@
                 <countdown v-if="counting" :time="60000" @countdownend="countdownend">
                     <template slot-scope="props">{{ +props.seconds || 60 }}秒后获取</template>
                 </countdown>
-                <span v-else>获取验证码</span>
+                <span v-else>重新获取验证码</span>
             </div>
         </md-field>
-        <md-field v-model="password" icon="lock" placeholder="请输入密码"/>
-        <md-field v-model="repeatPassword" icon="lock" placeholder="请再次确认密码"/>
+        <md-field v-model="password" icon="lock" placeholder="请输入密码"
+                  :type="visiblePass ? 'text' : 'password'"
+        />
+
+        <md-field v-model="repeatPassword" icon="lock" placeholder="请再次确认密码"
+                  :type="visiblePass ? 'text' : 'password'"
+        />
+        <div class="red" v-show="isErrow">两次密码输入不一致</div>
 
         <div class="register_submit_btn">
             <van-button type="danger" size="large" @click="registerSubmit">确定</van-button>
@@ -22,6 +28,10 @@
     import fieldGroup from '@/components/field-group/';
 
     import {authRegister} from '@/api/api';
+    //导入错误的验证
+    import {Toast} from 'vant';
+
+    import {authRegisterCaptcha} from '@/api/api';
 
     export default {
         data() {
@@ -30,19 +40,30 @@
                 counting: true,
                 code: '',
                 password: '',
-                repeatPassword: ''
+                repeatPassword: '',
+                isErrow: false
             };
         },
         methods: {
             registerSubmit() {
+                const password = this.password
+                const repeatPassword = this.repeatPassword
                 let regData = this.getRegData();
-                authRegister(regData).then(res => {
-                    const status = 'success';
-                    this.$router.push({
-                        name: 'registerStatus',
-                        params: {status: status}
-                    });
-                });
+                if (password === repeatPassword) {
+                    this.isErrow = false;
+                    authRegister(regData).then(res => {
+                        const status = 'success';
+                        this.$router.push({
+                            name: 'registerStatus',
+                            params: {status: status}
+                        });
+                    }).catch(error => {
+                        Toast.fail(error.data.errmsg);
+                    })
+                } else {
+                    this.isErrow = true;
+                }
+
             },
             getRegData() {
                 return {
@@ -52,8 +73,18 @@
                 };
             },
             getCode() {
-                this.counting = true;
+                authRegisterCaptcha(this.getMobile()).then(res => {
+                    Toast.success(res.data.errmsg)
+                }).catch(error => {
+                    Toast.fail(error.data.errmsg);
+                });
             },
+            getMobile() {
+                return {
+                    mobile: this.mobile
+                };
+            },
+
             countdownend() {
                 this.counting = false;
             }
@@ -61,7 +92,8 @@
 
         components: {
             [field.name]: field,
-            [fieldGroup.name]: fieldGroup
+            [fieldGroup.name]: fieldGroup,
+            Toast
         }
     };
 </script>

@@ -1,5 +1,20 @@
 import request from '@/utils/request'
 
+
+
+/*
+ 检测手机号是否可用
+ */
+const AuthCheckMobile='wx/auth/checkMobile';
+export function authCheckMobile(data) {
+  return request({
+    url: AuthCheckMobile,
+    method: 'post',
+    data
+  })
+}
+
+
 const IndexUrl= 'wx/home/index'; //首页数据接口
 export function getHome() {
   return request({

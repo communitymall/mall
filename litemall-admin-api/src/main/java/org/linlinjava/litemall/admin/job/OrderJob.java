@@ -48,7 +48,7 @@ public class OrderJob {
         List<LitemallOrder> orderList = orderService.queryUnpaid(SystemConfig.getOrderUnpaid());
         for (LitemallOrder order : orderList) {
             // 设置订单已取消状态
-            order.setOrderStatus(OrderUtil.STATUS_AUTO_CANCEL);
+            order.setOrderStatus(OrderUtil.STATUS_CANCELLATION);
             order.setEndTime(LocalDateTime.now());
             if (orderService.updateWithOptimisticLocker(order) == 0) {
                 throw new RuntimeException("更新数据已失效");
@@ -85,7 +85,7 @@ public class OrderJob {
         for (LitemallOrder order : orderList) {
 
             // 设置订单已取消状态
-            order.setOrderStatus(OrderUtil.STATUS_AUTO_CONFIRM);
+            order.setOrderStatus(OrderUtil.STATUS_CANCELLATION);
             order.setConfirmTime(LocalDateTime.now());
             if (orderService.updateWithOptimisticLocker(order) == 0) {
                 logger.info("订单 ID=" + order.getId() + " 数据已经更新，放弃自动确认收货");

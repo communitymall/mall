@@ -1,19 +1,28 @@
+/*
+物流公司的管理页面
+*/
+
 <template>
   <div class="app-container">
 
     <!-- 查询和其他操作 -->
     <div class="filter-container">
-      <el-input v-model="listQuery.name" clearable class="filter-item" style="width: 200px;" placeholder="请输入广告标题"/>
-      <el-input v-model="listQuery.content" clearable class="filter-item" style="width: 200px;" placeholder="请输入广告内容"/>
+      <el-input v-model="listQuery.id" clearable class="filter-item" style="width: 200px;" placeholder="请输入物流公司id"/>
+      <el-input
+        v-model="listQuery.name"
+        clearable
+        class="filter-item"
+        style="width: 200px;"
+        placeholder="请输入物流公司名称"/>
       <el-button
-        v-permission="['GET /admin/ad/list']"
+        v-permission="['GET /admin/logistics/listCompany']"
         class="filter-item"
         type="primary"
         icon="el-icon-search"
         @click="handleFilter">查找
       </el-button>
       <el-button
-        v-permission="['POST /admin/ad/create']"
+        v-permission="['POST /admin/logistics/addCompany']"
         class="filter-item"
         type="primary"
         icon="el-icon-edit"
@@ -31,38 +40,36 @@
     <!-- 查询结果 -->
     <el-table v-loading="listLoading" :data="list" element-loading-text="正在查询中。。。" border fit highlight-current-row>
 
-      <el-table-column align="center" label="广告ID" prop="id" sortable/>
+      <el-table-column align="center" label="物流公司ID" prop="id" sortable/>
 
-      <el-table-column align="center" label="广告标题" prop="name"/>
+      <el-table-column align="center" label="物流公司名称" prop="name"/>
 
-      <el-table-column align="center" label="广告内容" prop="content"/>
+      <el-table-column align="center" label="物流公司地址" prop="address"/>
 
-      <el-table-column align="center" label="广告图片" prop="url">
+      <el-table-column align="center" label="联系电话" prop="phone"/>
+
+      <el-table-column align="center" label="联系人" prop="contact"/>
+
+      <el-table-column align="center" label="客服电话" prop="serviceTel"/>
+
+      <el-table-column align="center" label="公司性质" prop="logisticsType">
         <template slot-scope="scope">
-          <img v-if="scope.row.url" :src="scope.row.url" width="80">
+          <el-tag :type="scope.row.logisticsType ? '0' : '1' ">{{ scope.row.logisticsType ? '自营' : '第三方' }}</el-tag>
         </template>
       </el-table-column>
 
-      <el-table-column align="center" label="广告位置" prop="position"/>
-
-      <el-table-column align="center" label="活动链接" prop="link"/>
-
-      <el-table-column align="center" label="是否启用" prop="enabled">
-        <template slot-scope="scope">
-          <el-tag :type="scope.row.enabled ? 'success' : 'error' ">{{ scope.row.enabled ? '启用' : '不启用' }}</el-tag>
-        </template>
-      </el-table-column>
+      <el-table-column align="center" label="创建人" prop="createUser"/>
 
       <el-table-column align="center" label="操作" width="200" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
-            v-permission="['POST /admin/ad/update']"
+            v-permission="['POST /admin/logistics/updateCompany']"
             type="primary"
             size="mini"
             @click="handleUpdate(scope.row)">编辑
           </el-button>
           <el-button
-            v-permission="['POST /admin/ad/delete']"
+            v-permission="['POST /admin/logistics/delCompany']"
             type="danger"
             size="mini"
             @click="handleDelete(scope.row)">删除
@@ -88,39 +95,52 @@
         label-position="left"
         label-width="100px"
         style="width: 400px; margin-left:50px;">
-        <el-form-item label="广告标题" prop="name">
+        <el-form-item label="物流公司名称" prop="name">
           <el-input v-model="dataForm.name"/>
         </el-form-item>
-        <el-form-item label="广告内容" prop="content">
-          <el-input v-model="dataForm.content"/>
+        <el-form-item label="物流公司地址" prop="address">
+          <el-input v-model="dataForm.address"/>
         </el-form-item>
-        <el-form-item label="广告图片" prop="url">
-          <el-upload
-            :headers="headers"
-            :action="uploadPath"
-            :show-file-list="false"
-            :on-success="uploadUrl"
-            :before-upload="checkFileSize"
-            class="avatar-uploader"
-            accept=".jpg,.jpeg,.png,.gif">
-            <img v-if="dataForm.url" :src="dataForm.url" class="avatar">
-            <i v-else class="el-icon-plus avatar-uploader-icon"/>
-            <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过1024kb</div>
-          </el-upload>
+        <el-form-item label="联系电话" prop="phone">
+          <el-input v-model="dataForm.phone"/>
         </el-form-item>
-        <el-form-item label="广告位置" prop="position">
-          <el-select v-model="dataForm.position" placeholder="请选择">
-            <el-option :value="1" label="首页"/>
+        <el-form-item label="联系人" prop="contact">
+          <el-input v-model="dataForm.contact"/>
+        </el-form-item>
+        <el-form-item label="客服电话" prop="serviceTel">
+          <el-input v-model="dataForm.serviceTel"/>
+        </el-form-item>
+        <!--        <el-form-item label="广告图片" prop="url">-->
+        <!--          <el-upload-->
+        <!--            :headers="headers"-->
+        <!--            :action="uploadPath"-->
+        <!--            :show-file-list="false"-->
+        <!--            :on-success="uploadUrl"-->
+        <!--            :before-upload="checkFileSize"-->
+        <!--            class="avatar-uploader"-->
+        <!--            accept=".jpg,.jpeg,.png,.gif">-->
+        <!--            <img v-if="dataForm.url" :src="dataForm.url" class="avatar">-->
+        <!--            <i v-else class="el-icon-plus avatar-uploader-icon"/>-->
+        <!--            <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过1024kb</div>-->
+        <!--          </el-upload>-->
+        <!--        </el-form-item>-->
+        <!--        <el-form-item label="广告位置" prop="position">-->
+        <!--          <el-select v-model="dataForm.position" placeholder="请选择">-->
+        <!--            <el-option :value="1" label="首页"/>-->
+        <!--          </el-select>-->
+        <!--        </el-form-item>-->
+        <!--        <el-form-item label="活动链接" prop="link">-->
+        <!--          <el-input v-model="dataForm.link"/>-->
+        <!--        </el-form-item>-->
+        <el-form-item label="公司性质" prop="logisticsType">
+          <el-select v-model="dataForm.logisticsType" placeholder="请选择">
+            <el-option :value="1" label="自营"/>
+            <el-option :value="0" label="第三方"/>
           </el-select>
         </el-form-item>
-        <el-form-item label="活动链接" prop="link">
-          <el-input v-model="dataForm.link"/>
-        </el-form-item>
-        <el-form-item label="是否启用" prop="enabled">
-          <el-select v-model="dataForm.enabled" placeholder="请选择">
-            <el-option :value="true" label="启用"/>
-            <el-option :value="false" label="不启用"/>
-          </el-select>
+
+        <el-form-item label="创建人" prop="createUser">
+          <el-input v-model="dataForm.createUser"/>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -163,13 +183,13 @@
 </style>
 
 <script>
-import { listAd, createAd, updateAd, deleteAd } from '@/api/ad'
+import { listLogistics, createLogistics, updateLogistics, deleteLogistics } from '@/api/logistics'
 import { uploadPath } from '@/api/storage'
 import { getToken } from '@/utils/auth'
 import Pagination from '@/components/Pagination' // Secondary package based on el-pagination
 
 export default {
-  name: 'Ad',
+  name: 'Logistics',
   components: { Pagination },
   data() {
     return {
@@ -181,18 +201,19 @@ export default {
         page: 1,
         limit: 20,
         name: undefined,
-        content: undefined,
+        contact: undefined,
         sort: 'add_time',
         order: 'desc'
       },
       dataForm: {
         id: undefined,
         name: undefined,
-        content: undefined,
-        url: undefined,
-        link: undefined,
-        position: 1,
-        enabled: true
+        address: undefined,
+        phone: undefined,
+        contact: undefined,
+        serviceTel: undefined,
+        logisticsType: undefined,
+        createUser: undefined
       },
       dialogFormVisible: false,
       dialogStatus: '',
@@ -202,12 +223,12 @@ export default {
       },
       rules: {
         name: [
-          { required: true, message: '广告标题不能为空', trigger: 'blur' }
+          { required: true, message: '物流公司名称不能为空', trigger: 'blur' }
         ],
-        content: [
-          { required: true, message: '广告内容不能为空', trigger: 'blur' }
+        createUser: [
+          { required: true, message: '创建人不能为空', trigger: 'blur' }
         ],
-        url: [{ required: true, message: '广告链接不能为空', trigger: 'blur' }]
+        logisticsType: [{ required: true, message: '公司性质不能为空', trigger: 'blur' }]
       },
       downloadLoading: false
     }
@@ -225,7 +246,7 @@ export default {
   methods: {
     getList() {
       this.listLoading = true
-      listAd(this.listQuery)
+      listLogistics(this.listQuery)
         .then(response => {
           this.list = response.data.data.list
           this.total = response.data.data.total
@@ -245,11 +266,12 @@ export default {
       this.dataForm = {
         id: undefined,
         name: undefined,
-        content: undefined,
-        url: undefined,
-        link: undefined,
-        position: 1,
-        enabled: true
+        address: undefined,
+        phone: undefined,
+        contact: undefined,
+        serviceTel: undefined,
+        logisticsType: 0,
+        createUser: undefined
       }
     },
     handleCreate() {
@@ -273,7 +295,7 @@ export default {
     createData() {
       this.$refs['dataForm'].validate(valid => {
         if (valid) {
-          createAd(this.dataForm)
+          createLogistics(this.dataForm)
             .then(response => {
               this.list.unshift(response.data.data)
               this.dialogFormVisible = false
@@ -302,7 +324,7 @@ export default {
     updateData() {
       this.$refs['dataForm'].validate(valid => {
         if (valid) {
-          updateAd(this.dataForm)
+          updateLogistics(this.dataForm)
             .then(() => {
               for (const v of this.list) {
                 if (v.id === this.dataForm.id) {
@@ -314,7 +336,7 @@ export default {
               this.dialogFormVisible = false
               this.$notify.success({
                 title: '成功',
-                message: '更新广告成功'
+                message: '更新成功'
               })
             })
             .catch(response => {
@@ -327,7 +349,7 @@ export default {
       })
     },
     handleDelete(row) {
-      deleteAd(row)
+      deleteLogistics(row)
         .then(response => {
           this.$notify.success({
             title: '成功',
@@ -347,24 +369,26 @@ export default {
       this.downloadLoading = true
         import('@/vendor/Export2Excel').then(excel => {
           const tHeader = [
-            '广告ID',
-            '广告标题',
-            '广告内容',
-            '广告图片',
-            '广告位置',
-            '活动链接',
-            '是否启用'
+            '物流公司ID',
+            '物流公司名称',
+            '物流公司地址',
+            '联系电话',
+            '联系人',
+            '客服电话',
+            '公司性质',
+            '创建人'
           ]
           const filterVal = [
             'id',
             'name',
-            'content',
-            'url',
-            'postion',
-            'link',
-            'enabled'
+            'address',
+            'phone',
+            'contact',
+            'serviceTel',
+            'logisticsType',
+            'createUser'
           ]
-          excel.export_json_to_excel2(tHeader, this.list, filterVal, '广告信息')
+          excel.export_json_to_excel2(tHeader, this.list, filterVal, '物流公司信息')
           this.downloadLoading = false
         })
     }

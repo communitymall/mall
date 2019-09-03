@@ -4,10 +4,11 @@
         <md-field
                 v-model="mobile"
                 icon="mobile"
-                placeholder="请输入手机号"/>
-
+                placeholder="请输入手机号"
+        >
+        </md-field>
         <div class="register_submit">
-            <van-button size="large" type="danger" @click="submitCode">下一步</van-button>
+            <van-button size="large" type="danger" @click="checkMobile">下一步</van-button>
         </div>
 
         <div class="register_footer">
@@ -20,32 +21,48 @@
 <script>
     import field from '@/components/field/';
     import fieldGroup from '@/components/field-group/';
-
     import {authRegisterCaptcha} from '@/api/api';
+    //导入检测手机号是否可用
+    import {authCheckMobile} from '@/api/api';
+    //导入错误的验证
+    import {Toast} from 'vant';
 
     export default {
+
+        components: {
+            [field.name]: field,
+            [fieldGroup.name]: fieldGroup,
+            Toast
+        },
         data() {
             return {
-                mobile: ''
+                mobile: '',
+                isAvailable: true
             };
         },
 
         methods: {
-            submitCode() {
-                authRegisterCaptcha(this.getMobile());
-                this.$router.push({path: 'registerSubmit', query: {mobile: this.mobile}});
-            },
             getMobile() {
                 return {
                     mobile: this.mobile
                 };
+            },
+            //查看手机号是否被注册
+            checkMobile() {
+                const isAvailable = this.isAvailable;
+                authCheckMobile(this.getMobile()).then(res => {
+                    this.isAvailable = true
+                    this.$router.push({path: 'registerSubmit', query: {mobile: this.mobile}});
+                    authRegisterCaptcha(this.getMobile());
+
+                }).catch(error => {
+                    this.isAvailable = false
+                    Toast.fail(error.data.errmsg);
+                });
             }
         },
 
-        components: {
-            [field.name]: field,
-            [fieldGroup.name]: fieldGroup
-        }
+
     };
 </script>
 

@@ -451,6 +451,18 @@ export const asyncRouterMap = [
           noCache: true
         }
       },
+
+      {
+        path: 'logistics',
+        component: () => import('@/views/config/logistics'),
+        name: 'configLogistics',
+        meta: {
+          perms: ['GET /admin/config/logistics', 'POST /admin/config/logistics'],
+          title: '物流配置',
+          noCache: true
+        }
+      },
+
       {
         path: 'express',
         component: () => import('@/views/config/express'),
