@@ -110,37 +110,11 @@
         <el-form-item label="客服电话" prop="serviceTel">
           <el-input v-model="dataForm.serviceTel"/>
         </el-form-item>
-        <!--        <el-form-item label="广告图片" prop="url">-->
-        <!--          <el-upload-->
-        <!--            :headers="headers"-->
-        <!--            :action="uploadPath"-->
-        <!--            :show-file-list="false"-->
-        <!--            :on-success="uploadUrl"-->
-        <!--            :before-upload="checkFileSize"-->
-        <!--            class="avatar-uploader"-->
-        <!--            accept=".jpg,.jpeg,.png,.gif">-->
-        <!--            <img v-if="dataForm.url" :src="dataForm.url" class="avatar">-->
-        <!--            <i v-else class="el-icon-plus avatar-uploader-icon"/>-->
-        <!--            <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过1024kb</div>-->
-        <!--          </el-upload>-->
-        <!--        </el-form-item>-->
-        <!--        <el-form-item label="广告位置" prop="position">-->
-        <!--          <el-select v-model="dataForm.position" placeholder="请选择">-->
-        <!--            <el-option :value="1" label="首页"/>-->
-        <!--          </el-select>-->
-        <!--        </el-form-item>-->
-        <!--        <el-form-item label="活动链接" prop="link">-->
-        <!--          <el-input v-model="dataForm.link"/>-->
-        <!--        </el-form-item>-->
         <el-form-item label="公司性质" prop="logisticsType">
           <el-select v-model="dataForm.logisticsType" placeholder="请选择">
             <el-option :value="1" label="自营"/>
             <el-option :value="0" label="第三方"/>
           </el-select>
-        </el-form-item>
-
-        <el-form-item label="创建人" prop="createUser">
-          <el-input v-model="dataForm.createUser"/>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">

@@ -106,7 +106,7 @@ public class AdminOrderService {
             return ResponseUtil.badArgumentValue();
         }
 
-        // 如果订单不是退款状态，则不能退款
+         //如果订单不是退款状态，则不能退款
 //        if (!order.getOrderStatus().equals(OrderUtil.STATUS_REFUND)) {
 //            return ResponseUtil.fail(ORDER_CONFIRM_NOT_ALLOWED, "订单不能确认收货");
 //        }
@@ -243,4 +243,72 @@ public class AdminOrderService {
         return ResponseUtil.ok();
     }
 
+
+    /**
+     * 订单通过审核
+     *
+     * @param body 订单信息，{ orderId：xxx }
+     * @return 订单操作结果
+     * 成功则 { errno: 0, errmsg: '成功' }
+     * 失败则 { errno: XXX, errmsg: XXX }
+     */
+    public Object approved(String body) {
+        String orderSn = JacksonUtil.parseString(body, "orderSn");
+        Integer id = JacksonUtil.parseInteger(body, "orderId");
+        if(orderSn.isEmpty()){
+            return ResponseUtil.badArgument();
+        }
+        LitemallOrder order = new LitemallOrder();
+        //审核通过 设置订单状态为未备货
+        order.setOrderStatus((short)1);
+        order.setOrderSn(orderSn);
+        order.setId(id);
+        order.setUpdateTime(LocalDateTime.now());
+        orderService.approved(order);
+        return ResponseUtil.ok();
+    }
+
+    /**
+     * 订单完成备货
+     *
+     * @param body 订单信息，{ orderId：xxx }
+     * @return 订单操作结果
+     * 成功则 { errno: 0, errmsg: '成功' }
+     * 失败则 { errno: XXX, errmsg: XXX }
+     */
+    public Object completeGoods(String body) {
+        String orderSn = JacksonUtil.parseString(body, "orderSn");
+        Integer id = JacksonUtil.parseInteger(body, "orderId");
+        if(orderSn.isEmpty()){
+            return ResponseUtil.badArgument();
+        }
+        LitemallOrder order = new LitemallOrder();
+        //审核通过 设置订单状态为备货
+        order.setOrderStatus((short)2);
+        order.setOrderSn(orderSn);
+        order.setId(id);
+        order.setUpdateTime(LocalDateTime.now());
+        orderService.approved(order);
+        return ResponseUtil.ok();
+    }
+
+    /**
+     * 查询所有完成备货的订单，
+     *
+     * @param body 订单信息，{ orderId：xxx }
+     * @return 订单操作结果
+     * 成功则 { errno: 0, errmsg: '成功' }
+     * 失败则 { errno: XXX, errmsg: XXX }
+     */
+    public Object checkDeliveryOrder(Integer userId, String orderSn, List<Short> orderStatusArray,
+    Integer page, Integer limit, String sort, String order) {
+
+
+        //审核通过 设置订单状态为备货
+        Short orderStatus =2;
+        List<LitemallOrder> orderList = orderService.checkDeliveryOrder(userId, orderSn,orderStatus, orderStatusArray, page, limit,
+                sort, order);
+        return ResponseUtil.okList(orderList);
+
+    }
 }

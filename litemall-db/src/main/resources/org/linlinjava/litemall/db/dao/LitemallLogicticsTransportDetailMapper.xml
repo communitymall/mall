@@ -9,8 +9,8 @@
     <id column="id" jdbcType="BIGINT" property="id" />
     <result column="transit_id" jdbcType="VARCHAR" property="transitId" />
     <result column="order_sn" jdbcType="VARCHAR" property="orderSn" />
-    <result column="ship_status" jdbcType="VARCHAR" property="shipStatus" />
-    <result column="create_time" jdbcType="VARCHAR" property="createTime" />
+    <result column="ship_status" jdbcType="INTEGER" property="shipStatus" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <!--
@@ -187,8 +187,8 @@
     </selectKey>
     insert into litemall_logictics_transport_detail (transit_id, order_sn, ship_status, 
       create_time)
-    values (#{transitId,jdbcType=VARCHAR}, #{orderSn,jdbcType=VARCHAR}, #{shipStatus,jdbcType=VARCHAR}, 
-      #{createTime,jdbcType=VARCHAR})
+    values (#{transitId,jdbcType=VARCHAR}, #{orderSn,jdbcType=VARCHAR}, #{shipStatus,jdbcType=INTEGER},
+      #{createTime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="org.linlinjava.litemall.db.domain.LitemallLogicticsTransportDetail">
     <!--
@@ -221,10 +221,10 @@
         #{orderSn,jdbcType=VARCHAR},
       </if>
       <if test="shipStatus != null">
-        #{shipStatus,jdbcType=VARCHAR},
+        #{shipStatus,jdbcType=INTEGER},
       </if>
       <if test="createTime != null">
-        #{createTime,jdbcType=VARCHAR},
+        #{createTime,jdbcType=TIMESTAMP},
       </if>
     </trim>
   </insert>
@@ -255,10 +255,10 @@
         order_sn = #{record.orderSn,jdbcType=VARCHAR},
       </if>
       <if test="record.shipStatus != null">
-        ship_status = #{record.shipStatus,jdbcType=VARCHAR},
+        ship_status = #{record.shipStatus,jdbcType=INTEGER},
       </if>
       <if test="record.createTime != null">
-        create_time = #{record.createTime,jdbcType=VARCHAR},
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
       </if>
     </set>
     <if test="_parameter != null">
@@ -274,8 +274,8 @@
     set id = #{record.id,jdbcType=BIGINT},
       transit_id = #{record.transitId,jdbcType=VARCHAR},
       order_sn = #{record.orderSn,jdbcType=VARCHAR},
-      ship_status = #{record.shipStatus,jdbcType=VARCHAR},
-      create_time = #{record.createTime,jdbcType=VARCHAR}
+      ship_status = #{record.shipStatus,jdbcType=INTEGER},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -294,10 +294,10 @@
         order_sn = #{orderSn,jdbcType=VARCHAR},
       </if>
       <if test="shipStatus != null">
-        ship_status = #{shipStatus,jdbcType=VARCHAR},
+        ship_status = #{shipStatus,jdbcType=INTEGER},
       </if>
       <if test="createTime != null">
-        create_time = #{createTime,jdbcType=VARCHAR},
+        create_time = #{createTime,jdbcType=TIMESTAMP},
       </if>
     </set>
     where id = #{id,jdbcType=BIGINT}
@@ -310,8 +310,8 @@
     update litemall_logictics_transport_detail
     set transit_id = #{transitId,jdbcType=VARCHAR},
       order_sn = #{orderSn,jdbcType=VARCHAR},
-      ship_status = #{shipStatus,jdbcType=VARCHAR},
-      create_time = #{createTime,jdbcType=VARCHAR}
+      ship_status = #{shipStatus,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=BIGINT}
   </update>
   <select id="selectOneByExample" parameterType="org.linlinjava.litemall.db.domain.LitemallLogicticsTransportDetailExample" resultMap="BaseResultMap">

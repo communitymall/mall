@@ -22,8 +22,8 @@
           <div slot="footer" v-else>添加日期 {{item.addTime}}</div>
         </van-card>
 
-        <div class="cart_delete" v-if="isEditor" @click="deleteCart(i)">删除</div>
-      </div>
+      <div class="cart_delete" v-if="isEditor" @click="deleteCart(i)">删除</div>
+  </div>
     </van-checkbox-group>
 
     <is-empty v-if="!goods.length">您的购物车空空如也~</is-empty>

@@ -355,7 +355,6 @@ public class WxAuthController {
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         //给密码加密
         String encode = encoder.encode(password);
-        System.out.println(encode);
         user.setPassword(encode);
         //设置账号可用
         byte b = 0;
@@ -676,7 +675,7 @@ public class WxAuthController {
     }
 
     /**
-     * 账号信息更新
+     * 账号信息更新  修改昵称的
      *
      * @param body    请求内容
      *                {
@@ -697,7 +696,12 @@ public class WxAuthController {
         }
         String avatar = JacksonUtil.parseString(body, "avatar");
         Byte gender = JacksonUtil.parseByte(body, "gender");
-        String nickname = JacksonUtil.parseString(body, "nickname");
+        String nickName = JacksonUtil.parseString(body, "nickName");
+
+        //进行密码修改接受的参数
+        String oldPassword = JacksonUtil.parseString(body, "oldPassword");
+        String password = JacksonUtil.parseString(body, "password");
+        String mobile = JacksonUtil.parseString(body, "mobile");
 
         LitemallUser user = userService.findById(userId);
         if (!StringUtils.isEmpty(avatar)) {
@@ -706,9 +710,38 @@ public class WxAuthController {
         if (gender != null) {
             user.setGender(gender);
         }
-        if (!StringUtils.isEmpty(nickname)) {
-            user.setNickname(nickname);
+        if (!StringUtils.isEmpty(nickName)) {
+            user.setNickname(nickName);
         }
+
+        System.out.println(oldPassword);
+        System.out.println(password);
+        System.out.println(mobile);
+        //判断旧密码是否正确
+        if (!StringUtil.isEmpty(mobile)) {
+            user.setMobile(mobile);
+            List<LitemallUser> litemallUsers = userService.queryByMobile(mobile);
+            if (litemallUsers.size() > 1) {//有两个相同的手机号同时在数据库
+                ResponseUtil.fail(407, "系统内部错误");
+            }
+            LitemallUser litemallUser = litemallUsers.get(0);
+            String password1 = litemallUser.getPassword();
+            if(!(password1.equals(oldPassword))){
+                ResponseUtil.fail(407, "当前密码输入错误");
+            }
+            if(!StringUtils.isEmpty(password)){
+                BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+                //给密码加密
+                String encode = encoder.encode(password);
+                user.setPassword(encode);
+            }
+            int i = userService.updateById(user);
+            return ResponseUtil.ok();
+        } else {
+            ResponseUtil.fail(407, "传入参数错误");
+        }
+
+
 
         if (userService.updateById(user) == 0) {
             return ResponseUtil.updatedDataFailed();

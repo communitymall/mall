@@ -4,13 +4,15 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.util.StringUtil;
 import org.linlinjava.litemall.db.dao.LitemallLogicsticsTransportMapper;
 import org.linlinjava.litemall.db.dao.LitemallLogisticsTrucksMapper;
-import org.linlinjava.litemall.db.domain.*;
+import org.linlinjava.litemall.db.domain.LitemallLogicsticsTransport;
+import org.linlinjava.litemall.db.domain.LitemallLogicsticsTransportExample;
+import org.linlinjava.litemall.db.domain.LitemallLogisticsTrucks;
+import org.linlinjava.litemall.db.domain.LitemallLogisticsTrucksExample;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.time.Duration;
 import java.time.LocalDateTime;
-import java.time.temporal.ChronoUnit;
 import java.util.List;
 
 @Service
@@ -43,43 +45,52 @@ public class LitemallLogisticsTrucksService {
         List<LitemallLogicsticsTransport> litemallLogicsticsTransports = transportMapper.selectByExample(example);
         System.out.println(litemallLogicsticsTransports);
         if(litemallLogicsticsTransports.size()==0){
-            //没有订单信息  不允许需改
-            System.out.println("------没有订单不能修改----------------------------");
-            return 888;
-        }
-        //获得最近创建的订单信息
-        LitemallLogicsticsTransport litemallLogicsticsTransport1 = litemallLogicsticsTransports.get(0);
-        //获得创建的时间
-        LocalDateTime createTime = litemallLogicsticsTransport1.getCreateTime();
-        //获得现在的时间
-        LocalDateTime now = LocalDateTime.now();
-        //比较时间差
-        Duration duration = Duration.between(createTime,now);
-        //long between = ChronoUnit.DAYS.between(now, createTime);
-        long days = duration.toDays();
-        System.out.println("------------------------------------------------");
-        System.out.println(days);
-        //最近30天没有派送订单，不能修改
-        if(days>30l){
+            return trucksMapper.updateByPrimaryKey(trucks);
+        }else {
+            //获得最近创建的订单信息
+            LitemallLogicsticsTransport litemallLogicsticsTransport1 = litemallLogicsticsTransports.get(0);
+            //获得创建的时间
+            LocalDateTime createTime = litemallLogicsticsTransport1.getCreateTime();
+            //获得现在的时间
+            LocalDateTime now = LocalDateTime.now();
+            //比较时间差
+            Duration duration = Duration.between(createTime,now);
+            //long between = ChronoUnit.DAYS.between(now, createTime);
+            long days = duration.toDays();
+            System.out.println("------------------------------------------------");
             System.out.println(days);
-            System.out.println("*********************************************");
-           return 999;
-       }
-       return trucksMapper.updateByPrimaryKey(trucks);
+            //最近30天没有派送订单，不能修改
+            if(days>30l){
+                System.out.println(days);
+                System.out.println("*********************************************");
+                return 999;
+            }
+            return trucksMapper.updateByPrimaryKey(trucks);
+        }
+
+
+
+
     }
 
     public List<LitemallLogisticsTrucks> querySelective(String companyId,String id, String licensePlateNumber,String driver,String phone,int page,int limit){
         LitemallLogisticsTrucksExample example = new LitemallLogisticsTrucksExample();
         LitemallLogisticsTrucksExample.Criteria criteria = example.createCriteria();
         //进行判断
-        if(StringUtil.isEmpty(companyId)){
-
+        if(!StringUtil.isEmpty(companyId)){
+            int i = Integer.parseInt(companyId);
+            criteria.andCompanyIdEqualTo(i);
         }
-        if(StringUtil.isEmpty(id)){
-
+        if(!StringUtil.isEmpty(licensePlateNumber)){
+            criteria.andLicensePlateNumberEqualTo(licensePlateNumber);
         }
+        //查询已有的数据（逻辑上没有删除的）
+        criteria.andDeletedEqualTo(1);
+
         PageHelper.startPage(page, limit);
-        
+
+        System.out.println("-----------------------ok");
+        System.out.println(trucksMapper.selectByExample(example));
         return trucksMapper.selectByExample(example);
     }
 
@@ -125,4 +136,17 @@ public class LitemallLogisticsTrucksService {
         List<LitemallLogisticsTrucks> litemallLogisticsTrucks = trucksMapper.selectByExample(example);
         return litemallLogisticsTrucks;
     }
+
+    /*
+    根据CompanyId号查询和根据车牌号查询
+     */
+    public  List<LitemallLogisticsTrucks> querySelectiveByCompanyIdAndLn(String companyId,String licenseNumber){
+        LitemallLogisticsTrucksExample example = new LitemallLogisticsTrucksExample();
+        LitemallLogisticsTrucksExample.Criteria criteria = example.createCriteria();
+        criteria.andCompanyIdEqualTo(Integer.parseInt(companyId));
+        criteria.andLicensePlateNumberEqualTo(licenseNumber);
+        List<LitemallLogisticsTrucks> litemallLogisticsTrucks = trucksMapper.selectByExample(example);
+        return litemallLogisticsTrucks;
+    }
+
 }

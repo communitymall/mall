@@ -5,11 +5,14 @@ package org.linlinjava.litemall.admin.web;
 import com.github.pagehelper.util.StringUtil;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.apache.shiro.subject.Subject;
 import org.linlinjava.litemall.admin.annotation.RequiresPermissionsDesc;
 import org.linlinjava.litemall.admin.service.AdminLogisticsService;
 import org.linlinjava.litemall.core.util.JacksonUtil;
 import org.linlinjava.litemall.core.util.ResponseUtil;
+import org.linlinjava.litemall.db.domain.LitemallAdmin;
 import org.linlinjava.litemall.db.domain.LitemallLogicsticsTransport;
 import org.linlinjava.litemall.db.domain.LitemallLogisticsCompany;
 import org.linlinjava.litemall.db.domain.LitemallLogisticsTrucks;
@@ -22,7 +25,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -55,7 +57,10 @@ public class AdminLogisticsController {
         String phone = JacksonUtil.parseString(body, "phone");
         String contact = JacksonUtil.parseString(body, "contact");
         String serviceTel = JacksonUtil.parseString(body, "serviceTel");
-        String createUser = JacksonUtil.parseString(body, "createUser");
+
+        //创建人的信息
+        Subject currentUser = SecurityUtils.getSubject();
+        LitemallAdmin admin = (LitemallAdmin) currentUser.getPrincipal();
 
         LitemallLogisticsCompany company = new LitemallLogisticsCompany();
         company.setName(name);
@@ -64,7 +69,7 @@ public class AdminLogisticsController {
         company.setContact(contact);
         company.setLogisticsType(logisticsType);
         company.setServiceTel(serviceTel);
-        company.setCreateUser(createUser);
+        company.setCreateUser(admin.getUsername());
         companyService.add(company);
         return ResponseUtil.ok();
     }
@@ -138,22 +143,39 @@ public class AdminLogisticsController {
     @RequiresPermissionsDesc(menu = {"物流管理", "车辆管理"}, button = "新增")
     @RequestMapping("/addTruck")
     @ResponseBody
-    public Object addTruck(HttpServletRequest request,
-                           @RequestParam(value = "companyId") long comanpyId,
-                           @RequestParam(value = "licensePlateNumber") String licensePlateNumber,
-                           @RequestParam(value = "driver") String driver,
-                           @RequestParam(value = "phone") String phone,
-                           @RequestParam(value = "load") String load
-    ) {
+    public Object addTruck(HttpServletRequest request, @RequestBody String body) {
+        Integer companyId = JacksonUtil.parseInteger(body, "companyId");
+        String driver = JacksonUtil.parseString(body, "driver");
+        String licensePlateNumber = JacksonUtil.parseString(body, "licensePlateNumber");
+        String load = JacksonUtil.parseString(body, "load");
+        String phone = JacksonUtil.parseString(body, "phone");
+
+        String province = JacksonUtil.parseString(body, "province");
+        String city = JacksonUtil.parseString(body, "city");
+        String area = JacksonUtil.parseString(body, "area");
+
+
+        String countArea=province+city+area;
+        //创建人的信息
+        Subject currentUser = SecurityUtils.getSubject();
+        LitemallAdmin admin = (LitemallAdmin) currentUser.getPrincipal();
+
         LitemallLogisticsTrucks truck = new LitemallLogisticsTrucks();
-        truck.setCompanyId((int) comanpyId);
+        truck.setCompanyId(companyId);
         truck.setLicensePlateNumber(licensePlateNumber);
         truck.setDriver(driver);
         truck.setPhone(phone);
         truck.setLoad(load);
+        truck.setCompanyId(companyId);
+        truck.setCreateUser(admin.getUsername());
         //设置逻辑删除的没有删除
         truck.setDeleted(1);
         truck.setCreateTime(LocalDateTime.now());
+        truck.setProvince(countArea);
+        truck.setCity(city);
+        truck.setArea(area);
+        //设置车辆的状态为空闲
+        truck.setVehicle(1);
         trucksService.add(truck);
         return ResponseUtil.ok();
     }
@@ -163,20 +185,32 @@ public class AdminLogisticsController {
     @RequiresPermissionsDesc(menu = {"物流管理", "车辆管理"}, button = "更新")
     @RequestMapping("/updateTruck")
     @ResponseBody
-    public Object updateTruck(HttpServletRequest request,
-                              @RequestParam(value = "companyId") long comanpyId,
-                              @RequestParam(value = "id") long id,
-                              @RequestParam(value = "licensePlateNumber") String licensePlateNumber,
-                              @RequestParam(value = "driver") String driver,
-                              @RequestParam(value = "phone") String phone,
-                              @RequestParam(value = "load") String load) {
+    public Object updateTruck(HttpServletRequest request, @RequestBody String body) {
+        Integer companyId = JacksonUtil.parseInteger(body, "companyId");
+        Integer id = JacksonUtil.parseInteger(body, "id");
+        String licensePlateNumber = JacksonUtil.parseString(body, "licensePlateNumber");
+        String driver = JacksonUtil.parseString(body, "driver");
+        String phone = JacksonUtil.parseString(body, "phone");
+        String load = JacksonUtil.parseString(body, "load");
+
+        //车辆地区的修改
+        String province = JacksonUtil.parseString(body, "province");
+        String city = JacksonUtil.parseString(body, "city");
+        String area = JacksonUtil.parseString(body, "area");
+
+        String pca = province+city+area;
+
+        Integer vehicle = JacksonUtil.parseInteger(body, "vehicle");
+
         LitemallLogisticsTrucks truck = new LitemallLogisticsTrucks();
-        truck.setCompanyId((int) comanpyId);
-        truck.setId((int) id);
+        truck.setCompanyId(companyId);
+        truck.setId(id);
         truck.setLicensePlateNumber(licensePlateNumber);
         truck.setDriver(driver);
         truck.setPhone(phone);
         truck.setLoad(load);
+        truck.setVehicle(vehicle);
+        truck.setProvince(pca);
         int update = trucksService.update(truck);
         if (update == 888) {
             return ResponseUtil.fail(499, "没有物流派送，不能修改");
@@ -184,7 +218,7 @@ public class AdminLogisticsController {
         if (update == 999) {
             return ResponseUtil.fail(489, "最近的物流订单超过一个月，不能修改");
         }
-        return trucksService.update(truck);
+        return ResponseUtil.ok();
     }
 
     /*逻辑删除*/
@@ -192,12 +226,11 @@ public class AdminLogisticsController {
     @RequiresPermissionsDesc(menu = {"物流管理", "车辆管理"}, button = "删除")
     @RequestMapping("/delTruck")
     @ResponseBody
-    public Object delTruck(HttpServletRequest request,
-                           @RequestParam(value = "companyId") String comanpyId,
-                           @RequestParam(value = "id") String id,
-                           @RequestParam(value = "licensePlateNumber") String licensePlateNumber
-    ) {
-        trucksService.deleteByPrimaryKey(id, comanpyId, licensePlateNumber);
+    public Object delTruck(HttpServletRequest request, @RequestBody String body) {
+        String companyId = JacksonUtil.parseString(body, "companyId");
+        String id = JacksonUtil.parseString(body, "id");
+        String licensePlateNumber = JacksonUtil.parseString(body, "licensePlateNumber");
+        trucksService.deleteByPrimaryKey(id, companyId, licensePlateNumber);
         return ResponseUtil.ok();
     }
 
@@ -213,7 +246,6 @@ public class AdminLogisticsController {
                             @RequestParam(value = "phone", required = false) String phone,
                             @RequestParam(value = "page", defaultValue = "1") int page,
                             @RequestParam(value = "limit", defaultValue = "10") int limit) {
-
         return ResponseUtil.okList(trucksService.querySelective(companyId, id, licensePlateNumber, driver, phone, page, limit));
     }
 
@@ -225,15 +257,7 @@ public class AdminLogisticsController {
     @RequestMapping("/createOrder")
     public Object createLogisticsOrder(HttpServletRequest request,
                                        @RequestBody String body) {
-        Object transitId = adminLogisticsService.addOrder(body);
-        if (transitId.equals(-1)) {
-            return ResponseUtil.fail(408, "请输入正确的车牌号！");
-        }
-//        Map<Object, Object> data = new HashMap<String, Object>();
-//        data.put(transitId,"物流配送订单");
-        List<Object> list = new ArrayList();
-        list.add(transitId);
-        return ResponseUtil.transportOk(list);
+        return adminLogisticsService.addOrder(body);
     }
 
 
@@ -242,10 +266,10 @@ public class AdminLogisticsController {
     public Object updateOrderStatus(HttpServletRequest request,
                                     @RequestParam(value = "orderId") String orderId,
                                     @RequestParam(value = "status") int status) {
-        int add = detailService.add(orderId, status);
-        if (add == -1) {
-            return ResponseUtil.fail(403, "该订单已经开始运输了！");
-        }
+//       int add = detailService.add(orderId, status);
+//        if (add == -1) {
+//            return ResponseUtil.fail(403, "该订单已经开始运输了！");
+//       }
         return ResponseUtil.ok();
     }
 

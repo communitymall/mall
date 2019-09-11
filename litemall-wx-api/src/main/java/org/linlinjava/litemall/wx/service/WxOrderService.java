@@ -12,12 +12,12 @@ import org.apache.commons.io.IOUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.linlinjava.litemall.core.express.ExpressService;
-import org.linlinjava.litemall.core.express.dao.ExpressInfo;
 import org.linlinjava.litemall.core.notify.NotifyService;
 import org.linlinjava.litemall.core.notify.NotifyType;
 import org.linlinjava.litemall.core.qcode.QCodeService;
 import org.linlinjava.litemall.core.system.SystemConfig;
 import org.linlinjava.litemall.core.util.DateTimeUtil;
+import org.linlinjava.litemall.core.util.IpUtil;
 import org.linlinjava.litemall.core.util.JacksonUtil;
 import org.linlinjava.litemall.core.util.ResponseUtil;
 import org.linlinjava.litemall.db.domain.*;
@@ -25,7 +25,6 @@ import org.linlinjava.litemall.db.service.*;
 import org.linlinjava.litemall.db.util.CouponUserConstant;
 import org.linlinjava.litemall.db.util.OrderHandleOption;
 import org.linlinjava.litemall.db.util.OrderUtil;
-import org.linlinjava.litemall.core.util.IpUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -882,9 +881,9 @@ public class WxOrderService {
             return ResponseUtil.badArgumentValue();
         }
         Short orderStatus = order.getOrderStatus();
-        if (!OrderUtil.isTransactionCompletedStatus(order) ) {
-            return ResponseUtil.fail(ORDER_INVALID_OPERATION, "当前商品不能评价");
-        }
+//        if (!OrderUtil.isTransactionCompletedStatus(order) ) {
+//            return ResponseUtil.fail(ORDER_INVALID_OPERATION, "当前商品不能评价");
+//        }
         if (!order.getUserId().equals(userId)) {
             return ResponseUtil.fail(ORDER_INVALID, "当前商品不属于用户");
         }

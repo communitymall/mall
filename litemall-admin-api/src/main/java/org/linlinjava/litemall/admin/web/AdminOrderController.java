@@ -100,4 +100,39 @@ public class AdminOrderController {
         return adminOrderService.reply(body);
     }
 
+
+    /**
+     * 货到付款订单的审核
+     *
+     * @param body 订单信息，{ orderId：xxx }
+     * @return 订单操作结果
+     */
+    @RequiresPermissions("admin:order:approved")
+    @RequiresPermissionsDesc(menu = {"商场管理", "订单管理"}, button = "订单审核")
+    @PostMapping("/approved")
+    public Object approved(@RequestBody String body){return adminOrderService.approved(body);}
+
+
+    /*
+    订单备货完成
+     */
+    @RequiresPermissions("admin:order:completeGoods")
+    @RequiresPermissionsDesc(menu = {"商场管理", "订单管理"}, button = "备货完成")
+    @PostMapping("/completeGoods")
+    public Object completeGoods(@RequestBody String body){return adminOrderService.completeGoods(body);}
+
+     /*
+    查询所有备货完成，可以发货的订单
+     */
+    @RequiresPermissions("admin:order:checkDeliveryOrder")
+    @RequiresPermissionsDesc(menu = {"商场管理", "订单管理"}, button = "发货")
+    @GetMapping("/checkDeliveryOrder")
+    public Object checkDeliveryOrder(Integer userId, String orderSn,
+                       @RequestParam(required = false) List<Short> orderStatusArray,
+                       @RequestParam(defaultValue = "1") Integer page,
+                       @RequestParam(defaultValue = "10") Integer limit,
+                       @Sort @RequestParam(defaultValue = "add_time") String sort,
+                       @Order @RequestParam(defaultValue = "desc") String order) {
+        return adminOrderService.checkDeliveryOrder(userId, orderSn, orderStatusArray, page, limit, sort, order);
+    }
 }

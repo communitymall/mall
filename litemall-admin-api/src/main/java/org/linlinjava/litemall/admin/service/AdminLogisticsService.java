@@ -2,19 +2,17 @@ package org.linlinjava.litemall.admin.service;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.subject.Subject;
 import org.linlinjava.litemall.core.util.JacksonUtil;
 import org.linlinjava.litemall.core.util.ResponseUtil;
-import org.linlinjava.litemall.db.dao.LitemallLogicsticsTransportMapper;
-import org.linlinjava.litemall.db.domain.LitemallLogicsticsTransport;
-import org.linlinjava.litemall.db.domain.LitemallLogisticsCompany;
-import org.linlinjava.litemall.db.domain.LitemallLogisticsTrucks;
-import org.linlinjava.litemall.db.service.LitemallLogicsticsTransportService;
-import org.linlinjava.litemall.db.service.LitemallLogisticsCompanyService;
-import org.linlinjava.litemall.db.service.LitemallLogisticsTrucksService;
+import org.linlinjava.litemall.db.domain.*;
+import org.linlinjava.litemall.db.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -34,6 +32,12 @@ public class AdminLogisticsService {
     @Autowired
     private LitemallLogicsticsTransportService transportService;
 
+    @Autowired
+    private LitemallLogicticsTransportDetailService transportDetailService;
+
+    @Autowired
+    private LitemallOrderService orderService;
+
     public Object list(String id, String name, int page, int limit) {
         List<LitemallLogisticsCompany> list = companyService.querySelective(id, name, page, limit);
         return ResponseUtil.okList(list);
@@ -42,50 +46,69 @@ public class AdminLogisticsService {
     /*
     物流订单的添加
      */
+    @Transactional(propagation = Propagation.REQUIRED, readOnly = false,rollbackFor = {Exception.class})
     public Object addOrder(String body) {
-        //获得商品的订单号
-        List<Integer> orderid = JacksonUtil.parseIntegerList(body, "orderid");
-        //商品订单编号的处理？？？
-
         //获得物流公司的编号
-        Integer companyId = JacksonUtil.parseInteger(body, "companyId");
-        //获得第三方物流订单编号
-        Integer thirdOrder = JacksonUtil.parseInteger(body, "ThirdOrder");
+        String companyId = JacksonUtil.parseString(body, "companyId");
         //获得车辆牌照
-        Integer licensePlateNumber = JacksonUtil.parseInteger(body, "licensePlateNumber");
+        String licensePlateNumber = JacksonUtil.parseString(body, "licensePlateNumber");
+        //判断输入的物流公司与车辆牌照在车辆表中是否存在
+        List<LitemallLogisticsTrucks> litemallLogisticsTrucks1 = trucksService.querySelectiveByCompanyIdAndLn(companyId, licensePlateNumber);
+        if (litemallLogisticsTrucks1.size() == 0) {
+            //物流公司与车辆牌照在车辆表中是不存在
+            return ResponseUtil.fail(512, "物流公司ID或车牌号输入错误");
+        }
+        //生成物流订单号
+        Integer transitId = UUID.randomUUID().toString().hashCode();
+        String transitId1 = transitId.toString();
+        System.out.println(transitId1);
+        //获得商品的订单号
+        List<String> orders = JacksonUtil.parseStringList(body, "orders");
+
+        //得到创建人的信息
+        //创建人的信息
+        Subject currentUser = SecurityUtils.getSubject();
+        LitemallAdmin admin = (LitemallAdmin) currentUser.getPrincipal();
+        String createUser = admin.getUsername();
+
         //获得运费
         Integer freight = JacksonUtil.parseInteger(body, "freight");
-        //生成物流订单号
-        int transitId = UUID.randomUUID().toString().hashCode();
-
-
-        //设置司机
-        String s = String.valueOf(licensePlateNumber);
-        List<LitemallLogisticsTrucks> litemallLogisticsTrucks = trucksService.querySelectiveByLinNumber(s);
-        //车牌号没有输入对
-        if(litemallLogisticsTrucks.size()==0){
-             return  -1;
-
-        }
-        LitemallLogisticsTrucks trucks = litemallLogisticsTrucks.get(0);
+        //得到司机
+        LitemallLogisticsTrucks trucks = litemallLogisticsTrucks1.get(0);
         String driver = trucks.getDriver();
-        //其他的字段？？、
+        String thirdOrder =null;
 
 
-        return transportService.add(companyId,licensePlateNumber,thirdOrder,transitId,driver,freight);
+        try {//异常捕获
+            LitemallOrder order = new LitemallOrder();
+            for (int i = 0; i < orders.size(); i++) {
+                transportDetailService.add(transitId1, orders.get(i));
+                //数据操作没有错误。修改订单的状态为（4已发货）
+                order.setOrderSn(orders.get(i));
+                order.setOrderStatus((short)4);
+                orderService.updateByOrderSn(order);
+            }
+            transportService.add(companyId,licensePlateNumber,thirdOrder,transitId1,driver,freight,createUser);
+
+
+
+        } catch (Exception ex) {
+            throw ex;
+        }
+        return ResponseUtil.ok();
     }
 
     /*
     物流配送订单状态更新
      */
-    public Object updateLogisticsOrderStatus(String transitId,int status){
-        return transportService.update(transitId,status);
+    public Object updateLogisticsOrderStatus(String transitId, int status) {
+        return transportService.update(transitId, status);
     }
 
     /*
     物流订单的详情
      */
-    public List<LitemallLogicsticsTransport> list(String orderId,String transitId,String companyId,String thirdOrder,String licensePlateNumber,int page,int limit){
-        return transportService.list(orderId,transitId,companyId,thirdOrder,licensePlateNumber,page,limit);
+    public List<LitemallLogicsticsTransport> list(String orderId, String transitId, String companyId, String thirdOrder, String licensePlateNumber, int page, int limit) {
+        return transportService.list(orderId, transitId, companyId, thirdOrder, licensePlateNumber, page, limit);
     }
 }

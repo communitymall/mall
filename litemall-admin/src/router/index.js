@@ -221,7 +221,29 @@ export const asyncRouterMap = [
           title: '关键词',
           noCache: true
         }
+      },
+      {
+        path: 'logisticsOrder',
+        component: () => import('@/views/mall/logisticsOrder'),
+        name: 'logisticsOrder',
+        meta: {
+          perms: ['GET /admin/logisticsOrder/list', 'POST /admin/logisticsOrder/create', 'GET /admin/logisticsOrder/read', 'POST /admin/logisticsOrder/update', 'POST /admin/logisticsOrder/delete'],
+          title: '物流订单管理',
+          noCache: true
+        }
+      },
+
+      {
+        path: 'auditOrder',
+        component: () => import('@/views/mall/auditOrder'),
+        name: 'auditOrder',
+        meta: {
+          perms: ['GET /admin/logisticsOrder/list', 'POST /admin/logisticsOrder/create', 'GET /admin/logisticsOrder/read', 'POST /admin/logisticsOrder/update', 'POST /admin/logisticsOrder/delete'],
+          title: '待发货的的订单',
+          noCache: true
+        }
       }
+
     ]
   },
 
@@ -459,6 +481,17 @@ export const asyncRouterMap = [
         meta: {
           perms: ['GET /admin/config/logistics', 'POST /admin/config/logistics'],
           title: '物流配置',
+          noCache: true
+        }
+      },
+
+      {
+        path: 'logisticsTrucks',
+        component: () => import('@/views/config/logisticsTrucks'),
+        name: 'configLogisticsTrucks',
+        meta: {
+          perms: ['GET /admin/config/logisticsTrucks', 'POST /admin/config/logisticsTrucks'],
+          title: '车辆配置',
           noCache: true
         }
       },

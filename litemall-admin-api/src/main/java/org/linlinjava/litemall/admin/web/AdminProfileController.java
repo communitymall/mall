@@ -44,6 +44,8 @@ public class AdminProfileController {
         Subject currentUser = SecurityUtils.getSubject();
         LitemallAdmin admin = (LitemallAdmin) currentUser.getPrincipal();
 
+        System.out.println(admin);
+
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         if (!encoder.matches(oldPassword, admin.getPassword())) {
             return ResponseUtil.fail(ADMIN_INVALID_ACCOUNT, "账号密码不对");

@@ -14,20 +14,17 @@ import java.util.List;
  * 401 用户确认收货，订单结束； 402 用户没有确认收货，但是快递反馈已收获后，超过一定时间，系统自动确认收货，订单结束。
  *
  *
- * 0 订单没有审核 可以取消订单
- * 1 订单审核通过  可以取消订单
- * 2 订单的商品正在备货  可以取消订单
- * 3 订单未派送  可以取消订单
+ * 0 订单没有审核 (用户)可以取消订单 系统管理员需要审核的订单（货到付款类型的订单）
+ * 1 未备货 订单中的商品需要去采购（客户现在可以取消订单）
+ * 2 已备货  订单的商品采购完毕（客户不可用取消订单）
+ * 3 订单未派送  是专门给客户展现的订单状态？？？
  * 4 订单已经发货 ：不可以消订单
  * 5 订单已经收货 ：不可以消订单
  * 6 订单手动收货 ： 不可以消订单
- * 7 订单待支付  可以取消订单
- * 8 订单支付完成  可以取消订单
- * 9 订单取消
- * 10 订单超时未支付取消订单
- * 11 订单交易完成   不可用取消订单
- *
- *
+ * 7 订单待支付  在线付款的订单的状态
+ * 8 订单取消
+ * 9 订单超时未支付取消订单
+ * 10 订单交易完成   不可用取消订单
  *
  * 当101用户未付款时，此时用户可以进行的操作是取消或者付款
  * 当201支付完成而商家未发货时，此时用户可以退款
@@ -48,7 +45,7 @@ public class OrderUtil {
     public static final Short STATUS_PAYMENT_COMPLETED = 8;
     public static final Short STATUS_CANCELLATION = 9;
     public static final Short STATUS_OVERTINE_CANCELLATION = 10;
-    public static final Short STATUS_TRANSACTION_COMPLETED = 11;
+
 
 
     public static String orderStatusText(LitemallOrder order) {
@@ -57,15 +54,15 @@ public class OrderUtil {
         System.out.println(status);
 
         if (status == 0) {
-            return "订单没有审核";
+            return "订单未审核";
         }
 
         if (status == 1) {
-            return "订单通过审核";
+            return "订单未备货";
         }
 
         if (status == 2) {
-            return "订单的商品正在备货";
+            return "订单已备货";
         }
 
         if (status == 3) {
@@ -89,21 +86,16 @@ public class OrderUtil {
         }
 
         if (status == 8) {
-            return "订单支付完成";
-        }
-
-        if (status == 9) {
             return "订单取消";
         }
 
-        if (status == 10) {
+        if (status == 9) {
             return "订单超时未支付取消订单";
         }
 
-        if (status == 11) {
+        if (status == 10) {
             return "订单交易完成";
         }
-
         throw new IllegalStateException("orderStatus不支持");
     }
 
@@ -116,14 +108,15 @@ public class OrderUtil {
             //订单没有审核 ： 可以取消订单  ，订单不可支付
             handleOption.setCancel(true);
         } else if (status == 1 ) {
-            // 订单审核通过 : 可以取消订单 ，订单可以支付
+            // 订单未备货 : 可以取消订单
             handleOption.setCancel(true);
-            handleOption.setPay(true);
-        } else if (status == 2 || status == 3) {
-            // 订单的商品正在备货，订单未派送   可以取消订单，（在线支付）可以退款
-            handleOption.setCancel(true);
-            handleOption.setRefund(true);
-        } else if (status == 4 || status == 5 || status ==6) {
+        } else if (status == 2 ) {
+            // 订单的商品已备货
+
+        }else if(status == 3){
+            // 订单未派送
+        }
+        else if (status == 4 || status == 5 || status ==6) {
             // 订单已经发货 ，订单已经收货 , 订单手动收货    不可以取消订单，（在线支付）不可以退款,可以确认收货
             handleOption.setConfirm(true);
         } else if (status == 7) {
@@ -250,7 +243,5 @@ public class OrderUtil {
         return OrderUtil.STATUS_OVERTINE_CANCELLATION == litemallOrder.getOrderStatus().shortValue();
     }
 
-    public static boolean isTransactionCompletedStatus(LitemallOrder litemallOrder) {
-        return OrderUtil.STATUS_TRANSACTION_COMPLETED == litemallOrder.getOrderStatus().shortValue();
-    }
+
 }

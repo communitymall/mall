@@ -46,6 +46,13 @@ public class LitemallUserService {
         return userMapper.updateByPrimaryKeySelective(user);
     }
 
+    public int updateByMobile(LitemallUser user){
+        user.setUpdateTime(LocalDateTime.now());
+        LitemallUserExample example = new LitemallUserExample();
+
+        return userMapper.updateByExampleSelective(user,example);
+    }
+
     public List<LitemallUser> querySelective(String username, String mobile, Integer page, Integer size, String sort, String order) {
         LitemallUserExample example = new LitemallUserExample();
         LitemallUserExample.Criteria criteria = example.createCriteria();

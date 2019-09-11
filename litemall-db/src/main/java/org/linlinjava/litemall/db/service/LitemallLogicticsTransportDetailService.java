@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.UUID;
 
 @Service
 public class LitemallLogicticsTransportDetailService {
@@ -18,21 +17,12 @@ public class LitemallLogicticsTransportDetailService {
 
     LitemallLogicticsTransportDetail detail = new LitemallLogicticsTransportDetail();
 
-    public int add(String orderId,int status){
-        int transitId = UUID.randomUUID().hashCode();
-        detail.setOrderSn(orderId);
-        detail.setTransitId(String.valueOf(transitId));
-        detail.setShipStatus(String.valueOf(status));
-        String ctime = String.valueOf(LocalDateTime.now());
-        detail.setCreateTime(ctime);
-        //判断orderid在数据是否存在
-        LitemallLogicticsTransportDetailExample example = new LitemallLogicticsTransportDetailExample();
-        LitemallLogicticsTransportDetailExample.Criteria criteria = example.createCriteria();
-        criteria.andOrderSnEqualTo(orderId);
-        List<LitemallLogicticsTransportDetail> details = detailMapper.selectByExampleSelective(example);
-        if(details.size()>0){
-            return -1;
-        }
+    public int add(String transitId,String orderSn){
+        detail.setOrderSn(orderSn);
+        detail.setTransitId(transitId);
+        //设置运输状态为0（在途中）
+        detail.setShipStatus(0);
+        detail.setCreateTime(LocalDateTime.now());
         return detailMapper.insertSelective(detail);
     }
 
@@ -45,7 +35,6 @@ public class LitemallLogicticsTransportDetailService {
         if(!StringUtil.isEmpty(transitId)){
             criteria.andTransitIdEqualTo(transitId);
         }
-
         return detailMapper.selectByExample(example);
     }
 }

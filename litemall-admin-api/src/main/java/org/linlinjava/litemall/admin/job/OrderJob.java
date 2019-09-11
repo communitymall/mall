@@ -47,9 +47,14 @@ public class OrderJob {
 
         List<LitemallOrder> orderList = orderService.queryUnpaid(SystemConfig.getOrderUnpaid());
         for (LitemallOrder order : orderList) {
-            // 设置订单已取消状态
-            order.setOrderStatus(OrderUtil.STATUS_CANCELLATION);
-            order.setEndTime(LocalDateTime.now());
+            Short orderStatus = order.getOrderStatus();
+            //当订单是待支付的状态下设置订单取消
+            logger.info("当前的订单状态是："+orderStatus);
+            if(orderStatus.equals(7)){
+                // 设置订单已取消状态
+                order.setOrderStatus(OrderUtil.STATUS_CANCELLATION);
+                order.setEndTime(LocalDateTime.now());
+            }
             if (orderService.updateWithOptimisticLocker(order) == 0) {
                 throw new RuntimeException("更新数据已失效");
             }

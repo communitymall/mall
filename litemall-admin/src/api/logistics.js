@@ -43,3 +43,71 @@ export function deleteLogistics(data) {
     data
   })
 }
+
+/*
+   物流公司车辆的管理
+ */
+export function listLogisticsTrucks(query) {
+  return request({
+    url: '/logistics/listTruck',
+    method: 'get',
+    params: query
+  })
+}
+
+export function createLogisticsTrucks(data) {
+  return request({
+    url: '/logistics/addTruck',
+    method: 'post',
+    data
+  })
+}
+
+export function updateLogisticsTrucks(data) {
+  return request({
+    url: '/logistics/updateTruck',
+    method: 'post',
+    data
+  })
+}
+
+export function deleteLogisticsTrucks(data) {
+  return request({
+    url: '/logistics/delTruck',
+    method: 'post',
+    data
+  })
+}
+
+/**
+ * 物流订单的管理
+ */
+export function listLogisticsOrder(query) {
+  return request({
+    url: '/logistics/queryOrderList',
+    method: 'get',
+    params: query
+  })
+}
+
+/*
+物流配送详情
+ */
+export function FindLogisticsTransit(query) {
+  return request({
+    url: '/logistics/queryTransit',
+    method: 'get',
+    params: query
+  })
+}
+
+/*
+物流订单的创建
+ */
+export function createOrder(data) {
+  return request({
+    url: '/logistics/createOrder',
+    method: 'post',
+    data
+  })
+}
