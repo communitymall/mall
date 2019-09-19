@@ -43,7 +43,7 @@
 
       <el-table-column align="center" label="物流单号" prop="shipSn"/>
 
-      <el-table-column align="center" label="物流渠道" prop="shipChannel"/>
+      <el-table-column align="center" label="物流公司" prop="shipChannel"/>
 
       <el-table-column align="center" label="操作" width="200" class-name="small-padding fixed-width">
         <template slot-scope="scope">
@@ -52,13 +52,6 @@
             type="primary"
             size="mini"
             @click="handleDetail(scope.row)">详情
-          </el-button>
-          <el-button
-            v-permission="['POST /admin/order/ship']"
-            v-if="scope.row.orderStatus==2"
-            type="primary"
-            size="mini"
-            @click="handleShip(scope.row)">发货
           </el-button>
           <el-button
             v-permission="['POST /admin/order/refund']"
@@ -149,44 +142,6 @@
           <span>（确认收货时间）{{ orderDetail.order.confirmTime }}</span>
         </el-form-item>
       </el-form>
-    </el-dialog>
-
-    <!-- 发货对话框 -->
-    <el-dialog :visible.sync="shipDialogVisible" title="发货">
-      <el-form
-        ref="shipForm"
-        :model="shipForm"
-        status-icon
-        label-position="left"
-        label-width="100px"
-        style="width: 400px; margin-left:50px;">
-
-        <van-checkbox-group v-model="checkedGoods" class="card-goods" @change="toggle">
-          <div v-for="(item, i) in goods" :key="i" class="card-goods__item">
-            <van-checkbox :key="item.id" :name="item.id" v-model="item.checked"/>
-            <van-card :title="item.goodsName" :price="item.price" :num="item.number" :thumb="item.picUrl">
-              <div slot="desc">
-                <div class="van-card__desc">
-                  <van-tag v-for="(spec, index) in item.specifications" :key="index" plain style="margin-right:6px;">
-                    {{ spec }}
-                  </van-tag>
-                </div>
-              </div>
-              <div v-if="isEditor" slot="footer">
-                <van-stepper v-model="item.number" disable-input @change="stepperEvent(item,arguments)"/>
-              </div>
-              <div v-else slot="footer">添加日期 {{ item.addTime }}</div>
-            </van-card>
-
-            <div v-if="isEditor" class="cart_delete" @click="deleteCart(i)">删除</div>
-          </div>
-        </van-checkbox-group>
-
-      </el-form>
-      <div slot="footer" class="dialog-footer">
-        <el-button @click="shipDialogVisible = false">取消</el-button>
-        <el-button type="primary" @click="confirmShip">确定</el-button>
-      </div>
     </el-dialog>
 
     <!-- 订单审核对话框 -->
@@ -373,12 +328,6 @@ export default {
         this.$refs['shipForm'].clearValidate()
       })
     },
-
-    // 查询已经备货完成，可以发货的订单
-    checkDeliveryOrder() {
-
-    },
-
     auditOrder(row) {
       this.approvedForm.orderSn = row.orderSn
       this.approvedForm.orderId = row.id
@@ -475,8 +424,8 @@ export default {
     handleDownload() {
       this.downloadLoading = true
         import('@/vendor/Export2Excel').then(excel => {
-          const tHeader = ['订单ID', '订单编号', '用户ID', '订单状态', '是否删除', '收货人', '收货联系电话', '收货地址']
-          const filterVal = ['id', 'orderSn', 'userId', 'orderStatus', 'isDelete', 'consignee', 'mobile', 'address']
+          const tHeader = ['订单编号', '用户ID', '订单状态', '订单金额', '支付金额', '支付时间', '物流单号', '物流公司']
+          const filterVal = ['orderSn', 'userId', 'orderStatus', 'orderPrice', 'actualPrice', 'payTime', 'shipSn', 'shipChannel']
           excel.export_json_to_excel2(tHeader, this.list, filterVal, '订单信息')
           this.downloadLoading = false
         })

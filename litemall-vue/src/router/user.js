@@ -6,6 +6,18 @@ const UserServer = () => import('@/views/user/module-server');
 const UserHelp = () => import('@/views/user/module-help');
 const UserFeedback = () => import('@/views/user/module-feedback');
 
+const UserMerchant = () => import('@/views/user/module-merchant');
+const UserAddMerchant = () => import('@/views/user/module-merchant/addMerchant')
+
+const UserMerchantDetail = () => import('@/views/user/module-merchant-detail');
+const UserSetMerchantName= () => import('@/views/user/module-merchant-detail/detail-setMerchantName');
+const UserSetMerchantAddress= () => import('@/views/user/module-merchant-detail/detail-setMerchantAddress');
+const UserSetMerchantLeader= () => import('@/views/user/module-merchant-detail/detail-setMerchantLeader');
+const UserSetMerchantPhone= () => import('@/views/user/module-merchant-detail/detail-setMerchantPhone');
+const UserAddMerchantUser= () => import('@/views/user/module-merchant-detail/detail-addMerchantUser');
+
+const MerchantSetUser= () => import('@/views/user/module-merchant-detail/detail-setMerchantUser');
+
 const UserInformation = () => import('@/views/user/user-information-set');
 const UserInfo_SetMobile = () => import('@/views/user/user-information-set/set-mobile');
 const UserInfo_SetNickname = () => import('@/views/user/user-information-set/set-nickname');
@@ -34,6 +46,63 @@ export default [
     },
     component: UserCollect
   },
+  {
+    path: '/user/merchant',
+    name: 'merchant',
+    meta: {
+      login: true
+    },
+    component: UserMerchant
+  },
+  {
+    path: '/user/merchant/addMerchant',
+    name: 'addMerchant',
+    meta: {
+      login: true
+    },
+    component: UserAddMerchant
+  },
+
+  {
+    path: '/user/merchant/detail',
+    name: 'merchant-detail',
+    meta: {
+      login: true
+    },
+    component: UserMerchantDetail
+  },
+  {
+    path: '/user/merchant/detail/detail-setMerchantName',
+    name: 'merchant-detail-setMerchantName',
+    component: UserSetMerchantName
+  },
+  {
+    path: '/user/merchant/detail/detail-setMerchantAddress',
+    name: 'merchant-detail-setMerchantAddress',
+    component: UserSetMerchantAddress
+  },
+  {
+    path: '/user/merchant/detail/detail-setMerchantLeader',
+    name: 'merchant-detail-setMerchantLeader',
+    component: UserSetMerchantLeader
+  },
+  {
+    path: '/user/merchant/detail/detail-setMerchantPhone',
+    name: 'merchant-detail-setMerchantPhone',
+    component: UserSetMerchantPhone
+  },
+  {
+    path: '/user/merchant/detail/detail-setMerchantUser',
+    name: 'merchant-detail-setMerchantUser',
+    component: MerchantSetUser
+  },
+  {
+    path: '/user/merchant/detail/detail-addMerchantUser',
+    name: 'merchant-detail-addMerchantUser',
+    component: UserAddMerchantUser
+  },
+
+
   {
     path: '/user/address',
     name: 'address',

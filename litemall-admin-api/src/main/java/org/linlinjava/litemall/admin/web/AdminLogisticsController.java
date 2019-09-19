@@ -111,7 +111,6 @@ public class AdminLogisticsController {
                                        @RequestParam(value = "name", required = false) String name,
                                        @RequestParam(value = "page", defaultValue = "1") int page,
                                        @RequestParam(value = "limit", defaultValue = "10") int limit) {
-
         return ResponseUtil.okList(companyService.querySelective(id, name, page, limit));
     }
 
@@ -155,7 +154,7 @@ public class AdminLogisticsController {
         String area = JacksonUtil.parseString(body, "area");
 
 
-        String countArea=province+city+area;
+
         //创建人的信息
         Subject currentUser = SecurityUtils.getSubject();
         LitemallAdmin admin = (LitemallAdmin) currentUser.getPrincipal();
@@ -171,7 +170,7 @@ public class AdminLogisticsController {
         //设置逻辑删除的没有删除
         truck.setDeleted(1);
         truck.setCreateTime(LocalDateTime.now());
-        truck.setProvince(countArea);
+        truck.setProvince(province);
         truck.setCity(city);
         truck.setArea(area);
         //设置车辆的状态为空闲
@@ -197,9 +196,6 @@ public class AdminLogisticsController {
         String province = JacksonUtil.parseString(body, "province");
         String city = JacksonUtil.parseString(body, "city");
         String area = JacksonUtil.parseString(body, "area");
-
-        String pca = province+city+area;
-
         Integer vehicle = JacksonUtil.parseInteger(body, "vehicle");
 
         LitemallLogisticsTrucks truck = new LitemallLogisticsTrucks();
@@ -210,7 +206,9 @@ public class AdminLogisticsController {
         truck.setPhone(phone);
         truck.setLoad(load);
         truck.setVehicle(vehicle);
-        truck.setProvince(pca);
+        truck.setProvince(province);
+        truck.setCity(city);
+        truck.setArea(area);
         int update = trucksService.update(truck);
         if (update == 888) {
             return ResponseUtil.fail(499, "没有物流派送，不能修改");
@@ -305,7 +303,6 @@ public class AdminLogisticsController {
     @RequestMapping("/queryTransit")
     public Object logisticsOrderDetail(HttpServletRequest request,
                                        @RequestParam(value = "transitId", required = false) String transitId) {
-
         return ResponseUtil.transportListOk(detailService.list(transitId));
     }
 

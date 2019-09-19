@@ -32,6 +32,9 @@
     <result column="add_time" jdbcType="TIMESTAMP" property="addTime" />
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
     <result column="deleted" jdbcType="BIT" property="deleted" />
+    <result column="ship_status" jdbcType="INTEGER" property="shipStatus" />
+    <result column="pay_status" jdbcType="INTEGER" property="payStatus" />
+    <result column="pay_type" jdbcType="INTEGER" property="payType" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <!--
@@ -107,7 +110,7 @@
     id, user_id, order_sn, order_status, consignee, mobile, address, message, goods_price, 
     freight_price, coupon_price, integral_price, groupon_price, order_price, actual_price, 
     pay_id, pay_time, ship_sn, ship_channel, ship_time, confirm_time, comments, end_time, 
-    add_time, update_time, deleted
+    add_time, update_time, deleted, ship_status, pay_status, pay_type
   </sql>
   <select id="selectByExample" parameterType="org.linlinjava.litemall.db.domain.LitemallOrderExample" resultMap="BaseResultMap">
     <!--
@@ -525,6 +528,15 @@
       </if>
       <if test="record.deleted != null">
         deleted = #{record.deleted,jdbcType=BIT},
+      </if>
+      <if test="record.shipStatus != null">
+        ship_status = #{record.shipStatus,jdbcType=INTEGER},
+      </if>
+      <if test="record.payStatus != null">
+        pay_status = #{record.payStatus,jdbcType=INTEGER},
+      </if>
+      <if test="record.payType != null">
+        pay_type = #{record.payType,jdbcType=INTEGER},
       </if>
     </set>
     <if test="_parameter != null">

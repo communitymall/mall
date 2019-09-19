@@ -93,7 +93,7 @@ export function listLogisticsOrder(query) {
 /*
 物流配送详情
  */
-export function FindLogisticsTransit(query) {
+export function FindLogisticsTransitDetail(query) {
   return request({
     url: '/logistics/queryTransit',
     method: 'get',

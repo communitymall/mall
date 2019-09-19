@@ -3,15 +3,12 @@ package org.linlinjava.litemall.db.service;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.util.StringUtil;
 import org.linlinjava.litemall.db.dao.LitemallLogisticsCompanyMapper;
-import org.linlinjava.litemall.db.domain.LitemallGoods;
-import org.linlinjava.litemall.db.domain.LitemallLogicsticsTransportExample;
 import org.linlinjava.litemall.db.domain.LitemallLogisticsCompany;
 import org.linlinjava.litemall.db.domain.LitemallLogisticsCompanyExample;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -59,6 +56,8 @@ public class LitemallLogisticsCompanyService {
             criteria.andNameLike("%" + name + "%");
         }
         PageHelper.startPage(page,limt);
+
+        System.out.println(CompanyMapper.selectByExample(example));
 
         return CompanyMapper.selectByExample(example);
     }

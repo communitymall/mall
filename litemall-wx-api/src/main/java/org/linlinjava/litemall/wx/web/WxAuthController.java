@@ -138,10 +138,14 @@ public class WxAuthController {
             return ResponseUtil.updatedDataFailed();
         }
 
+        //获得user的ID
+        Integer id = user.getId();
+
         // userInfo
         UserInfo userInfo = new UserInfo();
         userInfo.setNickName(mobile);
         userInfo.setAvatarUrl(user.getAvatar());
+        userInfo.setId(id);
 
         // token
         String token = UserTokenManager.generateToken(user.getId());
@@ -782,6 +786,10 @@ public class WxAuthController {
         return ResponseUtil.ok();
     }
 
+    /*
+    获得用户的信息
+
+     */
     @GetMapping("info")
     public Object info(@LoginUser Integer userId) {
         if (userId == null) {
@@ -794,7 +802,7 @@ public class WxAuthController {
         data.put("avatar", user.getAvatar());
         data.put("gender", user.getGender());
         data.put("mobile", user.getMobile());
-
+        data.put("userId",user.getId());
         return ResponseUtil.ok(data);
     }
 

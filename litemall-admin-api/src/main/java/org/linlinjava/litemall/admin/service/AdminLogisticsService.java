@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -46,7 +47,7 @@ public class AdminLogisticsService {
     /*
     物流订单的添加
      */
-    @Transactional(propagation = Propagation.REQUIRED, readOnly = false,rollbackFor = {Exception.class})
+    @Transactional(propagation = Propagation.REQUIRED, readOnly = false, rollbackFor = {Exception.class})
     public Object addOrder(String body) {
         //获得物流公司的编号
         String companyId = JacksonUtil.parseString(body, "companyId");
@@ -61,35 +62,39 @@ public class AdminLogisticsService {
         //生成物流订单号
         Integer transitId = UUID.randomUUID().toString().hashCode();
         String transitId1 = transitId.toString();
-        System.out.println(transitId1);
+
         //获得商品的订单号
         List<String> orders = JacksonUtil.parseStringList(body, "orders");
 
         //得到创建人的信息
-        //创建人的信息
         Subject currentUser = SecurityUtils.getSubject();
         LitemallAdmin admin = (LitemallAdmin) currentUser.getPrincipal();
         String createUser = admin.getUsername();
+
+        //获得物流公司的名称
+        LitemallLogisticsCompany company = new LitemallLogisticsCompany();
+        company.setId(Integer.parseInt(companyId));
+        LitemallLogisticsCompany company1 = companyService.selectById(company);
 
         //获得运费
         Integer freight = JacksonUtil.parseInteger(body, "freight");
         //得到司机
         LitemallLogisticsTrucks trucks = litemallLogisticsTrucks1.get(0);
         String driver = trucks.getDriver();
-        String thirdOrder =null;
-
-
+        String thirdOrder = null;
         try {//异常捕获
             LitemallOrder order = new LitemallOrder();
             for (int i = 0; i < orders.size(); i++) {
                 transportDetailService.add(transitId1, orders.get(i));
-                //数据操作没有错误。修改订单的状态为（4已发货）
+                //数据操作没有错误。修改订单的状态为（4已发货），设置订单的物流编号，设置订单的物流公司名称,设置订单的更新时间
                 order.setOrderSn(orders.get(i));
-                order.setOrderStatus((short)4);
+                order.setOrderStatus((short) 4);
+                order.setShipSn(transitId1);
+                order.setShipChannel(company1.getName());
+                order.setUpdateTime(LocalDateTime.now());
                 orderService.updateByOrderSn(order);
             }
-            transportService.add(companyId,licensePlateNumber,thirdOrder,transitId1,driver,freight,createUser);
-
+            transportService.add(companyId, licensePlateNumber, thirdOrder, transitId1, driver, freight, createUser);
 
 
         } catch (Exception ex) {

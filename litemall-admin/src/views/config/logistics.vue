@@ -4,7 +4,6 @@
 
 <template>
   <div class="app-container">
-
     <!-- 查询和其他操作 -->
     <div class="filter-container">
       <el-input v-model="listQuery.id" clearable class="filter-item" style="width: 200px;" placeholder="请输入物流公司id"/>
@@ -256,16 +255,6 @@ export default {
         this.$refs['dataForm'].clearValidate()
       })
     },
-    uploadUrl: function(response) {
-      this.dataForm.url = response.data.url
-    },
-    checkFileSize: function(file) {
-      if (file.size > 1048576) {
-        this.$message.error(`${file.name}文件大于1024KB，请选择小于1024KB大小的图片`)
-        return false
-      }
-      return true
-    },
     createData() {
       this.$refs['dataForm'].validate(valid => {
         if (valid) {
@@ -273,6 +262,7 @@ export default {
             .then(response => {
               this.list.unshift(response.data.data)
               this.dialogFormVisible = false
+              this.getList()
               this.$notify.success({
                 title: '成功',
                 message: '创建成功'
@@ -308,6 +298,7 @@ export default {
                 }
               }
               this.dialogFormVisible = false
+              this.getList()
               this.$notify.success({
                 title: '成功',
                 message: '更新成功'

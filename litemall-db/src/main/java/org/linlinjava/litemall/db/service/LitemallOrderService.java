@@ -242,7 +242,6 @@ public class LitemallOrderService {
         LitemallOrderExample example = new LitemallOrderExample();
         LitemallOrderExample.Criteria criteria = example.createCriteria();
         criteria.andOrderSnEqualTo(orderSn);
-        LocalDateTime preUpdateTime = order.getUpdateTime();
         order.setUpdateTime(LocalDateTime.now());
         return litemallOrderMapper.updateByExampleSelective(order,example);
     }

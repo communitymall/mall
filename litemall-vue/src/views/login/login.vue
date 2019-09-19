@@ -84,7 +84,6 @@
                                 <router-link to="/login/forget">忘记密码</router-link>
                             </div>
                         </div>
-
                         <van-button size="large" type="danger" :loading="isLogining" @click="loginSubmit">登录
                         </van-button>
                     </md-field-group>
@@ -97,7 +96,6 @@
 
 </template>
 
-
 <script>
     import field from '@/components/field/';
     import fieldGroup from '@/components/field-group/';
@@ -108,7 +106,7 @@
 
     import {Toast} from 'vant';
 
-    import {authCaptcha} from '@/api/api';
+    import {authCaptcha,getMobiles} from '@/api/api';
     export default {
         name: 'login-request',
         components: {
@@ -116,7 +114,6 @@
             [fieldGroup.name]: fieldGroup,
             Toast
         },
-
 
         data() {
             return {
@@ -131,13 +128,26 @@
                 userInfo: {}
             };
         },
-
+        created(){
+            this.init();
+        },
 
         methods: {
+            init(){
+                //默认手机号
+                console.log(NXT_GET_TOKEN())
+                getMobiles(NXT_GET_TOKEN()).then(res=> {
+                    if(res != null && res.data != null && res.data.length>0){
+                        this.account = res.data[0];
+                    }
+                }).catch(error => {
+                    console.log("defalut mobile error");
+                })
+            },
+
             clearText() {
                 this.account = '';
             },
-
             getCode() {
                 authCaptcha(this.getMobile()).then(res => {
 
@@ -149,9 +159,7 @@
                 return {
                     mobile: this.account,
                 };
-
             },
-
             countdownend() {
                 this.counting = false;
 
@@ -175,7 +183,6 @@
                     Toast.fail(error.data.errmsg);
                 });
             },
-
             loginSubmit() {
                 this.isLogining = true;
                 try {
@@ -187,7 +194,6 @@
                     this.isLogining = false;
                 }
             },
-
             routerRedirect() {
                 // const { query } = this.$route;
                 // this.$router.replace({
@@ -200,17 +206,13 @@
             getLoginData() {
                 const password = this.password;
                 const account = this.getUserType(this.account);
-
                 const code = this.code;
-
                 return {
                     [account]: this.account,
                     password: password,
-
                     code: code
                 };
             },
-
             getUserType(account) {
                 const accountType = mobileReg.test(account)
                     ? 'mobile'
@@ -222,71 +224,56 @@
         }
     };
 </script>
-
-
 <style lang="scss" scoped>
     @import '../../assets/scss/mixin';
-
     .login {
         position: relative;
         background-color: #fff;
     }
-
     .store_header {
         text-align: center;
         padding: 30px 0;
-
         .store_avatar img {
             border-radius: 50%;
         }
-
         .store_name {
             padding-top: 5px;
             font-size: 16px;
         }
     }
-
     .register {
         padding-top: 40px;
         color: $font-color-gray;
-
         a {
             color: $font-color-gray;
         }
-
         > div {
             width: 50%;
             box-sizing: border-box;
             padding: 0 20px;
         }
-
         .connect {
             @include one-border(right);
             text-align: right;
         }
     }
-
     .bottom_positon {
         position: absolute;
         bottom: 30px;
         width: 100%;
     }
-
     .login_header {
         text-align: center;
         margin-bottom: 20px;
         border-right: 20px;
     }
-
     .login_header span {
         text-align: center;
         margin-right: 80px;
         cursor: pointer;
     }
-
     .getCode {
         @include one-border(left);
         text-align: center;
     }
-
 </style>

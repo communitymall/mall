@@ -4,23 +4,11 @@
     <!-- 查询和其他操作 -->
     <div class="filter-container">
       <el-input
-        v-model="listQuery.orderId"
-        clearable
-        class="filter-item"
-        style="width: 200px;"
-        placeholder="请输入用户订单编号"/>
-      <el-input
         v-model="listQuery.transitId"
         clearable
         class="filter-item"
         style="width: 200px;"
         placeholder="请输入物流订单编号"/>
-      <el-input
-        v-model="listQuery.companyId"
-        clearable
-        class="filter-item"
-        style="width: 200px;"
-        placeholder="请输入物流公司编号"/>
       <el-input
         v-model="listQuery.licensePlateNumber"
         clearable
@@ -55,7 +43,11 @@
 
       <el-table-column align="center" label="运费" prop="freight"/>
 
-      <el-table-column align="center" label="物流配送状态" prop="transitStatus"/>
+      <el-table-column align="center" label="物流配送状态" prop="transitStatus">
+        <template slot-scope="scope">
+          <el-tag>{{ scope.row.transitStatus | orderStatusFilter }}</el-tag>
+        </template>
+      </el-table-column>
 
       <el-table-column align="center" label="创建时间" prop="createTime"/>
 
@@ -69,12 +61,6 @@
             size="mini"
             @click="handleUpdate(scope.row)">详情
           </el-button>
-          <!--          <el-button-->
-          <!--            v-permission="['POST /admin/logistics/delTruck']"-->
-          <!--            type="danger"-->
-          <!--            size="mini"-->
-          <!--            @click="handleDelete(scope.row)">详情-->
-          <!--          </el-button>-->
         </template>
       </el-table-column>
     </el-table>
@@ -95,59 +81,27 @@
         status-icon
         label-position="left"
         label-width="100px"
-        style="width: 400px; margin-left:50px;">
+        style="width: 400px; margin-left:50px;"/>
 
-        <el-form-item label="物流订单编号" prop="transitId" >
-          <el-input v-model="dataForm.transitId" disabled="disabled"/>
-        </el-form-item>
-        <el-form-item label="运输车牌号" prop="licensePlateNumber">
-          <el-input v-model="dataForm.licensePlateNumber"/>
-        </el-form-item>
-        <el-form-item label="物流运输状态" prop="transitStatus">
-          <el-input v-model="dataForm.transitStatus" disabled="disabled"/>
-        </el-form-item>
-        <el-form-item label="运费" prop="freight">
-          <el-input v-model="dataForm.freight"/>
-        </el-form-item>
+      <el-table :data="logisticsDetailList" border fit highlight-current-row>
+        <el-table-column align="center" label="物流订单编号" prop="transitId" sortable/>
 
-      </el-form>
+        <el-table-column align="center" label="商品订单编号" prop="orderSn"/>
+
+        <el-table-column align="center" label="物流配送状态" prop="shipStatus">
+          <template slot-scope="scope">
+            <el-tag>{{ scope.row.shipStatus | detailStatusFilter }}</el-tag>
+          </template>
+        </el-table-column>
+
+        <el-table-column align="center" label="创建时间" prop="createTime"/>
+      </el-table>
       <div slot="footer" class="dialog-footer">
         <el-button @click="dialogFormVisible = false">取消</el-button>
         <el-button v-if="dialogStatus=='create'" type="primary" @click="createData">确定</el-button>
-        <el-button v-else type="primary" @click="updateData">确定</el-button>
+        <el-button v-else type="primary" @click="dialogFormVisible=false">确定</el-button>
       </div>
     </el-dialog>
-
-    <!--    &lt;!&ndash; detil详情的弹框 &ndash;&gt;-->
-    <!--    <el-dialog :title="textMap[dialogStatus]" :visible.sync="dialogFormVisible">-->
-    <!--      <el-form-->
-    <!--        ref="dataForm"-->
-    <!--        :rules="rules"-->
-    <!--        :model="dataForm"-->
-    <!--        status-icon-->
-    <!--        label-position="left"-->
-    <!--        label-width="100px"-->
-    <!--        style="width: 400px; margin-left:50px;">-->
-
-    <!--        <el-form-item label="物流订单编号" prop="transitId">-->
-    <!--          <el-input v-model="dataForm.transitId"/>-->
-    <!--        </el-form-item>-->
-    <!--        <el-form-item label="用户订单号" prop="orderSn">-->
-    <!--          <el-input v-model="dataForm.orderSn"/>-->
-    <!--        </el-form-item>-->
-    <!--        <el-form-item label="运输状态" prop="shipStatus">-->
-    <!--          <el-input v-model="dataForm.shipStatus"/>-->
-    <!--        </el-form-item>-->
-    <!--        <el-form-item label="创建时间" prop="detailCreateTime">-->
-    <!--          <el-input v-model="dataForm.detailCreateTime"/>-->
-    <!--        </el-form-item>-->
-    <!--      </el-form>-->
-    <!--      <div slot="footer" class="dialog-footer">-->
-    <!--        <el-button @click="dialogFormVisible = false">取消</el-button>-->
-    <!--        <el-button v-else type="primary" @click="updateData">确定</el-button>-->
-    <!--      </div>-->
-    <!--    </el-dialog>-->
-
   </div>
 </template>
 
@@ -181,14 +135,41 @@
 </style>
 
 <script>
-import { listLogisticsOrder, FindLogisticsTransit } from '@/api/logistics'
+import { listLogisticsOrder, FindLogisticsTransitDetail } from '@/api/logistics'
 import { uploadPath } from '@/api/storage'
 import { getToken } from '@/utils/auth'
 import Pagination from '@/components/Pagination' // Secondary package based on el-pagination
 
+const statusMap = {
+  0: '未审核',
+  1: '未备货',
+  2: '已备货',
+  3: '未派送',
+  4: '已发货',
+  5: '已收货',
+  6: '手动收货',
+  7: '待支付',
+  8: '取消订单',
+  9: '订单超时',
+  10: '交易完成'
+}
+const detailMap = {
+  0: '在途中',
+  1: '派送完成'
+}
+
 export default {
   name: 'LogisticsOrder',
   components: { Pagination },
+  filters: {
+    orderStatusFilter(status) {
+      return statusMap[status]
+    },
+    detailStatusFilter(status) {
+      return detailMap[status]
+    }
+  },
+
   data() {
     return {
       uploadPath,
@@ -220,8 +201,7 @@ export default {
       dialogFormVisible: false,
       dialogStatus: '',
       textMap: {
-        update: '编辑订单信息',
-        create: '添加车辆信息'
+        update: '编辑订单信息'
       },
       rules: {
         licensePlateNumber: [
@@ -268,17 +248,17 @@ export default {
     /*
       查询detail
        */
-    getDetailList() {
-      FindLogisticsTransit(this.dataForm.transitId)
-        .then(response => {
-          this.logisticsDetailList = response.data.data.list
-          this.total = response.data.data.total
-        })
-        .catch(() => {
-          this.list = []
-          this.total = 0
-        })
-    },
+    // getDetailList() {
+    //   FindLogisticsTransit(this.dataForm.transitId)
+    //     .then(response => {
+    //       this.logisticsDetailList = response.data.data.list
+    //       this.total = response.data.data.total
+    //     })
+    //     .catch(() => {
+    //       this.list = []
+    //       this.total = 0
+    //     })
+    // },
 
     handleFilter() {
       this.listQuery.page = 1
@@ -299,19 +279,15 @@ export default {
         shipStatus: undefined
       }
     },
-    handleCreate() {
-      this.resetForm()
-      this.dialogStatus = 'create'
-      this.dialogFormVisible = true
-      this.$nextTick(() => {
-        this.$refs['dataForm'].clearValidate()
-      })
-    },
+
     uploadUrl: function(response) {
       this.dataForm.url = response.data.url
     },
     handleUpdate(row) {
-      FindLogisticsTransit(row).then(response => {
+      this.dataForm.transitId = row.transitId
+
+      FindLogisticsTransitDetail(this.dataForm).then(response => {
+        this.logisticsDetailList = response.data.data.list
         this.$notify.success({
           title: '成功',
           message: '查找成功'
@@ -323,8 +299,7 @@ export default {
           message: response.data.errmsg
         })
       })
-
-      this.dataForm = Object.assign({}, row)
+      // this.dataForm = Object.assign({}, row)
       this.dialogStatus = 'update'
       this.dialogFormVisible = true
       this.$nextTick(() => {
@@ -362,22 +337,26 @@ export default {
       this.downloadLoading = true
         import('@/vendor/Export2Excel').then(excel => {
           const tHeader = [
-            '所属公司ID',
+            '物流订单编号',
+            '所属物流公司ID',
             '车牌号',
             '司机',
-            '联系电话',
-            '载重量（kg）',
+            '运费',
+            '物流派送状态',
+            '创建时间',
             '创建人'
           ]
           const filterVal = [
+            'transitId',
             'companyId',
             'licensePlateNumber',
             'driver',
-            'phone',
-            'load',
+            'freight',
+            'transitStatus',
+            'createTime',
             'createUser'
           ]
-          excel.export_json_to_excel2(tHeader, this.list, filterVal, '车辆配置信息')
+          excel.export_json_to_excel2(tHeader, this.list, filterVal, '物流订单信息')
           this.downloadLoading = false
         })
     }

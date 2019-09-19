@@ -45,7 +45,7 @@ public class LitemallLogisticsTrucksService {
         List<LitemallLogicsticsTransport> litemallLogicsticsTransports = transportMapper.selectByExample(example);
         System.out.println(litemallLogicsticsTransports);
         if(litemallLogicsticsTransports.size()==0){
-            return trucksMapper.updateByPrimaryKey(trucks);
+            return trucksMapper.updateByPrimaryKeySelective(trucks);
         }else {
             //获得最近创建的订单信息
             LitemallLogicsticsTransport litemallLogicsticsTransport1 = litemallLogicsticsTransports.get(0);

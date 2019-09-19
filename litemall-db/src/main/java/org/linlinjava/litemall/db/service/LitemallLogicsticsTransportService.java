@@ -65,13 +65,14 @@ public class LitemallLogicsticsTransportService {
     public List<LitemallLogicsticsTransport> list(String orderId,String transitId,String companyId,String thirdOrder,String licensePlateNumber,int page,int limit){
         LitemallLogicsticsTransportExample example = new LitemallLogicsticsTransportExample();
         LitemallLogicsticsTransportExample.Criteria criteria = example.createCriteria();
-        if(!StringUtil.isEmpty(orderId)){
+        if(!StringUtil.isEmpty(transitId)){
             criteria.andTransitIdEqualTo(transitId);
+        }
+        if(!StringUtil.isEmpty(licensePlateNumber)){
+            criteria.andLicensePlateNumberEqualTo(licensePlateNumber);
         }
         PageHelper.startPage(page, limit);
         List<LitemallLogicsticsTransport> litemallLogicsticsTransports = transportMapper.selectByExampleSelective(example);
-
-        System.out.println(litemallLogicsticsTransports);
         return litemallLogicsticsTransports;
     }
 }

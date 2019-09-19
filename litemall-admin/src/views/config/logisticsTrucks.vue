@@ -50,7 +50,9 @@
 
       <el-table-column align="center" label="载重量(kg)" prop="load"/>
 
-      <el-table-column align="center" label="所属地区" prop="province" />
+      <el-table-column align="center" label="所属地区" prop="province,city,area">
+        <template slot-scope="scope"> {{ scope.row.province }}{{ scope.row.city }}{{ scope.row.area }} </template>
+      </el-table-column>
 
       <el-table-column align="center" label="车辆状态" prop="vehicle">
         <template slot-scope="scope">
@@ -87,7 +89,7 @@
       :limit.sync="listQuery.limit"
       @pagination="getList"/>
 
-    <!-- 添加或修改对话框 -->
+    <!-- 添加对话框 -->
     <el-dialog :title="textMap[dialogStatus]" :visible.sync="dialogFormVisible">
       <el-form
         ref="dataForm"
@@ -104,7 +106,6 @@
 
         <el-form-item label="所属物流公司" prop="companyId">
           <el-select v-model="dataForm.companyId">
-            <!--            <el-option v-for="item in logisticsList" :key="item.id" :label="item.label"  value="item.id" :value="item.name" />-->
             <el-option v-for="item in logisticsList" :key="item.id" :label="item.label" :value="item.id">{{ item.name }}
             </el-option>
           </el-select>
@@ -127,7 +128,6 @@
       <div slot="footer" class="dialog-footer">
         <el-button @click="dialogFormVisible = false">取消</el-button>
         <el-button v-if="dialogStatus=='create'" type="primary" @click="createData">确定</el-button>
-        <el-button v-else type="primary" @click="updateData">确定</el-button>
       </div>
     </el-dialog>
 
@@ -148,7 +148,6 @@
 
         <el-form-item label="所属物流公司" prop="companyId">
           <el-select v-model="dataForm.companyId">
-            <!--            <el-option v-for="item in logisticsList" :key="item.id" :label="item.label"  value="item.id" :value="item.name" />-->
             <el-option v-for="item in logisticsList" :key="item.id" :label="item.label" :value="item.id">{{ item.name }}
             </el-option>
           </el-select>
@@ -226,8 +225,6 @@ import {
 import { uploadPath } from '@/api/storage'
 import { getToken } from '@/utils/auth'
 import Pagination from '@/components/Pagination' // Secondary package based on el-pagination
-import { listRegion } from '@/api/region'
-
 import VDistpicker from 'v-distpicker'
 
 export default {
@@ -286,8 +283,6 @@ export default {
         ]
       },
       downloadLoading: false
-
-      // select: { province: '广东省', city: '广州市', area: '海珠区' },
     }
   },
   computed: {
@@ -300,7 +295,6 @@ export default {
   created() {
     this.getList()
     this.init()
-    this.getAreaList()
   },
   methods: {
     init: function() {
@@ -325,17 +319,6 @@ export default {
           this.listLoading = false
         })
     },
-
-    getAreaList() {
-      listRegion().then(response => {
-        this.regionList = response.data.data.list
-        this.listLoading = false
-      }).catch(() => {
-        this.regionList = []
-        this.listLoading = false
-      })
-    },
-
     handleFilter() {
       this.listQuery.page = 1
       this.getList()
@@ -375,9 +358,11 @@ export default {
             .then(response => {
               this.list.unshift(response.data.data)
               this.dialogFormVisible = false
+              this.getList()
               this.$notify.success({
                 title: '成功',
                 message: '创建成功'
+
               })
             })
             .catch(response => {
@@ -417,6 +402,7 @@ export default {
                 }
               }
               this.ModifyDialogFormVisible = false
+              this.getList()
               this.$notify.success({
                 title: '成功',
                 message: '更新成功'

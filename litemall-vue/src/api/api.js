@@ -1,6 +1,97 @@
 import request from '@/utils/request'
 
+/*
+添加门店人员
+ */
+const AddMerchantUser='wx/store/addMerchantUser';
+export function addMerchantUser(data) {
+  return request({
+    url: AddMerchantUser,
+    method: 'post',
+    data
+  })
+}
+/*
+查看门店中创建人的信息
+ */
+const FindMerchantLeader='wx/store/findMerchantLeader';
+export function findMerchantLeader(data) {
+  return request({
+    url: FindMerchantLeader,
+    method: 'post',
+    data
+  })
+}
 
+/*
+用户修改门店中人员的信息
+ */
+const UpdateUserStore='wx/store/updateUserStore';
+export function updateUserStore(data) {
+  return request({
+    url: UpdateUserStore,
+    method: 'post',
+    data
+  })
+}
+/*
+用户查看门店中人员的所有信息
+ */
+const ListUserStore='wx/store/listUserStore';
+export function listUserStore(data) {
+  return request({
+    url: ListUserStore,
+    method: 'post',
+    data
+  })
+}
+
+/*
+用户创建门店
+ */
+const MerchantCreate='wx/store/create';
+export function merchantCreate(data) {
+  return request({
+    url: MerchantCreate,
+    method: 'post',
+    data
+  })
+}
+
+/*
+修改门店信息
+ */
+const MerchantUpdate='wx/store/update';
+export function merchantUpdate(data) {
+  return request({
+    url: MerchantUpdate,
+    method: 'post',
+    data
+  })
+}
+
+/*
+查询当前用户的具体门店信息
+ */
+const MerchantDetail='wx/store/detail';
+export function merchantDetail(data) {
+  return request({
+    url: MerchantDetail,
+    method: 'post',
+    data
+  })
+}
+
+/*
+查询当前所有用户的门店
+ */
+const MerchantList='wx/store/list';
+export function merchantList(data) {
+  return request({
+    url: MerchantList,
+    method: 'post',
+  })
+}
 
 /*
  检测手机号是否可用
@@ -460,3 +551,11 @@ export function getList(api, query) {
 }
 
 export const REFUND_LIST = '';
+
+const NxtJsServlet='NxtJsServlet';
+export function getMobiles(token) {//设备指纹对接获取要显示的手机号
+  return request({
+    url: NxtJsServlet+'?mode=getMobiles&'+token,
+    method: 'get'
+  })
+}

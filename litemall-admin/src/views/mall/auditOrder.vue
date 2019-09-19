@@ -24,7 +24,7 @@
         class="filter-item"
         type="primary"
         icon="el-icon-download"
-        @click="shipDialogVisible=true">发货
+        @click="speedupCheckbox">发货
       </el-button>
     </div>
     <!-- 查询结果 -->
@@ -48,17 +48,15 @@
           <el-tag>{{ scope.row.orderStatus | orderStatusFilter }}</el-tag>
         </template>
       </el-table-column>
-
-      <el-table-column align="center" label="订单金额" prop="orderPrice"/>
-
       <el-table-column align="center" label="支付金额" prop="actualPrice"/>
 
       <el-table-column align="center" label="支付时间" prop="payTime"/>
 
-      <el-table-column align="center" label="物流单号" prop="shipSn"/>
+      <el-table-column align="center" label="收货人" prop="consignee"/>
 
-      <el-table-column align="center" label="物流渠道" prop="shipChannel"/>
+      <el-table-column align="center" label="收货人联系电话" prop="mobile"/>
 
+      <el-table-column align="center" label="收货地址" prop="address"/>
     </el-table>
     <pagination
       v-show="total>0"
@@ -75,11 +73,17 @@
         label-position="left"
         label-width="100px"
         style="width: 400px; margin-left:50px;">
-        <el-form-item label="物流公司编号" prop="companyId">
-          <el-input v-model="shipForm.companyId"/>
+        <el-form-item label="发货物流公司" prop="companyId">
+          <el-select v-model="shipForm.companyId" @change="checkLicensePlateNumber">
+            <el-option v-for="item in logisticsList" :key="item.id" :label="item.label" :value="item.id">{{ item.name }}
+            </el-option>
+          </el-select>
         </el-form-item>
-        <el-form-item label="车辆牌照" prop="licensePlateNumber">
-          <el-input v-model="shipForm.licensePlateNumber"/>
+        <el-form-item label="运输车辆牌照" prop="companyId">
+          <el-select v-model="shipForm.licensePlateNumber">
+            <el-option v-for="item in logisticsTrucksList" :key="item.licensePlateNumber" :label="item.label" :value="item.licensePlateNumber">{{ item.licensePlateNumber }}
+            </el-option>
+          </el-select>
         </el-form-item>
         <el-form-item label="运费" prop="freight">
           <el-input v-model="shipForm.freight"/>
@@ -96,7 +100,7 @@
 
 <script>
 import { shipOrder, checkDeliveryOrder } from '@/api/order'
-import { createOrder } from '@/api/logistics'
+import { createOrder, listLogistics, listLogisticsTrucks } from '@/api/logistics'
 import Pagination from '@/components/Pagination' // Secondary package based on el-pagination
 import checkPermission from '@/utils/permission' // 权限判断函数
 const statusMap = {
@@ -124,6 +128,8 @@ export default {
   data() {
     return {
       list: [],
+      logisticsList: [],
+      logisticsTrucksList: [],
       total: 0,
       listLoading: true,
       listQuery: {
@@ -163,19 +169,36 @@ export default {
         licensePlateNumber: undefined,
         freight: undefined
       },
+
       shipDialogVisible: false,
       refundForm: {
         orderId: undefined,
         refundMoney: undefined
       },
       refundDialogVisible: false,
-      downloadLoading: false
+      downloadLoading: false,
+      dForm: {
+        companyId: undefined
+      }
     }
   },
   created() {
     this.getList()
+    this.init()
   },
   methods: {
+    init: function() {
+      listLogistics().then(response => {
+        this.logisticsList = response.data.data.list
+      })
+    },
+
+    checkLicensePlateNumber() {
+      this.dForm.companyId = this.shipForm.companyId
+      listLogisticsTrucks(this.dForm).then(response => {
+        this.logisticsTrucksList = response.data.data.list
+      })
+    },
 
     handleSelectionChange(val) {
       this.multipleSelection = val
@@ -229,7 +252,8 @@ export default {
           type: 'warning'
         })
       } else {
-        this.speedupData()
+        // this.speedupData()
+        this.shipDialogVisible = true
       }
     },
 
@@ -251,10 +275,6 @@ export default {
       this.getList()
     },
     handleShip() {
-      // this.shipForm.companyId = row.companyId
-      // this.shipForm.licensePlateNumber = row.licensePlateNumber
-      // this.shipForm.freight = row.freight
-
       this.shipDialogVisible = true
       this.$nextTick(() => {
         this.$refs['shipForm'].clearValidate()
@@ -283,9 +303,9 @@ export default {
     handleDownload() {
       this.downloadLoading = true
         import('@/vendor/Export2Excel').then(excel => {
-          const tHeader = ['订单ID', '订单编号', '用户ID', '订单状态', '是否删除', '收货人', '收货联系电话', '收货地址']
-          const filterVal = ['id', 'orderSn', 'userId', 'orderStatus', 'isDelete', 'consignee', 'mobile', 'address']
-          excel.export_json_to_excel2(tHeader, this.list, filterVal, '订单信息')
+          const tHeader = ['订单编号', '用户ID', '订单状态', '收货人', '收货联系电话', '收货地址']
+          const filterVal = ['orderSn', 'userId', 'orderStatus', 'consignee', 'mobile', 'address']
+          excel.export_json_to_excel2(tHeader, this.list, filterVal, '待发货订单信息')
           this.downloadLoading = false
         })
     }
