@@ -1,0 +1,71 @@
+<view class="container">
+  <view class="orders-switch">
+    <view class="item {{ showType == 0 ? 'active' : ''}}" bindtap="switchTab" data-index='0'>
+      <view class="txt">门店信息</view>
+    </view>
+    <view class="item {{ showType == 1 ? 'active' : ''}}" bindtap="switchTab" data-index='1'>
+      <view class="txt">人员信息</view>
+    </view>
+  </view>
+  <view class="orders" wx:if="{{showType==0}}">
+    <navigator url="../merchantUpdate/merchantUpdate?id={{merchantInfo.id}}" class="order" open-type="redirect" wx:key="id">
+      <view class="h">
+        <view class="l">门店名称：{{merchantInfo.merchantName}}</view>
+        <view class="r">编辑</view>
+      </view>
+      <view class="h">
+        <view class="l">门店地址：{{merchantInfo.merchantAddress}}</view>
+        <view class="r">编辑</view>
+      </view>
+      <view class="h">
+        <view class="l">门店负责人：{{merchantInfo.merchantLeader}}</view>
+        <view class="r">编辑</view>
+      </view>
+      <view class="h">
+        <view class="l">门店电话：{{merchantInfo.merchantPhone}}</view>
+        <view class="r">编辑</view>
+      </view>
+      <view class="h">
+        <view class="l">门店营业执照：{{merchantInfo.merchantCode}}</view>
+        <view class="r">编辑</view>
+      </view>
+      <view class="h">
+        <view class="l">门店照片：{{merchantInfo.merchantPic}}</view>
+        <view class="r">编辑</view>
+      </view>
+    </navigator>
+  </view>
+  <view class="orders" wx:if="{{showType==1}}">
+    <view class="order">
+      <view class="h">
+        <view class="l">
+          <view class="l">{{merchantLeaderInfo.merchantLeader}}</view>
+          <view class="l">(创建人)</view>
+          <view class="l"> {{merchantLeaderInfo.merchantPhone}}</view>
+        </view>
+      </view>
+    </view>
+    <view class="order" wx:for="{{userList}}" wx:key="id">
+      <view class="h">
+        <view class="l">
+          <view class="l">{{item.name}}</view>
+          <view class="l" wx:if="{{item.roleType==0}}">(管理员)</view>
+          <view class="l" wx:if="{{item.roleType==1}}">(厨师)</view>
+          <view class="l" wx:if="{{item.roleType==2}}">(店员)</view>
+          <view class="l"> {{item.mobile}}</view>
+        </view>
+        <view class="r">
+          <navigator url="../merchantUserUpdate/merchantUserUpdate?uId={{item.uId}}">编辑</navigator>
+        </view>
+      </view>
+    </view>
+    <view class="" wx:for="{{userList}}" wx:key="id">
+      <view class="">
+        <navigator url="../merchantUserAdd/merchantUserAdd?storeId={{item.storeId}}">
+          <view class="add-address">新增店员</view>
+        </navigator>
+      </view>
+    </view>
+  </view>
+
+</view>

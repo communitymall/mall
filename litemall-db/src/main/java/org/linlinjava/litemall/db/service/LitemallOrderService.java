@@ -12,10 +12,7 @@ import javax.annotation.Resource;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
+import java.util.*;
 
 @Service
 public class LitemallOrderService {
@@ -73,19 +70,20 @@ public class LitemallOrderService {
         example.setOrderByClause(LitemallOrder.Column.addTime.desc());
         LitemallOrderExample.Criteria criteria = example.or();
         criteria.andUserIdEqualTo(userId);
-
-        System.out.println(orderStatus);
-        System.out.println(payStatus);
-
         if (orderStatus != null) {
+            if(orderStatus.get(0)==2){
+                List<Short> list = new LinkedList<>();
+                list.add((short)1);
+                list.add((short)2);
+                list.add((short)3);
+                criteria.andOrderStatusIn(list);
+            }
             criteria.andOrderStatusIn(orderStatus);
        }
-
         //添加支付方式的判断
-        if(payStatus!=null){
-           criteria.andPayTypeEqualTo(payStatus);
-        }
-
+//        if(payStatus!=null){
+//            criteria.andPayTypeEqualTo(payStatus);
+//        }
         criteria.andDeletedEqualTo(false);
         if (!StringUtils.isEmpty(sort) && !StringUtils.isEmpty(order)) {
             example.setOrderByClause(sort + " " + order);

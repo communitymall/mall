@@ -7,7 +7,7 @@ const UserHelp = () => import('@/views/user/module-help');
 const UserFeedback = () => import('@/views/user/module-feedback');
 
 const UserMerchant = () => import('@/views/user/module-merchant');
-const UserAddMerchant = () => import('@/views/user/module-merchant/addMerchant')
+const UserAddMerchant = () => import('@/views/user/module-merchant/addMerchant');
 
 const UserMerchantDetail = () => import('@/views/user/module-merchant-detail');
 const UserSetMerchantName= () => import('@/views/user/module-merchant-detail/detail-setMerchantName');
@@ -15,6 +15,8 @@ const UserSetMerchantAddress= () => import('@/views/user/module-merchant-detail/
 const UserSetMerchantLeader= () => import('@/views/user/module-merchant-detail/detail-setMerchantLeader');
 const UserSetMerchantPhone= () => import('@/views/user/module-merchant-detail/detail-setMerchantPhone');
 const UserAddMerchantUser= () => import('@/views/user/module-merchant-detail/detail-addMerchantUser');
+
+const UserSelectMerchant = () => import('@/views/user/module-selectMerchant');
 
 const MerchantSetUser= () => import('@/views/user/module-merchant-detail/detail-setMerchantUser');
 
@@ -71,6 +73,15 @@ export default [
     },
     component: UserMerchantDetail
   },
+  {
+    path: '/user/selectMerchant',
+    name: 'selectMerchant',
+    meta: {
+      login: true
+    },
+    component: UserSelectMerchant
+  },
+
   {
     path: '/user/merchant/detail/detail-setMerchantName',
     name: 'merchant-detail-setMerchantName',

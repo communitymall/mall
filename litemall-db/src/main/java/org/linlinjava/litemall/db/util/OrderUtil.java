@@ -124,13 +124,10 @@ public class OrderUtil {
             handleOption.setCancel(true);
             handleOption.setPay(true);
         } else if (status == 8) {
-            // 订单支付完成，可以取消订单，（在线支付）可以退款,
-            handleOption.setRefund(true);
-        } else if (status == 9 ) {
             // 订单取消，没有操作
-        } else if (status == 10 ) {
+        } else if (status == 9 ) {
             // 订单超时未支付取消订单，没有操作
-        }else if (status == 11 ) {
+        } else if (status == 10 ) {
             // 订单交易完成，不可取消订单，不可退款，可以删除订单，可以评论，可以再次购买
             handleOption.setDelete(true);
             handleOption.setComment(true);
@@ -138,7 +135,6 @@ public class OrderUtil {
         } else {
             throw new IllegalStateException("status不支持");
         }
-
         return handleOption;
     }
 

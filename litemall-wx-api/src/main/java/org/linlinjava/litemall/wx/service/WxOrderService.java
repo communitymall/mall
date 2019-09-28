@@ -103,6 +103,8 @@ public class WxOrderService {
     private LitemallCouponUserService couponUserService;
     @Autowired
     private CouponVerifyService couponVerifyService;
+    @Autowired
+    private  LitemallMerchantService litemallMerchantService;
 
     /**
      * 订单列表
@@ -122,6 +124,15 @@ public class WxOrderService {
         if (userId == null) {
             return ResponseUtil.unlogin();
         }
+        if(showType==0){//查询全部的订单信息
+            showType=-1;
+        }
+        if(showType==1){//查询待支付的订单信息
+            showType=7;
+        }
+        if(showType==3){//查询待收货的订单信息
+            showType=4;
+        }
 
         List<Short> orderStatus = OrderUtil.orderStatus(showType);
         List<LitemallOrder> orderList = orderService.queryByOrderStatus(userId, orderStatus,payStatus, page, limit, sort, order);
@@ -135,7 +146,7 @@ public class WxOrderService {
 
             //订单业务的管理
             orderVo.put("orderStatusText", OrderUtil.orderStatusText(o));
-            // orderVo.put("handleOption", OrderUtil.build(o));
+            orderVo.put("handleOption", OrderUtil.build(o));
 
             LitemallGroupon groupon = grouponService.queryByOrderId(o.getId());
             if (groupon != null) {
@@ -195,7 +206,7 @@ public class WxOrderService {
         orderVo.put("freightPrice", order.getFreightPrice());
         orderVo.put("actualPrice", order.getActualPrice());
         orderVo.put("orderStatusText", OrderUtil.orderStatusText(order));
-        //orderVo.put("handleOption", OrderUtil.build(order));
+        orderVo.put("handleOption", OrderUtil.build(order));
         orderVo.put("expCode", order.getShipChannel());
         orderVo.put("expNo", order.getShipSn());
 
@@ -249,6 +260,9 @@ public class WxOrderService {
         //需要接收出来的支付类型payStatus
         Integer payType = JacksonUtil.parseInteger(body, "payType");
 
+        System.out.println(payType+ "==payType");
+        //收货的门店id
+        String storeId = JacksonUtil.parseString(body, "storeId");
        // 如果是团购项目,验证活动是否有效
         if (grouponRulesId != null && grouponRulesId > 0) {
             LitemallGrouponRules rules = grouponRulesService.queryById(grouponRulesId);
@@ -262,17 +276,23 @@ public class WxOrderService {
             }
         }
 
-        if (cartId == null || addressId == null || couponId == null) {
+//        if (cartId == null || addressId == null || couponId == null) {
+//            return ResponseUtil.badArgument();
+//        }
+        if (cartId == null || storeId == null || couponId == null) {
             return ResponseUtil.badArgument();
         }
-
         // 收货地址
-        System.out.println(userId);
-        System.out.println(addressId);
-        LitemallAddress checkedAddress = addressService.query(userId, addressId);
-        if (checkedAddress == null) {
+//        LitemallAddress checkedAddress = addressService.query(userId, addressId);
+//        if (checkedAddress == null) {
+//            return ResponseUtil.badReceiveAddress();
+//        }
+        //根据收货的门店id查询收货的信息
+        LitemallMerchant detail = litemallMerchantService.detail(Integer.parseInt(storeId));
+        if(detail == null){
             return ResponseUtil.badReceiveAddress();
         }
+
 
         // 团购优惠
         BigDecimal grouponPrice = new BigDecimal(0.00);
@@ -337,11 +357,12 @@ public class WxOrderService {
         order.setUserId(userId);
         order.setOrderSn(orderService.generateOrderSn(userId));
         //order.setOrderStatus(OrderUtil.STATUS_CREATE);
-        order.setConsignee(checkedAddress.getName());
-        order.setMobile(checkedAddress.getTel());
+        //order.setConsignee(checkedAddress.getName());
+        order.setConsignee(detail.getMerchantName());//设置收货人的名称
+        order.setMobile(detail.getMerchantPhone());//设置收货人的电话
         order.setMessage(message);
-        String detailedAddress = checkedAddress.getProvince() + checkedAddress.getCity() + checkedAddress.getCounty() + " " + checkedAddress.getAddressDetail();
-        order.setAddress(detailedAddress);
+        //String detailedAddress = checkedAddress.getProvince() + checkedAddress.getCity() + checkedAddress.getCounty() + " " + checkedAddress.getAddressDetail();
+        order.setAddress(detail.getMerchantAddress());
         order.setGoodsPrice(checkedGoodsPrice);
         order.setFreightPrice(freightPrice);
         order.setCouponPrice(couponPrice);
@@ -349,8 +370,12 @@ public class WxOrderService {
         order.setOrderPrice(orderTotalPrice);
         order.setActualPrice(actualPrice);
 
-        //设置订单的初始状态为 0（未审核）
-        order.setOrderStatus((short)0);
+        //如果是货到付款 设置订单的初始状态为 0（未审核）
+        if(payType==2){
+            order.setOrderStatus((short)0);
+        }else {//设置订单状态为待支付 7
+            order.setOrderStatus((short)7);
+        }
         //设置物流状态为 3（未派送）
         order.setShipStatus(3);
         //设置支付状态为 7（待支付）
@@ -483,7 +508,7 @@ public class WxOrderService {
         }
 
         // 设置订单已取消状态
-        order.setOrderStatus(OrderUtil.STATUS_CANCELLATION);
+        order.setOrderStatus(OrderUtil.STATUS_PAYMENT_COMPLETED);
         order.setEndTime(LocalDateTime.now());
         if (orderService.updateWithOptimisticLocker(order) == 0) {
             throw new RuntimeException("更新数据已失效");
@@ -539,6 +564,7 @@ public class WxOrderService {
 
         LitemallUser user = userService.findById(userId);
         String openid = user.getWeixinOpenid();
+        System.out.println("openid="+openid);
         if (openid == null) {
             return ResponseUtil.fail(AUTH_OPENID_UNACCESS, "订单不能支付");
         }

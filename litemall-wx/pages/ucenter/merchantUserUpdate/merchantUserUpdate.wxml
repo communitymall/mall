@@ -1,0 +1,29 @@
+<view class="add-address">
+  <view class="add-form">
+    <view class="form-item">
+      用户姓名：
+      <input class="input" bindinput="bindinputMerchantUserName" placeholder="请输入名称" value="{{merchantUser.name}}" auto-focus/>
+    </view>
+
+    <view class="form-item">
+      用户角色: <radio-group class="radio-group" bindchange="bindinputMerchantRoleType">
+              <label class="radio" >
+                  管理员<radio value="0" checked=""/>
+              </label>
+              <label class="radio" >
+                  厨师<radio value="1" checked=""/>
+              </label>
+              <label class="radio" >
+                  店员<radio value="2" checked=""/>
+              </label>
+          </radio-group>
+    </view>
+  </view>
+
+  <view class="btns">
+    <button class="cannel" bindtap="cancelAddress">取消</button>
+    <button class="save" bindtap="saveMerchantUser">保存</button>
+  </view>
+
+</view>
+<view class="bg-mask" bindtap="cancelSelectRegion" wx:if="{{openSelectRegion}}"></view>

@@ -41,15 +41,18 @@ public class WxStoreController {
 
     @PostMapping("/create")
     @ResponseBody
-    public Object create(HttpServletRequest request, @RequestBody String  body ){
+    public Object create(HttpServletRequest request, @RequestBody String  body,@LoginUser Integer userId ){
         String merchantAddress = JacksonUtil.parseString(body, "merchantAddress");
         String merchantCode = JacksonUtil.parseString(body, "merchantCode");
         String merchantLeader = JacksonUtil.parseString(body, "merchantLeader");
         String merchantName = JacksonUtil.parseString(body, "merchantName");
         String merchantPhone = JacksonUtil.parseString(body, "merchantPhone");
         String merchantPic = JacksonUtil.parseString(body, "merchantPic");
-        String userId = JacksonUtil.parseString(body, "userId");
-        Object storeId = litemallMerchantService.add(userId,merchantAddress,merchantCode,merchantLeader,merchantName,merchantPhone,merchantPic);
+//        String userId = JacksonUtil.parseString(body, "userId");
+        if (userId == null) {
+            return ResponseUtil.unlogin();
+        }
+        Object storeId = litemallMerchantService.add(String.valueOf(userId),merchantAddress,merchantCode,merchantLeader,merchantName,merchantPhone,merchantPic);
         return ResponseUtil.createStoreOk(storeId);
     }
 

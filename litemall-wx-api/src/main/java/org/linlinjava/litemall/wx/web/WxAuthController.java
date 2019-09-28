@@ -96,40 +96,40 @@ public class WxAuthController {
         }
 
 
-        FwApi fwApi = new FwImpl();
-        // 1 调用【短信防火墙】验证请求
-        HashMap<String, Object> paramMap = fwApi.getLoginReq(request, mobile);
-        String jsonReq = fwApi.req(paramMap);
-        logger.debug("login() fireware res =" + jsonReq);
-        int smsSendRet = fwApi.getRet(jsonReq);
-        if (smsSendRet == 1) {
-            // 2 调用【短信防火墙】失败结果
-            fwApi.fail(paramMap);
-        }
+//        FwApi fwApi = new FwImpl();
+//        // 1 调用【短信防火墙】验证请求
+//        HashMap<String, Object> paramMap = fwApi.getLoginReq(request, mobile);
+//        String jsonReq = fwApi.req(paramMap);
+//        logger.debug("login() fireware res =" + jsonReq);
+//        int smsSendRet = fwApi.getRet(jsonReq);
+//        if (smsSendRet == 1) {
+//            // 2 调用【短信防火墙】失败结果
+//            fwApi.fail(paramMap);
+//        }
         //验证码登录的判断
         if (!(code == null || code.length() <= 0)) {//验证码登录
             String cachedCaptcha = CaptchaCodeManager.getCachedCaptcha(mobile);
             if (StringUtil.isEmpty(cachedCaptcha)) {
                 return ResponseUtil.fail(AUTH_CAPTCHA_UNSUPPORT, "验证码过期或错误！");
             }
-            if (!(code.equals(cachedCaptcha))) {
-                //调用【短信防火墙】失败结果
-                fwApi.fail(paramMap);
-                return ResponseUtil.fail(AUTH_CAPTCHA_UNSUPPORT, "验证码过期或错误！");
-            } else {
-                //调用【短信防火墙】成功结果
-                fwApi.succ(paramMap);
-            }
+//            if (!(code.equals(cachedCaptcha))) {
+//                //调用【短信防火墙】失败结果
+//                fwApi.fail(paramMap);
+//                return ResponseUtil.fail(AUTH_CAPTCHA_UNSUPPORT, "验证码过期或错误！");
+//            } else {
+//                //调用【短信防火墙】成功结果
+//                fwApi.succ(paramMap);
+//            }
         } else {//验证码是空值 ，用手机号与密码登录
             BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-            if (!encoder.matches(password, user.getPassword())) {
-                //调用【短信防火墙】失败结果
-                fwApi.fail(paramMap);
-                return ResponseUtil.fail(AUTH_INVALID_ACCOUNT, "手机号或密码不对");
-            } else {
-                //调用【短信防火墙】成功结果
-                fwApi.succ(paramMap);
-            }
+//            if (!encoder.matches(password, user.getPassword())) {
+//                //调用【短信防火墙】失败结果
+//                fwApi.fail(paramMap);
+//                return ResponseUtil.fail(AUTH_INVALID_ACCOUNT, "手机号或密码不对");
+//            } else {
+//                //调用【短信防火墙】成功结果
+//                fwApi.succ(paramMap);
+//            }
         }
         // 更新登录情况
         user.setLastLoginTime(LocalDateTime.now());
@@ -165,14 +165,13 @@ public class WxAuthController {
      */
     @PostMapping("login_by_weixin")
     public Object loginByWeixin(@RequestBody WxLoginInfo wxLoginInfo, HttpServletRequest request) {
-        //设置测试的验证码
-        String codeTset = "888888";
 
         String code = wxLoginInfo.getCode();
         UserInfo userInfo = wxLoginInfo.getUserInfo();
 
         //输出一下信息
         System.out.println(userInfo);
+        System.out.println(code+"====code");
         if (code == null || userInfo == null) {
             return ResponseUtil.badArgument();
         }

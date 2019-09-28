@@ -54,11 +54,11 @@ public class OrderJob {
                 // 设置订单已取消状态
                 order.setOrderStatus(OrderUtil.STATUS_CANCELLATION);
                 order.setEndTime(LocalDateTime.now());
+                logger.info("订单 ID" + order.getId() + " 已经超期自动取消订单");
             }
             if (orderService.updateWithOptimisticLocker(order) == 0) {
                 throw new RuntimeException("更新数据已失效");
             }
-
             // 商品货品数量增加
             Integer orderId = order.getId();
             List<LitemallOrderGoods> orderGoodsList = orderGoodsService.queryByOid(orderId);
@@ -69,7 +69,7 @@ public class OrderJob {
                     throw new RuntimeException("商品货品库存增加失败");
                 }
             }
-            logger.info("订单 ID" + order.getId() + " 已经超期自动取消订单");
+
         }
     }
 

@@ -19,7 +19,11 @@ Page({
     couponId: 0,
     message: '',
     grouponLinkId: 0, //参与的团购，如果是发起则为0
-    grouponRulesId: 0 //团购规则ID
+    grouponRulesId: 0, //团购规则ID
+
+    storeId: 0,
+    merchantInfo: {},
+    payType: 0,
   },
   onLoad: function(options) {
     // 页面初始化 options为页面跳转所带来的参数
@@ -32,7 +36,8 @@ Page({
       cartId: that.data.cartId,
       addressId: that.data.addressId,
       couponId: that.data.couponId,
-      grouponRulesId: that.data.grouponRulesId
+      grouponRulesId: that.data.grouponRulesId,
+
     }).then(function(res) {
       if (res.errno === 0) {
         that.setData({
@@ -53,16 +58,41 @@ Page({
       wx.hideLoading();
     });
   },
+
+  //获取收货门店的信息
+  getMerchantInfo(options){
+    let that = this;
+    util.request(api.MerchantDetail, {
+      storeId: this.options.storeId
+    }, 'POST').then(function (res) {
+      if (res.errno === 0) {
+        //console.log(res.data);
+        that.setData({
+          merchantInfo: res.data,
+        });
+      }
+    });
+  },
+
+
   selectAddress() {
     wx.navigateTo({
-      url: '/pages/ucenter/address/address',
+      url: '/pages/ucenter/selectMerchant/selectMerchant',
     })
   },
+
+
   selectCoupon() {
     wx.navigateTo({
       url: '/pages/ucenter/couponSelect/couponSelect',
     })
   },
+  selectPayType() {
+    wx.navigateTo({
+      url: '/pages/ucenter/payTypeSelect/payTypeSelect',
+    })
+  },
+
   bindMessageInput: function(e) {
     this.setData({
       message: e.detail.value
@@ -73,6 +103,10 @@ Page({
 
   },
   onShow: function() {
+
+    this.getMerchantInfo();
+
+    
     // 页面显示
     wx.showLoading({
       title: '加载中...',
@@ -99,12 +133,25 @@ Page({
         grouponLinkId = 0;
       }
 
+      var storeId = wx.getStorageSync('storeId');
+      if (storeId === "") {
+        storeId = 0;
+      }
+
+      var payType = wx.getStorageSync('payType');
+      if (payType === "") {
+        payType = 0;
+      } 
+
       this.setData({
         cartId: cartId,
         addressId: addressId,
         couponId: couponId,
         grouponRulesId: grouponRulesId,
-        grouponLinkId: grouponLinkId
+        grouponLinkId: grouponLinkId,
+
+        storeId: storeId,
+        payType: payType,
       });
 
     } catch (e) {
@@ -128,6 +175,8 @@ Page({
       return false;
     }
     util.request(api.OrderSubmit, {
+      payType:this.data.payType,
+      storeId: this.data.storeId,
       cartId: this.data.cartId,
       addressId: this.data.addressId,
       couponId: this.data.couponId,

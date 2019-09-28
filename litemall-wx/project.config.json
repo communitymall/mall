@@ -1,17 +1,35 @@
 {
-	"description": "项目配置文件。",
+	"description": "项目配置文件",
+	"packOptions": {
+		"ignore": []
+	},
 	"setting": {
 		"urlCheck": false,
 		"es6": true,
 		"postcss": true,
 		"minified": true,
 		"newFeature": true,
-		"uglifyFileName": true
+		"coverView": true,
+		"autoAudits": false,
+		"uglifyFileName": true,
+		"checkInvalidKey": true,
+		"checkSiteMap": true,
+		"uploadWithSourceMap": true,
+		"babelSetting": {
+			"ignore": [],
+			"disablePlugins": [],
+			"outputPath": ""
+		}
 	},
 	"compileType": "miniprogram",
 	"libVersion": "2.4.0",
 	"appid": "wx60829c7a9b2bcddb",
 	"projectname": "litemall-wx",
+	"cloudfunctionTemplateRoot": "",
+	"debugOptions": {
+		"hidedInDevtools": []
+	},
+	"scripts": {},
 	"simulatorType": "wechat",
 	"simulatorPluginLibVersion": {},
 	"condition": {
@@ -31,7 +49,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 22,
+			"current": 42,
 			"list": [
 				{
 					"id": -1,
@@ -266,6 +284,33 @@
 					"name": "帮助中心",
 					"pathName": "pages/help/help",
 					"query": "",
+					"scene": null
+				},
+				{
+					"id": 39,
+					"name": "门店详情",
+					"pathName": "pages/ucenter/merchantDetail/merchantDetail",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "门店管理",
+					"pathName": "pages/ucenter/merchant/merchant",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "选择收货门店",
+					"pathName": "pages/ucenter/selectMerchant/selectMerchant",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "选择支付类型",
+					"pathName": "pages/ucenter/payTypeSelect/payTypeSelect",
 					"scene": null
 				}
 			]

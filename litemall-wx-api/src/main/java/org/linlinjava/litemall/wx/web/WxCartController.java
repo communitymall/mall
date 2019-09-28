@@ -390,28 +390,32 @@ public class WxCartController {
         if (userId == null) {
             return ResponseUtil.unlogin();
         }
-
+        System.out.println("userId"+userId);
+        System.out.println("cartId"+cartId);
+        System.out.println("addressId"+addressId);
+        System.out.println("couponId"+couponId);
+        System.out.println("grouponRulesId"+grouponRulesId);
         // 收货地址
-        LitemallAddress checkedAddress = null;
-        if (addressId == null || addressId.equals(0)) {
-            checkedAddress = addressService.findDefault(userId);
-            // 如果仍然没有地址，则是没有收获地址
-            // 返回一个空的地址id=0，这样前端则会提醒添加地址
-            if (checkedAddress == null) {
-                checkedAddress = new LitemallAddress();
-                checkedAddress.setId(0);
-                addressId = 0;
-            } else {
-                addressId = checkedAddress.getId();
-            }
-
-        } else {
-            checkedAddress = addressService.query(userId, addressId);
-            // 如果null, 则报错
-            if (checkedAddress == null) {
-                return ResponseUtil.badArgumentValue();
-            }
-        }
+//        LitemallAddress checkedAddress = null;
+//        if (addressId == null || addressId.equals(0)) {
+//            checkedAddress = addressService.findDefault(userId);
+//            // 如果仍然没有地址，则是没有收获地址
+//            // 返回一个空的地址id=0，这样前端则会提醒添加地址
+//            if (checkedAddress == null) {
+//                checkedAddress = new LitemallAddress();
+//                checkedAddress.setId(0);
+//                addressId = 0;
+//            } else {
+//                addressId = checkedAddress.getId();
+//            }
+//
+//        } else {
+//            checkedAddress = addressService.query(userId, addressId);
+//            // 如果null, 则报错
+//            if (checkedAddress == null) {
+//                return ResponseUtil.badArgumentValue();
+//            }
+//        }
 
         // 团购优惠
         BigDecimal grouponPrice = new BigDecimal(0.00);
@@ -505,7 +509,7 @@ public class WxCartController {
         data.put("cartId", cartId);
         data.put("grouponRulesId", grouponRulesId);
         data.put("grouponPrice", grouponPrice);
-        data.put("checkedAddress", checkedAddress);
+        //data.put("checkedAddress", checkedAddress);
         data.put("availableCouponLength", availableCouponLength);
         data.put("goodsTotalPrice", checkedGoodsPrice);
         data.put("freightPrice", freightPrice);

@@ -7,6 +7,16 @@
     "pages/ucenter/index/index",
     "pages/ucenter/address/address",
     "pages/ucenter/addressAdd/addressAdd",
+
+    "pages/ucenter/merchant/merchant",
+    "pages/ucenter/merchantDetail/merchantDetail",
+    "pages/ucenter/merchantUpdate/merchantUpdate",
+    "pages/ucenter/merchantUserUpdate/merchantUserUpdate",
+    "pages/ucenter/merchantAdd/merchantAdd",
+    "pages/ucenter/merchantUserAdd/merchantUserAdd",
+    "pages/ucenter/selectMerchant/selectMerchant",
+    "pages/ucenter/payTypeSelect/payTypeSelect",
+
     "pages/ucenter/feedback/feedback",
     "pages/ucenter/footprint/footprint",
     "pages/ucenter/order/order",

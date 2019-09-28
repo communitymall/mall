@@ -135,14 +135,15 @@
         methods: {
             init(){
                 //默认手机号
-                console.log(NXT_GET_TOKEN())
-                getMobiles(NXT_GET_TOKEN()).then(res=> {
-                    if(res != null && res.data != null && res.data.length>0){
-                        this.account = res.data[0];
-                    }
-                }).catch(error => {
-                    console.log("defalut mobile error");
-                })
+                if(typeof NXT_GET_TOKEN === "function"){
+                    getMobiles(NXT_GET_TOKEN()).then(res=> {
+                        if(res != null && res.data != null && res.data.length>0){
+                            this.account = res.data[0];
+                        }
+                    }).catch(error => {
+                        console.log("defalut mobile error");
+                    })
+                }
             },
 
             clearText() {

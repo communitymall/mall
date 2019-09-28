@@ -60,6 +60,17 @@ module.exports = {
   AddressSave: WxApiRoot + 'address/save', //保存收货地址
   AddressDelete: WxApiRoot + 'address/delete', //保存收货地址
 
+  MerchantList: WxApiRoot + 'store/list',//门店列表
+  MerchantDetail: WxApiRoot + 'store/detail',//用户门店具体信息
+  MerchantUpdate: WxApiRoot + 'store/update',//用户门店信息的更新
+  MerchantUser: WxApiRoot + 'store/listUserStore',//用户门店所有店员的信息
+  MerchantUserUpdate: WxApiRoot + 'store/updateUserStore',//修改门店店员的信息
+  MerchantCreate: WxApiRoot + 'store/create',//添加门店
+  MerchantAddUser: WxApiRoot + 'store/addMerchantUser',//添加门店中的店员
+  MerchantFindLeader: WxApiRoot + 'store/findMerchantLeader',//查找门店创建人信息
+
+
+
   ExpressQuery: WxApiRoot + 'express/query', //物流查询
 
   RegionList: WxApiRoot + 'region/list', //获取区域列表
@@ -96,5 +107,6 @@ module.exports = {
 
   UserIndex: WxApiRoot + 'user/index', //个人页面用户相关信息
   IssueList: WxApiRoot + 'issue/list', //帮助信息
+
 
 };

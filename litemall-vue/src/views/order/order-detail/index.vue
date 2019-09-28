@@ -13,7 +13,7 @@
         <van-cell title="商品金额">
           <span class="red">{{orderInfo.goodsPrice * 100 | yuan}}</span>
         </van-cell>
-        <van-cell title="快递费用">
+        <van-cell title="运输费用">
           <span class="red">{{orderInfo.freightPrice * 100 | yuan}}</span>
         </van-cell>
       </van-cell-group>
@@ -73,10 +73,10 @@
 
     <van-cell-group v-if="showExp()"
                     style="margin-top: 20px;">
-      <van-cell title="快递公司">
+      <van-cell title="物流公司">
         <span>{{orderInfo.expCode }}</span>
       </van-cell>
-      <van-cell title="快递编号">
+      <van-cell title="物流编号">
         <span>{{orderInfo.expNo }}</span>
       </van-cell>
     </van-cell-group>
