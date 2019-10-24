@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import { addressList,merchantList,authInfo } from '@/api/api';
+import { merchantList,authInfo } from '@/api/api';
 import { AddressList, NavBar} from 'vant';
 import { setLocalStorage } from '@/utils/local-storage';
 export default {
@@ -20,7 +20,7 @@ export default {
   },
 
   created() {
-    this.loadAddress();
+    //this.loadAddress();
     this.findM()
     this.getUserInfo();
   },
@@ -62,20 +62,20 @@ export default {
     goback() {
       this.$router.go(-1);
     },
-    loadAddress() {
-      addressList().then(res => {
-        var list = res.data.data.list;
-        for(var i = 0; i < list.length; i++ ){
-          var item = list[i]
-          this.addressList.push({
-            id: item.id,
-            name: item.name,
-            tel: item.tel,
-            address: item.province + item.city + item.county + " " + item.addressDetail
-          })
-        }
-      })
-    }
+    // loadAddress() {
+    //   addressList().then(res => {
+    //     var list = res.data.data.list;
+    //     for(var i = 0; i < list.length; i++ ){
+    //       var item = list[i]
+    //       this.addressList.push({
+    //         id: item.id,
+    //         name: item.name,
+    //         tel: item.tel,
+    //         address: item.province + item.city + item.county + " " + item.addressDetail
+    //       })
+    //     }
+    //   })
+    // }
   },
 
   components: {

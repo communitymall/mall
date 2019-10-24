@@ -6,39 +6,37 @@ var area = require('../../../utils/area.js');
 var app = getApp();
 Page({
   data: {
-    merchantUser: {
-      usId: 0,
-      name: '',
-      roleType: '',
-    },
+    // merchantUser: {
+    //   roleType: '',
+    // },
+    merchantUserInfo: {},
+    roleType: '',
   },
   bindinputMerchantUserName(event) {
-    let merchantUser = this.data.merchantUser;
-    merchantUser.name = event.detail.value;
+    let merchantUserInfo = this.data.merchantUserInfo;
+    merchantUserInfo.name = event.detail.value;
     this.setData({
-      merchantUser: merchantUser
+      merchantUserInfo: merchantUserInfo
     });
   },
   bindinputMerchantRoleType(event) {
-    let merchantUser = this.data.merchantUser;
-    merchantUser.roleType = event.detail.value;
+    let roleType = this.data.roleType;
+    roleType = event.detail.value;
     this.setData({
-      merchantUser: merchantUser
+      roleType: roleType
     });
   },
-  bindinputMerchantAddress(event) {
-    let merchant = this.data.merchant;
-    merchant.merchantAddress = event.detail.value;
+  bindinputMerchantUserMobile(event) {
+    let merchantUserInfo = this.data.merchantUserInfo;
+    merchantUserInfo.mobile = event.detail.value;
     this.setData({
-      merchant: merchant
+      merchantUserInfo: merchantUserInfo
     });
   },
-  
-
-  onLoad: function () {
+  onLoad: function() {
 
   },
-  onReady: function () {
+  onReady: function() {
 
   },
 
@@ -46,50 +44,84 @@ Page({
     wx.navigateBack();
   },
 
-  saveMerchantUser(options) {//保存门店店员信息
-    let merchantUser = this.data.merchantUser;
-    if (merchantUser.name == '') {
+  saveMerchantUser(options) { //保存门店店员信息
+    let merchantUserInfo = this.data.merchantUserInfo;
+    let roleType = this.data.roleType;
+    if (merchantUserInfo.name == '') {
       util.showErrorToast('请输入名称');
       return false;
     }
-
     let that = this;
     util.request(api.MerchantUserUpdate, {
       usId: this.options.uId,
-      name: merchantUser.name,
-      roleType: merchantUser.roleType,
-    }, 'POST').then(function (res) {
+      name: merchantUserInfo.name,
+      roleType: roleType,
+      mobile: merchantUserInfo.mobile,
+    }, 'POST').then(function(res) {
       if (res.errno === 0) {
-        //返回之前，先取出上一页对象，并设置addressId
         var pages = getCurrentPages();
-        var prevPage = pages[pages.length - 2];
+        var prevPage = pages[pages.length - 3];
         console.log(prevPage);
         if (prevPage.route == "pages/checkout/checkout") {
           prevPage.setData({
-
           })
-
           try {
             wx.setStorageSync('merchant', res.data);
           } catch (e) {
-
           }
           console.log("set merchant");
         }
         wx.navigateBack();
       }
     });
-
   },
 
-  onShow: function () {
+  findMerchantUser() {
+    let that = this;
+    util.request(api.MerchantFindUser, {
+      id: this.options.uId,
+    }, 'POST').then(function(res) {
+      if (res.errno === 0) {
+        that.setData({
+          merchantUserInfo: res.data
+        })
+      }
+    });
+  },
+  setRoleType(options) {
+    let roleType = this.data.roleType;
+    let merchantUer = this.data.merchantUer;
+    let that = this;
+    that.setData({
+      roleType: this.options.roleType,
+    });
+  },
+
+  setConsignee(options){//设置默认收货人
+    util.request(api.MerchantSetConsignee,{
+      userId: this.options.uId,
+      storeId: this.options.storeId
+    },'POST').then(function(res){
+      if(res.errno==0){
+        wx.showToast({
+          title: '操作成功！',
+          icon: 'success',
+          duration: 2000
+        })  
+      }
+    })
+  },
+
+  onShow: function() {
+    this.findMerchantUser();
+    this.setRoleType();
     // 页面显示
   },
-  onHide: function () {
+  onHide: function() {
     // 页面隐藏
 
   },
-  onUnload: function () {
+  onUnload: function() {
     // 页面关闭
 
   }

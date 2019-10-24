@@ -1,10 +1,10 @@
 <template>
     <div class="order">
         <van-cell-group>
-            <van-cell v-if="" isLink @click="goAddressList()" title="收货地址">
+            <van-cell v-if="" isLink @click="goAddressList()" title="收货信息">
                 <div slot="label">
                     <div>
-                        <span>{{ merchantInfo.merchantName }} </span>
+                        <span>{{ merchantInfo.merchantLeader }} </span>
                         <span>{{ merchantInfo.merchantPhone }} </span>
                     </div>
                     <div>
@@ -85,7 +85,7 @@
 
     import {Card, Tag, ard, Field, SubmitBar, Toast} from 'vant';
     import {CouponCell, CouponList, Popup} from 'vant';
-    import {cartCheckout, orderSubmit, couponSelectList, merchantDetail} from '@/api/api';
+    import {cartCheckout, orderSubmit, couponSelectList, merchantDetail,findOneMerchantUser} from '@/api/api';
     import {getLocalStorage, setLocalStorage} from '@/utils/local-storage';
     import dayjs from 'dayjs';
 
@@ -101,6 +101,8 @@
                 checkedGoodsList: [],
                 checkedAddress: {},
                 merchantInfo: {}, //门店的信息
+                consigneeInfo: {},//收货人的信息
+                consigneeId: -1,
                 payType: 0, //支付类型
                 availableCouponLength: 0, // 可用的优惠券数量
                 goodsTotalPrice: 0, //商品总价
@@ -158,6 +160,14 @@
                 }).then(res => {
                     // 下单成功，重置下单参数。
                     setLocalStorage({AddressId: 0, CartId: 0, CouponId: 0});
+                    //如果是货到付款的订单，直接跳转到相应的页面
+                    if(this.payType==2){
+                        this.$router.push({
+                            name: 'payResult',
+                            params: {orderId: orderId}
+                        });
+                        return;
+                    };
                     let orderId = res.data.data.orderId;
                     this.$router.push({
                         name: 'payment',
@@ -248,9 +258,24 @@
                         storeId: storeId,
                     }).then(res => {
                         this.merchantInfo = res.data.data;
+                        this.consigneeId =res.data.data.consigneeId;
+                        if(this.consigneeId !=-1){
+                            findOneMerchantUser({
+                                id: this.consigneeId,
+                            }).then(res => {
+                                this.merchantInfo.merchantLeader = res.data.data.name;
+                                this.merchantInfo.merchantPhone = res.data.data.mobile;
+                            }).catch(error => {
+
+                            })
+
+                        }
                     }).catch(error => {
                     })
                 }
+
+
+
             },
             onChange(index) {
                 this.showList = false;

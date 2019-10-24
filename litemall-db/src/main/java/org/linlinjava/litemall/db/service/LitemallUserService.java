@@ -53,6 +53,17 @@ public class LitemallUserService {
         return userMapper.updateByExampleSelective(user,example);
     }
 
+    //微信公众号的绑定
+    public int wxUpdateByMobile(String mobile,String fromUserName){
+        LitemallUser user = new LitemallUser();
+        user.setWeixinOpenid(fromUserName);
+        user.setUpdateTime(LocalDateTime.now());
+        LitemallUserExample example = new LitemallUserExample();
+        LitemallUserExample.Criteria criteria = example.createCriteria();
+        criteria.andMobileEqualTo(mobile);
+        return userMapper.updateByExampleSelective(user,example);
+    }
+
     public List<LitemallUser> querySelective(String username, String mobile, Integer page, Integer size, String sort, String order) {
         LitemallUserExample example = new LitemallUserExample();
         LitemallUserExample.Criteria criteria = example.createCriteria();

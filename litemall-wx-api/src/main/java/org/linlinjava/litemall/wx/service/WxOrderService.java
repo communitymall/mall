@@ -130,7 +130,13 @@ public class WxOrderService {
         if(showType==1){//查询待支付的订单信息
             showType=7;
         }
+        if(showType==2){//查询待发货的订单信息（订单未备货，订单已备货，订单未派送）
+            showType=2;
+        }
         if(showType==3){//查询待收货的订单信息
+            showType=3;
+        }
+        if(showType==4){//查询未审核与审核没有通过的订单信息
             showType=4;
         }
 
@@ -544,6 +550,8 @@ public class WxOrderService {
             return ResponseUtil.unlogin();
         }
         Integer orderId = JacksonUtil.parseInteger(body, "orderId");
+
+        Integer H5 = JacksonUtil.parseInteger(body,"H5");//vue页面的支付的标识
         if (orderId == null) {
             return ResponseUtil.badArgument();
         }
@@ -571,6 +579,10 @@ public class WxOrderService {
         WxPayMpOrderResult result = null;
         try {
             WxPayUnifiedOrderRequest orderRequest = new WxPayUnifiedOrderRequest();
+            //判断是否为H5支付
+            if(H5!=null){
+                orderRequest.setTradeType("MWEB");
+            }
             orderRequest.setOutTradeNo(order.getOrderSn());
             orderRequest.setOpenid(openid);
             orderRequest.setBody("订单：" + order.getOrderSn());
@@ -580,6 +592,8 @@ public class WxOrderService {
             fee = actualPrice.multiply(new BigDecimal(100)).intValue();
             orderRequest.setTotalFee(fee);
             orderRequest.setSpbillCreateIp(IpUtil.getIpAddr(request));
+
+            System.out.println("orderRequest="+orderRequest);
 
             result = wxPayService.createOrder(orderRequest);
 
@@ -668,7 +682,7 @@ public class WxOrderService {
 
         order.setPayId(payId);
         order.setPayTime(LocalDateTime.now());
-        //order.setOrderStatus(OrderUtil.STATUS_PAY);
+        order.setOrderStatus(OrderUtil.STATUS_APPROVED);
         if (orderService.updateWithOptimisticLocker(order) == 0) {
             // 这里可能存在这样一个问题，用户支付和系统自动取消订单发生在同时
             // 如果数据库首先因为系统自动取消订单而更新了订单状态；
@@ -676,12 +690,12 @@ public class WxOrderService {
             // 因此，这里会重新读取数据库检查状态是否是订单自动取消，如果是则更新成支付状态。
             order = orderService.findBySn(orderSn);
             int updated = 0;
-//            if (OrderUtil.isAutoCancelStatus(order)) {
-//                order.setPayId(payId);
-//                order.setPayTime(LocalDateTime.now());
-//                order.setOrderStatus(OrderUtil.STATUS_PAY);
-//                updated = orderService.updateWithOptimisticLocker(order);
-//            }
+            if (OrderUtil.isPendingPaymentStatus(order)) {
+                order.setPayId(payId);
+                order.setPayTime(LocalDateTime.now());
+                order.setOrderStatus(OrderUtil.STATUS_APPROVED);
+                updated = orderService.updateWithOptimisticLocker(order);
+            }
 
             // 如果updated是0，那么数据库更新失败
             if (updated == 0) {

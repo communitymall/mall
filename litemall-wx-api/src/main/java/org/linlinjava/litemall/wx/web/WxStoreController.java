@@ -112,6 +112,7 @@ public class WxStoreController {
         String userId = JacksonUtil.parseString(body, "usId");
         String name = JacksonUtil.parseString(body, "name");
         Integer roleType = JacksonUtil.parseInteger(body, "roleType");
+        String mobile = JacksonUtil.parseString(body, "mobile");
         if(StringUtil.isEmpty(userId)){
             return ResponseUtil.fail();
         }
@@ -121,7 +122,7 @@ public class WxStoreController {
         if(StringUtil.isEmpty(String.valueOf(roleType))){
             return ResponseUtil.fail();
         }
-        litemallMerchantService.updateUserStore(userId,name,roleType);
+        litemallMerchantService.updateUserStore(userId,name,roleType,mobile);
         return ResponseUtil.ok();
     }
 
@@ -152,5 +153,35 @@ public class WxStoreController {
             return ResponseUtil.fail();
         }
         return ResponseUtil.ok(litemallMerchantService.addMerchantUser(storeId,name,mobile,roleType));
+    }
+
+    /*
+    查询门店中具体店员的信息
+     */
+    @PostMapping("/findOneMerchantUser")
+    @ResponseBody
+    public Object findOneMerchantUser(HttpServletRequest request, @RequestBody String body){
+        String userId = JacksonUtil.parseString(body, "id");
+        if(StringUtil.isEmpty(userId)){
+            return ResponseUtil.fail();
+        }
+        return ResponseUtil.ok(litemallMerchantService.findOneMerchantUser(userId));
+    }
+
+    /*
+    设置门店默认收货人
+     */
+    @PostMapping("/setConsignee")
+    @ResponseBody
+    public Object setConsignee(HttpServletRequest request, @RequestBody String body){
+        String userId = JacksonUtil.parseString(body, "userId");
+        String storeId = JacksonUtil.parseString(body, "storeId");
+        if(StringUtil.isEmpty(userId)){
+            return ResponseUtil.fail();
+        }
+        if(StringUtil.isEmpty(storeId)){
+            return ResponseUtil.fail();
+        }
+        return ResponseUtil.ok(litemallMerchantService.setConsignee(userId, storeId));
     }
 }

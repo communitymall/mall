@@ -1,6 +1,42 @@
 import request from '@/utils/request'
 
 /*
+通过openId来返回用户的信息进行登录
+ */
+const LoginByOpenid='wx/chat/loginByOpenid';
+export function loginByOpenid(data) {
+  return request({
+    url: LoginByOpenid,
+    method: 'post',
+    data
+  })
+}
+
+/*
+设置门店默认收货人员
+ */
+const SetConsignee='wx/store/setConsignee';
+export function setConsignee(data) {
+  return request({
+    url: SetConsignee,
+    method: 'post',
+    data
+  })
+}
+
+/*
+查询门店店员的具体信息
+ */
+const FindOneMerchantUser='wx/store/findOneMerchantUser';
+export function findOneMerchantUser(data) {
+  return request({
+    url: FindOneMerchantUser,
+    method: 'post',
+    data
+  })
+}
+
+/*
 添加门店人员
  */
 const AddMerchantUser='wx/store/addMerchantUser';

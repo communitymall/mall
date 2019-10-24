@@ -51,16 +51,20 @@ public class LitemallMerchantService {
             }
             if (!StringUtil.isEmpty(merchantLeader)) {
                 merchant.setMerchantLeader(merchantLeader);
+                merchant.setConsigneeName(merchantLeader);//创建门店时，设置默认收货人为创建人
             }
             if (!StringUtil.isEmpty(merchantName)) {
                 merchant.setMerchantName(merchantName);
             }
             if (!StringUtil.isEmpty(merchantPhone)) {
                 merchant.setMerchantPhone(merchantPhone);
+                merchant.setConsigneePhone(merchantPhone);//创建门店时，设置默认收货人联系方式为创建人联系方式
             }
             if (!StringUtil.isEmpty(merchantPic)) {
                 merchant.setMerchantPic(merchantPic);
             }
+            merchant.setConsigneeId(Integer.parseInt(userId));//创建门店时，设置默认收货人id为创建人id
+
             litemallMerchantMapper.insertSelective(merchant);//添加门店的信息
             Integer storeId = merchant.getId();
 
@@ -159,14 +163,12 @@ public class LitemallMerchantService {
   修改商户的门店中店员的信息
    */
     @Transactional(propagation = Propagation.REQUIRED, readOnly = false, rollbackFor = {Exception.class})
-    public Object updateUserStore(String userId, String name, Integer roleType) {
+    public Object updateUserStore(String userId, String name, Integer roleType,String mobile) {
         try {
-            System.out.println(userId);
-            System.out.println(name);
-            System.out.println(roleType);
             LitemallUser user = new LitemallUser();
             user.setName(name);
             user.setId(Integer.parseInt(userId));
+            user.setMobile(mobile);
             LitemallUserExample userExample = new LitemallUserExample();
             LitemallUserExample.Criteria criteria1 = userExample.createCriteria();
             criteria1.andIdEqualTo(Integer.parseInt(userId));
@@ -215,6 +217,38 @@ public class LitemallMerchantService {
             userStore.setCreateTime(LocalDateTime.now());
             litemallUserStoreMapper.insertSelective(userStore);
             return  null;
+        } catch (Exception e) {
+            throw e;
+        }
+    }
+
+    /*
+   查询具体店员的信息
+    */
+    public Object findOneMerchantUser(String userId) {
+        try {
+            LitemallUser user = litemallUserMapper.selectByPrimaryKey(Integer.parseInt(userId));
+            return  user;
+        } catch (Exception e) {
+            throw e;
+        }
+    }
+
+    /*
+  设置门店默认收货人
+   */
+    public Object setConsignee(String userId,String storeId) {
+        try {
+            LitemallMerchant merchant =new LitemallMerchant();
+            LitemallUser user = litemallUserMapper.selectByPrimaryKey(Integer.parseInt(userId));
+            merchant.setConsigneeName(user.getName());
+            merchant.setConsigneePhone(user.getMobile());
+            merchant.setConsigneeId(Integer.parseInt(userId));
+            LitemallMerchantExample example = new LitemallMerchantExample();
+            LitemallMerchantExample.Criteria criteria = example.createCriteria();
+            criteria.andIdEqualTo(Integer.parseInt(storeId));
+            int i = litemallMerchantMapper.updateByExampleSelective(merchant, example);
+            return  i;
         } catch (Exception e) {
             throw e;
         }

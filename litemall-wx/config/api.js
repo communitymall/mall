@@ -68,7 +68,8 @@ module.exports = {
   MerchantCreate: WxApiRoot + 'store/create',//添加门店
   MerchantAddUser: WxApiRoot + 'store/addMerchantUser',//添加门店中的店员
   MerchantFindLeader: WxApiRoot + 'store/findMerchantLeader',//查找门店创建人信息
-
+  MerchantFindUser: WxApiRoot + 'store/findOneMerchantUser',//查询门店中具体店员的信息
+  MerchantSetConsignee: WxApiRoot + 'store/setConsignee',//设置门店默认收货人
 
 
   ExpressQuery: WxApiRoot + 'express/query', //物流查询

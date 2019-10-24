@@ -38,10 +38,17 @@ Page({
         wx.setStorageSync('storeId', event.currentTarget.dataset.storeId);
       } catch (e) {
       }
-      let storeId = event.currentTarget.dataset.storeId;
-      wx.navigateTo({
-        url: '/pages/checkout/checkout?storeId=' + storeId
+      let pages = getCurrentPages();
+      let prevPage = pages[pages.length - 2];
+      
+      wx.navigateBack({
+        delta: 1,
       })
+      
+      // let storeId = event.currentTarget.dataset.storeId;
+      // wx.navigateTo({
+      //   url: '/pages/checkout/checkout?storeId=' + storeId
+      // })
     }
   },
   onLoad: function () {

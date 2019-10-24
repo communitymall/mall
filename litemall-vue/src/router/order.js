@@ -32,5 +32,10 @@ export default [
     name: 'paymentStatus',
     component: () => import('@/views/order/payment-status'),
     props: true
-  }
+  },
+  {
+    path: '/order/payResult',
+    name: 'payResult',
+    component: () => import('@/views/order/payResult')
+  },
 ];

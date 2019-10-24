@@ -16,6 +16,7 @@
     "pages/ucenter/merchantUserAdd/merchantUserAdd",
     "pages/ucenter/selectMerchant/selectMerchant",
     "pages/ucenter/payTypeSelect/payTypeSelect",
+    "pages/ucenter/merchantLeaderUpdate/merchantLeaderUpdate",
 
     "pages/ucenter/feedback/feedback",
     "pages/ucenter/footprint/footprint",

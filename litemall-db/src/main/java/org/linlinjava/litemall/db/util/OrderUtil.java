@@ -25,6 +25,7 @@ import java.util.List;
  * 8 订单取消
  * 9 订单超时未支付取消订单
  * 10 订单交易完成   不可用取消订单
+ * 11 订单审核未通过
  *
  * 当101用户未付款时，此时用户可以进行的操作是取消或者付款
  * 当201支付完成而商家未发货时，此时用户可以退款
@@ -45,6 +46,8 @@ public class OrderUtil {
     public static final Short STATUS_PAYMENT_COMPLETED = 8;
     public static final Short STATUS_CANCELLATION = 9;
     public static final Short STATUS_OVERTINE_CANCELLATION = 10;
+    public static final Short STATUS_FAILED_AUDIT = 11;
+
 
 
 
@@ -96,6 +99,10 @@ public class OrderUtil {
         if (status == 10) {
             return "订单交易完成";
         }
+
+        if(status == 11){
+            return "订单审核未通过";
+        }
         throw new IllegalStateException("orderStatus不支持");
     }
 
@@ -132,6 +139,9 @@ public class OrderUtil {
             handleOption.setDelete(true);
             handleOption.setComment(true);
             handleOption.setRebuy(true);
+        } else if (status == 11 ) {
+            // 订单审核未通过
+
         } else {
             throw new IllegalStateException("status不支持");
         }
@@ -155,17 +165,20 @@ public class OrderUtil {
             // 订单审核通过
             status.add((short) 1);
         } else if (showType.equals(2)) {
-            //  订单的商品正在备货
+            //  订单待发货
+            status.add((short) 1);
             status.add((short) 2);
-        } else if (showType.equals(3)) {
-            // 订单未派送
             status.add((short) 3);
+        } else if (showType.equals(3)) {
+            // 订单待收货
+            status.add((short) 4);
 
 //            系统超时自动取消，此时应该不支持评价
 //            status.add((short)402);
         }else if (showType.equals(4)) {
-            //  订单已经发货
-            status.add((short) 4);
+            //  未审核与审核没有通过的订单信息
+            status.add((short) 11);
+            status.add((short )0);
         }else if (showType.equals(5)) {
             // 订单已经收货
             status.add((short) 5);
@@ -228,7 +241,7 @@ public class OrderUtil {
     }
 
     public static boolean isPaymentCompletedStatus(LitemallOrder litemallOrder) {
-        return OrderUtil.STATUS_PAYMENT_COMPLETED == litemallOrder.getOrderStatus().shortValue();
+        return OrderUtil.STATUS_FAILED_AUDIT == litemallOrder.getOrderStatus().shortValue();
     }
 
     public static boolean isCancellationStatus(LitemallOrder litemallOrder) {
@@ -239,5 +252,8 @@ public class OrderUtil {
         return OrderUtil.STATUS_OVERTINE_CANCELLATION == litemallOrder.getOrderStatus().shortValue();
     }
 
+    public static boolean isStatusFailed_Audit(LitemallOrder litemallOrder) {
+        return OrderUtil.STATUS_OVERTINE_CANCELLATION == litemallOrder.getOrderStatus().shortValue();
+    }
 
 }

@@ -15,8 +15,8 @@
      <view class="form-item">
       门店营业执照:  <input class="input" bindinput="bindinputMerchantCode" value="{{merchant.merchantCode}}" placeholder="请输入门店营业执照" />
     </view>
-     <view class="form-item">
-      门店照片:  <input class="input" bindinput="bindinputMerchantPic" value="{{merchant.merchantPic}}" placeholder="请输入门店照片" />
+     <view class="form-item" bindtap="changeAvatar">
+      门店照片: <image  class="userinfo-avatar" src="{{user.avatar}}" background-size="cover"></image> 
     </view>
     
   </view>
