@@ -10,7 +10,7 @@
       门店负责人:  <input class="input" bindinput="bindinputMerchantLeader" value="{{merchant.merchantLeader}}" placeholder="{{merchant.merchantLeader}}" />
     </view>
      <view class="form-item">
-      门店电话:  <input class="input" bindinput="bindinputMerchantPhone" value="{{merchant.merchantPhone}}" placeholder="{{merchant.merchantPhone}}" />
+      门店电话:  <input class="input" bindblur="bindinputMerchantPhone" value="{{merchant.merchantPhone}}" placeholder="{{merchant.merchantPhone}}" />
     </view>
      <view class="form-item">
       门店营业执照:  <input class="input" bindinput="bindinputMerchantCode" value="{{merchant.merchantCode}}" placeholder="{{merchant.merchantCode}}" />

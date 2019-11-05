@@ -11,6 +11,7 @@ Page({
     // },
     merchantUserInfo: {},
     roleType: '',
+    merchantLeader:'',
   },
   bindinputMerchantUserName(event) {
     let merchantUserInfo = this.data.merchantUserInfo;
@@ -94,13 +95,15 @@ Page({
     let that = this;
     that.setData({
       roleType: this.options.roleType,
+      merchantLeader: this.options.merchantLeader,
     });
   },
 
   setConsignee(options){//设置默认收货人
     util.request(api.MerchantSetConsignee,{
       userId: this.options.uId,
-      storeId: this.options.storeId
+      storeId: this.options.storeId,
+      roleType: this.data.roleType,
     },'POST').then(function(res){
       if(res.errno==0){
         wx.showToast({

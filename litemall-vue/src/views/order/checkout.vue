@@ -4,8 +4,8 @@
             <van-cell v-if="" isLink @click="goAddressList()" title="收货信息">
                 <div slot="label">
                     <div>
-                        <span>{{ merchantInfo.merchantLeader }} </span>
-                        <span>{{ merchantInfo.merchantPhone }} </span>
+                        <span>{{ merchantInfo.consigneeName }} </span>
+                        <span>{{ merchantInfo.consigneePhone }} </span>
                     </div>
                     <div>
                         {{ merchantInfo.merchantAddress }}

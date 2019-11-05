@@ -110,7 +110,6 @@ public class OrderUtil {
     public static OrderHandleOption build(LitemallOrder order) {
         int status = order.getOrderStatus().intValue();
         OrderHandleOption handleOption = new OrderHandleOption();
-
         if (status == 0) {
             //订单没有审核 ： 可以取消订单  ，订单不可支付
             handleOption.setCancel(true);
@@ -123,10 +122,14 @@ public class OrderUtil {
         }else if(status == 3){
             // 订单未派送
         }
-        else if (status == 4 || status == 5 || status ==6) {
-            // 订单已经发货 ，订单已经收货 , 订单手动收货    不可以取消订单，（在线支付）不可以退款,可以确认收货
+        else if (status == 4) {
+            // 订单已经发货    不可以取消订单，（在线支付）不可以退款,可以确认收货
             handleOption.setConfirm(true);
-        } else if (status == 7) {
+        } else if (status == 5) {
+            // 订单系统自动确认收货
+        }else if (status == 6) {
+            // 订单用户确认收货
+        }  else if (status == 7) {
             // 订单待支付， 订单可以取消 ，订单可以支付
             handleOption.setCancel(true);
             handleOption.setPay(true);

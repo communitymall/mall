@@ -364,8 +364,9 @@ public class WxOrderService {
         order.setOrderSn(orderService.generateOrderSn(userId));
         //order.setOrderStatus(OrderUtil.STATUS_CREATE);
         //order.setConsignee(checkedAddress.getName());
-        order.setConsignee(detail.getMerchantName());//设置收货人的名称
-        order.setMobile(detail.getMerchantPhone());//设置收货人的电话
+
+        order.setConsignee(detail.getConsigneeName());//设置收货人的名称
+        order.setMobile(detail.getConsigneePhone());//设置收货人的电话
         order.setMessage(message);
         //String detailedAddress = checkedAddress.getProvince() + checkedAddress.getCity() + checkedAddress.getCounty() + " " + checkedAddress.getAddressDetail();
         order.setAddress(detail.getMerchantAddress());

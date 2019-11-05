@@ -5,7 +5,6 @@
         <van-tabs v-model="activeIndex"
                   :swipe-threshold="5"
                   @click="handleTabClick">
-
             <van-tab v-for="(tabTitle, index) in tabTitles"
                      :title="tabTitle"
                      :key="index">
@@ -15,7 +14,9 @@
                     <van-cell title="商户地址" @click="onSetManchantAddress" :value="merchantAddress" isLink/>
                     <van-cell title="商户电话" @click="onSetManchantPhone" :value="merchantPhone" isLink/>
                     <van-cell title="商户负责人" @click="onSetManchantLeader" :value="merchantLeader" isLink/>
-
+                    <van-cell title="商户状态"  >
+                        <span>  {{ merchantStatus | detailMerchantStatusFilter }}</span>
+                    </van-cell>
                     <van-cell title="门店照片" class="cell_middle">
 <!--                        <van-uploader :afterRead="avatarAfterRead">-->
 <!--                            <div class="user_avatar_upload">-->
@@ -31,21 +32,27 @@
                     </van-cell>
                 </van-cell-group>
 
-
-                <van-cell-group v-if="activeIndex===1">
-
-                    <van-cell value="" is-link @click="onEditLeader()">
-                        <!-- 使用 title 插槽来自定义标题 -->
-                        <template slot="title">
-                            <span class="custom-title">{{leaderData.merchantLeader}}</span>
-                            <van-tag type="danger">创建人</van-tag>
-                            <br/>
-                            <span>{{leaderData.merchantPhone}}</span>
-                        </template>
-                    </van-cell>
-
+                <van-cell-group v-if="activeIndex===1" >
+<!--                    <van-cell value="" is-link @click="onEditLeader()">-->
+<!--                        &lt;!&ndash; 使用 title 插槽来自定义标题 &ndash;&gt;-->
+<!--                        <template slot="title">-->
+<!--                            <span class="custom-title">{{leaderData.merchantLeader}}</span>-->
+<!--                            <van-tag type="danger">创建人</van-tag>-->
+<!--                            <br/>-->
+<!--                            <span>{{leaderData.merchantPhone}}</span>-->
+<!--                        </template>-->
+<!--                    </van-cell>-->
                     <div v-for="(item, i) in merchantList" :key="i" class="card-goods__item">
-                        <van-cell value="编辑" is-link @click="onEdit(item,i)">
+                        <van-cell v-if="item.roleType===3" value="编辑" is-link @click="onEdit(item,i)">
+                            <!-- 使用 title 插槽来自定义标题 -->
+                            <template slot="title">
+                                <span class="custom-title">{{merchantLeader}}</span>
+                                <van-tag type="danger">{{ item.roleType | detailStatusFilter }}</van-tag>
+                                <br/>
+                                <span>{{merchantPhone}}</span>
+                            </template>
+                        </van-cell>
+                        <van-cell v-if="item.roleType!==3" value="编辑" is-link @click="onEdit(item,i)">
                             <!-- 使用 title 插槽来自定义标题 -->
                             <template slot="title">
                                 <span class="custom-title">{{item.name}}</span>
@@ -55,7 +62,6 @@
                             </template>
                         </van-cell>
                     </div>
-
                     <div align="center">
                         <van-button type="primary" size="small" @click="addMerchantUser">添加人员</van-button>
                     </div>
@@ -80,13 +86,23 @@
         0: '管理员',
         1: '厨师',
         2: '店员',
+        3: '负责人',
+    }
+
+    const merchantStatusMap ={
+        0: '审核中',
+        1: '审核未通过',
+        2: '审核通过'
     }
 
     export default {
         filters: {
             detailStatusFilter(status) {
                 return detailMap[status]
-            }
+            },
+            detailMerchantStatusFilter(status){
+                return merchantStatusMap[status]
+            },
         },
 
         name: 'merchant-detail',
@@ -110,7 +126,6 @@
                 ],
                 activeIndex: Number(this.active),
                 tabTitles: ['门店信息', '人员信息'],
-                orderList: [],
                 merchantList: [],
                 page: 0,
                 limit: 10,
@@ -130,8 +145,8 @@
                 merchantPic: '',
                 merchantPhone: '',
                 merchantLeader: '',
+                merchantStatus:'',
                 avatar: '',
-
                 usId: '',
                 uId: '',
                 roleType: '',
@@ -149,8 +164,7 @@
             },
             init() {
                 this.page = 0;
-                //this.orderList = [];
-                this.getOrderList();
+                this.getMerchantList();
             },
             onSetManchantName() {
                 let id = this.$route.query.storeId
@@ -218,7 +232,7 @@
                     this.leaderData.id = res.data.data.id;
                 });
             },
-            getOrderList() {
+            getMerchantList() {
                 let id = this.$route.query.storeId
                 this.shipData.storeId = id
                 merchantDetail(this.shipData).then(res => {
@@ -226,20 +240,20 @@
                     this.merchantAddress = res.data.data.merchantAddress;
                     this.merchantPic = res.data.data.merchantPic;
                     this.merchantCode = res.data.data.merchantCode;
-
                     this.merchantPhone = res.data.data.merchantPhone;
                     this.merchantLeader = res.data.data.merchantLeader;
+                    this.merchantStatus = res.data.data.merchantStatus;
                 });
                 this.page++;
-                orderList({
-                    showType: this.activeIndex,
-                    page: this.page,
-                    limit: this.limit
-                }).then(res => {
-                    this.orderList.push(...res.data.data.list);
-                    this.loading = false;
-                    this.finished = res.data.data.page >= res.data.data.pages;
-                });
+                // orderList({
+                //     showType: this.activeIndex,
+                //     page: this.page,
+                //     limit: this.limit
+                // }).then(res => {
+                //     this.orderList.push(...res.data.data.list);
+                //     this.loading = false;
+                //     this.finished = res.data.data.page >= res.data.data.pages;
+                // });
             },
         },
         components: {

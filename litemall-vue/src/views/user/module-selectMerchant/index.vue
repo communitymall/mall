@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import { merchantList,authInfo } from '@/api/api';
+import { merchantStatusList,authInfo } from '@/api/api';
 import { AddressList, NavBar} from 'vant';
 import { setLocalStorage } from '@/utils/local-storage';
 export default {
@@ -16,6 +16,10 @@ export default {
       addressList: [],
       merchantList:[],
       userId:'',
+      shipData:{
+        userId:'',
+        merchantStatus:2,
+      }
     };
   },
 
@@ -35,7 +39,8 @@ export default {
       })
     },
     findM(){
-      merchantList(this.userId).then(res => {
+      this.shipData.userId=this.userId;
+      merchantStatusList(this.shipData).then(res => {
         var list = res.data.data.list;
         for(var i = 0; i < list.length; i++ ){
           var item = list[i]

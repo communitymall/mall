@@ -15,6 +15,7 @@ Page({
     merchantPic:'',
     merchantInfo : {},
     merchantLeaderInfo: {},
+    userId:'',
   },
   onLoad: function (options) {
   },
@@ -44,10 +45,26 @@ Page({
         //console.log(res.data);
         that.setData({
           userList: res.data,
+          
         });
       }
     });
   },
+
+  getMerchantLeader(options) {
+    let that = this;
+    util.request(api.MerchantUser, {
+      storeId: this.options.id
+    }, 'POST').then(function (res) {
+      if (res.errno === 0) {
+        //console.log(res.data);
+        that.setData({
+          userList: res.data,
+        });
+      }
+    });
+  },
+
 
   findMerchantLeader(options){
     let that = this;
@@ -64,9 +81,18 @@ Page({
   },
 
   switchTab: function (event) {
+    let merchantStatus = this.data.merchantInfo.merchantStatus;
+    if(merchantStatus==0){
+    
+      util.showErrorToast('门店审核中！');
+      return;
+    }
+    if (merchantStatus == 1) {
+      util.showErrorToast('门店审核未通过！');
+      return;
+    }
     let showType = event.currentTarget.dataset.index;
     this.setData({
-      
       showType: showType,
     });
     if ( showType==0){

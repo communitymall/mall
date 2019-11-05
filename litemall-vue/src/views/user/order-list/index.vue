@@ -131,7 +131,7 @@ export default {
       this.$dialog
         .confirm({ message: '确定要取消该订单吗?' })
         .then(() => {
-          orderDelete({ orderId: id }).then(() => {
+          orderCancel({ orderId: id }).then(() => {
             this.init();
             this.$toast('已取消该订单');
           });

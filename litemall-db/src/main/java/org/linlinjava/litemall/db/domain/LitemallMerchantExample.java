@@ -375,6 +375,11 @@ public class LitemallMerchantExample {
             return (Criteria) this;
         }
 
+        public Criteria andMerchantStatusIn(List<Integer> values) {
+            addCriterion("merchant_status in", values, "merchantStatus");
+            return (Criteria) this;
+        }
+
         public Criteria andIdNotIn(List<Integer> values) {
             addCriterion("id not in", values, "id");
             return (Criteria) this;
@@ -402,6 +407,11 @@ public class LitemallMerchantExample {
 
         public Criteria andMerchantNameEqualTo(String value) {
             addCriterion("merchant_name =", value, "merchantName");
+            return (Criteria) this;
+        }
+
+        public Criteria andMerchantConsigneeIdEqualTo(String value) {
+            addCriterion("consignee_id =", value, "consigneeId");
             return (Criteria) this;
         }
 

@@ -2,12 +2,15 @@
   <view class="orders-switch">
     <view class="item {{ showType == 0 ? 'active' : ''}}" bindtap="switchTab" data-index='0'>
       <view class="txt">门店信息</view>
+      <!-- <view class="txt" wx:if="{{merchantInfo.merchantStatus==0}}">(审核中)</view>
+         <view class="txt" wx:if="{{merchantInfo.merchantStatus==1}}">(审核未通过)</view> -->
     </view>
     <view class="item {{ showType == 1 ? 'active' : ''}}" bindtap="switchTab" data-index='1'>
       <view class="txt">人员信息</view>
     </view>
   </view>
   <view class="orders" wx:if="{{showType==0}}">
+
     <navigator url="../merchantUpdate/merchantUpdate?id={{merchantInfo.id}}" class="order" open-type="redirect" wx:key="id">
       <view class="h">
         <view class="l">门店名称：{{merchantInfo.merchantName}}</view>
@@ -34,36 +37,46 @@
         <view class="r">上传</view>
       </view> -->
     </navigator>
-      <view  class="order" >
+
+    <view class="order">
+      <view class="h">
+        <view class="l">门店状态：</view>
+         <view class="r" wx:if="{{merchantInfo.merchantStatus==0}}">审核中</view>
+         <view class="r" wx:if="{{merchantInfo.merchantStatus==1}}">审核未通过</view>
+         <view class="r" wx:if="{{merchantInfo.merchantStatus==2}}">审核成功</view>
+      </view>
+    </view>
+
+    <view class="order">
       <view class="h" bindtap="changeAvatar">
         <view class="l">门店照片</view>
         <view class="r">上传</view>
-        
+
       </view>
-        <image  class="userinfo-avatar" src="{{merchantPic}}" background-size="cover"></image>
+      <image class="userinfo-avatar" src="{{merchantPic}}" background-size="cover"></image>
     </view>
   </view>
   <view class="orders" wx:if="{{showType==1}}">
-    <view class="order">
+    <view class="order"  wx:for="{{userList}}" wx:key="id" wx:if="{{item.roleType==3}}">
       <view class="h">
         <view class="l">
           <view class="l">{{merchantLeaderInfo.merchantLeader}}</view>
-          <view class="l">(创建人)</view>
+          <view class="l">(负责人)</view>
           <view class="l"> {{merchantLeaderInfo.merchantPhone}}</view>
         </view>
         <view class="r">
-          <navigator url="../merchantLeaderUpdate/merchantLeaderUpdate?storeId={{merchantLeaderInfo.id}}">编辑</navigator>
+          <navigator url="../merchantUserUpdate/merchantUserUpdate?uId={{item.uId}}&roleType={{item.roleType}}&storeId={{item.storeId}}&merchantLeader={{merchantLeaderInfo.merchantLeader}}">编辑</navigator>
         </view>
       </view>
     </view>
-    <view class="order" wx:for="{{userList}}" wx:key="id">
+    <view class="order" wx:for="{{userList}}" wx:key="id" wx:if="{{item.roleType!=3}}">
       <view class="h">
         <view class="l">
-          <view class="l">{{item.name}}</view>
+           <view class="l" wx:if="{{item.roleType!=3}}">{{item.name}}</view>
           <view class="l" wx:if="{{item.roleType==0}}">(管理员)</view>
           <view class="l" wx:if="{{item.roleType==1}}">(厨师)</view>
           <view class="l" wx:if="{{item.roleType==2}}">(店员)</view>
-          <view class="l"> {{item.mobile}}</view>
+          <view class="l" wx:if="{{item.roleType!=3}}"> {{item.mobile}}</view>
         </view>
         <view class="r">
           <navigator url="../merchantUserUpdate/merchantUserUpdate?uId={{item.uId}}&roleType={{item.roleType}}&storeId={{item.storeId}}">编辑</navigator>

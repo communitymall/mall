@@ -1,6 +1,19 @@
 import request from '@/utils/request'
 
 /*
+用户查看门店中通过审核门店
+ */
+const MerchantStatusList='wx/store/merchantStatusList';
+export function merchantStatusList(data) {
+  return request({
+    url: MerchantStatusList,
+    method: 'post',
+    data
+  })
+}
+
+
+/*
 通过openId来返回用户的信息进行登录
  */
 const LoginByOpenid='wx/chat/loginByOpenid';

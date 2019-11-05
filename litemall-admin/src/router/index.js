@@ -164,6 +164,17 @@ export const asyncRouterMap = [
     },
     children: [
       {
+        path: 'merchant',
+        component: () => import('@/views/mall/merchant'),
+        name: 'merchant',
+        meta: {
+          perms: ['GET /admin/merchant/list', 'GET /admin/merchant/detail', 'POST /admin/merchant/ordership', 'POST /admin/merchant/orderrefund', 'POST /admin/merchant/orderreply'],
+          title: '门店管理',
+          noCache: true
+        }
+      },
+
+      {
         path: 'region',
         component: () => import('@/views/mall/region'),
         name: 'region',

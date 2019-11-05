@@ -84,6 +84,10 @@
                 alert(file)
             },
             submit(){//提交的请求
+                if (!(/^1[34578]\d{9}$/.test(this.shipData.merchantPhone))) {
+                    alert("电话号码格式错误");
+                    return false;
+                }
                 merchantCreate(this.shipData)
                     .then(res => {
                         return this.$dialog.alert({message: '保存成功'});

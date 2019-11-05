@@ -33,7 +33,7 @@ Page({
   sendCode: function() {
     let that = this;
     wx.request({
-      url: api.AuthRegisterCaptcha,
+      url: api.AuthCaptcha,
       data: {
         mobile: that.data.mobile
       },
@@ -102,7 +102,8 @@ Page({
       data: {
         mobile: that.data.mobile,
         code: that.data.code,
-        password: that.data.password
+        password: that.data.password,
+        passwordRepeat: that.data.confirmPassword,
       },
       method: 'POST',
       header: {

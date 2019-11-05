@@ -78,22 +78,22 @@ Page({
         that.setData({
           merchantInfo: res.data,
         });
-        if (res.data.consigneeId != -2) {
-          util.request(api.MerchantFindUser, {
-            id: res.data.consigneeId
-          }, 'POST').then(function(res1) {
-            if (res1.errno === 0) {
-              that.setData({
-                merchantConsigneeInfo: res1.data,
-                checked: 1,
-              });
-            }
-          });
-        } else {
-          that.setData({
-            checked: 0,
-          });
-        }
+        // if (res.data.consigneeId != -2) {
+        //   util.request(api.MerchantFindUser, {
+        //     id: res.data.consigneeId
+        //   }, 'POST').then(function(res1) {
+        //     if (res1.errno === 0) {
+        //       that.setData({
+        //         merchantConsigneeInfo: res1.data,
+        //         checked: 1,
+        //       });
+        //     }
+        //   });
+        // } else {
+        //   that.setData({
+        //     checked: 0,
+        //   });
+        // }
       }
     });
   },

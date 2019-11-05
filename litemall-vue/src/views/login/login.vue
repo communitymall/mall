@@ -218,8 +218,8 @@
                 const accountType = mobileReg.test(account)
                     ? 'mobile'
                     : emailReg.test(account)
-                        ? 'email'
-                        : 'username';
+                        ? 'mobile'
+                        : 'mobile';
                 return accountType;
             }
         }

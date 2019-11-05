@@ -26,7 +26,7 @@ public class WxStoreController {
     @PostMapping("/update")
     @ResponseBody
     public Object update(HttpServletRequest request,
-                             @RequestBody String  body){
+                             @RequestBody String  body,@LoginUser Integer userId){
         Integer id = JacksonUtil.parseInteger(body, "id");
         String merchantName = JacksonUtil.parseString(body, "merchantName");
         String merchantCode = JacksonUtil.parseString(body, "merchantCode");
@@ -34,7 +34,10 @@ public class WxStoreController {
         String merchantPic = JacksonUtil.parseString(body, "merchantPic");
         String merchantPhone = JacksonUtil.parseString(body, "merchantPhone");
         String merchantLeader = JacksonUtil.parseString(body, "merchantLeader");
-        litemallMerchantService.update(id, merchantName, merchantCode, merchantAddress, merchantPic, merchantPhone, merchantLeader);
+        if (userId == null) {
+            return ResponseUtil.unlogin();
+        }
+        litemallMerchantService.update(userId,id, merchantName, merchantCode, merchantAddress, merchantPic, merchantPhone, merchantLeader);
         return ResponseUtil.ok();
 
     }
@@ -78,6 +81,21 @@ public class WxStoreController {
         List<LitemallMerchant> list = litemallMerchantService.list(String.valueOf(userId));
         return ResponseUtil.okList(list);
     }
+
+    @PostMapping("/merchantStatusList")
+    @ResponseBody
+    public Object merchantStatusList(HttpServletRequest request,@LoginUser Integer userId,@RequestBody String body){
+        if (userId == null) {
+            return ResponseUtil.unlogin();
+        }
+        Integer merchantStatus = JacksonUtil.parseInteger(body, "merchantStatus");
+        if(merchantStatus==null){
+            return ResponseUtil.fail();
+        }
+        List<LitemallMerchant> list = litemallMerchantService.merchantStatusList(String.valueOf(userId),merchantStatus);
+        return ResponseUtil.okList(list);
+    }
+
 
     /*
     获得用户门店的详情
@@ -176,12 +194,13 @@ public class WxStoreController {
     public Object setConsignee(HttpServletRequest request, @RequestBody String body){
         String userId = JacksonUtil.parseString(body, "userId");
         String storeId = JacksonUtil.parseString(body, "storeId");
+        Integer roleType = JacksonUtil.parseInteger(body, "roleType");
         if(StringUtil.isEmpty(userId)){
             return ResponseUtil.fail();
         }
         if(StringUtil.isEmpty(storeId)){
             return ResponseUtil.fail();
         }
-        return ResponseUtil.ok(litemallMerchantService.setConsignee(userId, storeId));
+        return ResponseUtil.ok(litemallMerchantService.setConsignee(userId, storeId,roleType));
     }
 }

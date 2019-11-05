@@ -12,6 +12,7 @@ Page({
     },
     merchantLeaderInfo: {},
     id: '',
+    node : '',
   },
   bindinputMerchantLeaderName(event) {
     let merchantLeaderInfo = this.data.merchantLeaderInfo;
@@ -23,6 +24,19 @@ Page({
 
   bindinputMerchantLeaderMobile(event) {
     let merchantLeaderInfo = this.data.merchantLeaderInfo;
+    let node = this.data.node;
+    var phone = event.detail.value;
+    var myreg = /^(((13[0-9]{1})|(15[0-9]{1})|(18[0-9]{1})|(17[0-9]{1}))+\d{8})$/;
+    if (!myreg.test(phone)) {
+      util.showErrorToast('手机号有误！');
+      this.setData({
+        node: false
+      });
+    } else {
+      this.setData({
+        node: true
+      });
+    }
     merchantLeaderInfo.merchantPhone = event.detail.value;
     this.setData({
       merchantLeaderInfo: merchantLeaderInfo
@@ -41,10 +55,17 @@ Page({
 
   saveMerchantLeader(options) { //保存信息
     let merchantLeaderInfo = this.data.merchantLeaderInfo;
+    let node = this.data.node;
     if (merchantLeaderInfo.merchantLeader == '') {
       util.showErrorToast('请输入名称');
       return false;
     }
+
+    if (node == false) {
+      util.showErrorToast('手机号有误！');
+      return false;
+    }
+
     let that = this;
     util.request(api.MerchantUpdate, {
       id: this.options.storeId,

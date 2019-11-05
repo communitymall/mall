@@ -17,6 +17,7 @@ Page({
     },
     storeId: 0,
     merchantInfo :{},
+    node : '',
   },
   bindinputMerchantLeader(event) {
     let merchant = this.data.merchant;
@@ -41,6 +42,19 @@ Page({
   },
   bindinputMerchantPhone(event) {
     let merchant = this.data.merchant;
+    let node = this.data.node;
+    var phone = event.detail.value;
+    var myreg = /^(((13[0-9]{1})|(15[0-9]{1})|(18[0-9]{1})|(17[0-9]{1}))+\d{8})$/;
+    if (!myreg.test(phone)) {
+      util.showErrorToast('手机号有误！');
+      this.setData({
+        node: false
+      });
+    } else {
+      this.setData({
+        node: true
+      });
+    }
     merchant.merchantPhone = event.detail.value;
     this.setData({
       merchant: merchant
@@ -107,7 +121,11 @@ Page({
       util.showErrorToast('请输入门店电话');
       return false;
     }
-
+    var myreg = /^(((13[0-9]{1})|(15[0-9]{1})|(18[0-9]{1})|(17[0-9]{1}))+\d{8})$/;
+    if (!myreg.test(merchant.merchantPhone)) {
+      util.showErrorToast('手机号有误！');
+      return false;
+    } 
 
     // if (address.areaCode == 0) {
     //   util.showErrorToast('请输入省市区');
@@ -151,7 +169,7 @@ Page({
           }
           console.log("set merchant");
         }
-        wx.navigateBack();
+         wx.navigateBack();
       }
     });
 

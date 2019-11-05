@@ -10,7 +10,7 @@ Page({
   },
   getMerchantList() {//获得门店的列表
     let that = this;
-    util.request(api.MerchantList, {}, 'POST').then(function (res) {
+    util.request(api.MerchantStatusList, {merchantStatus:2}, 'POST').then(function (res) {
       if (res.errno === 0) {
         that.setData({
           merchantList: res.data.list,

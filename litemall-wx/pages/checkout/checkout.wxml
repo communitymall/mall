@@ -7,7 +7,7 @@
       </view>
       <view class="m">
         <text class="mobile">{{merchantInfo.merchantName}}</text>
-        <view wx:if="{{checked==0}}"><text class="info">{{merchantInfo.merchantLeader}} 手机:{{merchantInfo.merchantPhone}}</text></view>
+        <view ><text class="info">{{merchantInfo.consigneeName}} 手机:{{merchantInfo.consigneePhone}}</text></view>
          <view wx:if="{{checked==1}}"> <text class="info">{{merchantConsigneeInfo.name}} 手机:{{merchantConsigneeInfo.mobile}}</text></view>
        
         <text class="address">{{merchantInfo.merchantAddress}}</text>

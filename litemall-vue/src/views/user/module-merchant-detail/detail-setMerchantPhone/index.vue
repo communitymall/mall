@@ -37,10 +37,15 @@
 				this.merchantPhone = localStorage.getItem('merchantPhone') || '';
 			},
 			saveMerchantPhone() {
+
 				if (true) {
 					let id = this.$route.query.storeId
 					this.shipData.id = id
 					this.shipData.merchantPhone =this.merchantPhone
+					if (!(/^1[34578]\d{9}$/.test(this.merchantPhone))) {
+						alert("电话号码格式错误");
+						return false;
+					}
 					merchantUpdate(this.shipData)
 							.then(res => {
 								//localStorage.setItem('merchantName', res.data.data.merchantName);

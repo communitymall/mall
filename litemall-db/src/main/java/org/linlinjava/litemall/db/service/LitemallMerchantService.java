@@ -1,5 +1,6 @@
 package org.linlinjava.litemall.db.service;
 
+import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.util.StringUtil;
 import org.linlinjava.litemall.db.dao.LitemallMerchantMapper;
 import org.linlinjava.litemall.db.dao.LitemallSUMapper;
@@ -9,6 +10,7 @@ import org.linlinjava.litemall.db.domain.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
 import java.time.LocalDate;
@@ -51,30 +53,55 @@ public class LitemallMerchantService {
             }
             if (!StringUtil.isEmpty(merchantLeader)) {
                 merchant.setMerchantLeader(merchantLeader);
-                merchant.setConsigneeName(merchantLeader);//创建门店时，设置默认收货人为创建人
+                merchant.setConsigneeName(merchantLeader);//创建门店时，设置默认收货人为负责人
             }
             if (!StringUtil.isEmpty(merchantName)) {
                 merchant.setMerchantName(merchantName);
             }
             if (!StringUtil.isEmpty(merchantPhone)) {
                 merchant.setMerchantPhone(merchantPhone);
-                merchant.setConsigneePhone(merchantPhone);//创建门店时，设置默认收货人联系方式为创建人联系方式
+                merchant.setConsigneePhone(merchantPhone);//创建门店时，设置默认收货人联系方式为负责人联系方式
             }
             if (!StringUtil.isEmpty(merchantPic)) {
                 merchant.setMerchantPic(merchantPic);
             }
-            merchant.setConsigneeId(Integer.parseInt(userId));//创建门店时，设置默认收货人id为创建人id
+
+
+            LitemallUserExample example  = new LitemallUserExample();
+            LitemallUserExample.Criteria criteria = example.createCriteria();
+            criteria.andMobileEqualTo(merchantPhone);
+            List<LitemallUser> litemallUsers = litemallUserMapper.selectByExample(example);
+            if(litemallUsers.size()==0){//数据库user中没有这个手机号
+                LitemallUser user = new LitemallUser();
+                user.setMobile(merchantPhone);
+                user.setName(merchantLeader);
+                user.setAddTime(LocalDateTime.now());
+                Byte b=0;
+                user.setStatus(b);
+                litemallUserMapper.insertSelective(user);
+                Integer id = user.getId();
+                System.out.println("id="+id);
+
+                merchant.setConsigneeId(id);//创建门店时，设置默认收货人为门店负责人的id
+                userStore.setUserId(Long.parseLong(String.valueOf(id)));//设置门店负责人的id
+            }else if(litemallUsers.size()==1){//
+                LitemallUser user = litemallUsers.get(0);
+                merchant.setConsigneeId(user.getId());
+                userStore.setUserId(Long.parseLong(String.valueOf(user.getId())));//设置门店负责人的id
+            }
+            merchant.setConsigneePhone(merchantPhone);
+            merchant.setConsigneeName(merchantLeader);
+            merchant.setMerchantStatus(0); //门店创建的时候，设置门店的状态是未审核
 
             litemallMerchantMapper.insertSelective(merchant);//添加门店的信息
             Integer storeId = merchant.getId();
 
             userStore.setCreateTime(LocalDateTime.now());
             userStore.setStoreId(Long.parseLong(storeId.toString()));
-            userStore.setUserId(Long.parseLong(String.valueOf(userId)));
-            userStore.setRoleType((short) 0);
+
+            userStore.setCreaterId(Integer.parseInt(userId));//设置创建人的id
+            userStore.setRoleType((short) 3);
             litemallUserStoreMapper.insertSelective(userStore);
-
-
             return storeId;
         } catch (Exception ex) {
             throw ex;
@@ -84,16 +111,24 @@ public class LitemallMerchantService {
     /*
     更新商户的门店
      */
-    public Object update(int id, String merchantName, String merchantCode, String merchantAddress, String merchantPic, String merchantPhone, String merchantLeader) {
+    @Transactional(propagation = Propagation.REQUIRED, readOnly = false, rollbackFor = {Exception.class})
+    public Object update(Integer userId,int id, String merchantName, String merchantCode, String merchantAddress, String merchantPic, String merchantPhone, String merchantLeader) {
         LitemallMerchant merchant = new LitemallMerchant();
         LitemallMerchantExample example = new LitemallMerchantExample();
         LitemallMerchantExample.Criteria criteria = example.createCriteria();
         criteria.andIdEqualTo(id);
+
+        LitemallUser user = new LitemallUser();
+
         if (!StringUtil.isEmpty(merchantName)) {
             merchant.setMerchantName(merchantName);
         }
         if (!StringUtil.isEmpty(merchantCode)) {
-            merchant.setMerchantCode(merchantCode);
+            LitemallMerchant merchant1 = litemallMerchantMapper.selectByPrimaryKey(id);
+            if(!(merchantCode.equals(merchant1.getMerchantCode()))){
+                merchant.setMerchantCode(merchantCode);
+                merchant.setMerchantStatus(0);//如果修改门店的营业执照编号，就要重新审核门店
+            }
         }
         if (!StringUtil.isEmpty(merchantAddress)) {
             merchant.setMerchantAddress(merchantAddress);
@@ -103,13 +138,33 @@ public class LitemallMerchantService {
         }
         if (!StringUtil.isEmpty(merchantPhone)) {
             merchant.setMerchantPhone(merchantPhone);
+            LitemallMerchant merchant1 = litemallMerchantMapper.selectByPrimaryKey(id);
+            if((merchant1.getMerchantPhone().equals(merchant1.getConsigneePhone()))){//说明收货人是负责人
+                merchant.setConsigneePhone(merchantPhone);
+            }
         }
         if (!StringUtil.isEmpty(merchantLeader)) {
             merchant.setMerchantLeader(merchantLeader);
+            user.setName(merchantLeader);
         }
         //设置更新时间
         merchant.setEditTime(LocalDateTime.now());
-        return litemallMerchantMapper.updateByExampleSelective(merchant, example);
+        try{
+            LitemallMerchant merchantLeader1 = findMerchantLeader(String.valueOf(id));
+            Integer consigneeId = merchantLeader1.getConsigneeId();
+            //user.setId(consigneeId);
+            //user.setUpdateTime(LocalDateTime.now());
+            //LitemallUserExample userExample = new LitemallUserExample();
+            //LitemallUserExample.Criteria criteria1 = userExample.createCriteria();
+            //criteria1.andIdEqualTo(consigneeId);
+            //litemallUserMapper.updateByExampleSelective(user, userExample);//修改user表中的信息
+            return litemallMerchantMapper.updateByExampleSelective(merchant, example);
+        }catch (Exception e){
+            throw  e;
+        }
+
+
+
     }
 
     /*
@@ -144,12 +199,52 @@ public class LitemallMerchantService {
         return litemallMerchantMapper.selectByOwnWay(Integer.parseInt(userId));
     }
 
+     /*
+    查询登录用户所注册的商户的门店（商户的状态）
+     */
+     public List<LitemallMerchant> merchantStatusList(String userId,Integer merchantStatus) {
+         return litemallMerchantMapper.selectByMerchantStatus(Integer.parseInt(userId),merchantStatus);
+     }
+
+
+    public List<LitemallMerchant> querySelective(Integer id, String merchantName, List<Integer> merchantStatusArray, Integer page, Integer limit, String sort, String order) {
+        LitemallMerchantExample example = new LitemallMerchantExample();
+        LitemallMerchantExample.Criteria criteria = example.createCriteria();
+
+        if (id != null) {
+            criteria.andIdEqualTo(id);
+        }
+        if (!StringUtils.isEmpty(merchantName)) {
+            criteria.andMerchantNameEqualTo(merchantName);
+        }
+        if (merchantStatusArray != null && merchantStatusArray.size() != 0) {
+            criteria.andMerchantStatusIn(merchantStatusArray);
+        }
+
+        if (!StringUtils.isEmpty(sort) && !StringUtils.isEmpty(order)) {
+            example.setOrderByClause(sort + " " + order);
+        }
+
+        PageHelper.startPage(page, limit);
+        return litemallMerchantMapper.selectByExample(example);
+    }
+
     /*
     查询用户门店的具体信息
      */
     public LitemallMerchant detail(Integer id) {
-
         return litemallMerchantMapper.selectByPrimaryKey(id);
+    }
+
+    /*
+    门店的审核
+     */
+    public Integer audit(Integer id ,Integer merchantStatus){
+        LitemallMerchant merchant = new LitemallMerchant();
+        merchant.setId(id);
+        merchant.setMerchantStatus(merchantStatus);
+        merchant.setEditTime(LocalDateTime.now());
+        return litemallMerchantMapper.updateByPrimaryKeySelective(merchant);
     }
 
     /*
@@ -169,6 +264,7 @@ public class LitemallMerchantService {
             user.setName(name);
             user.setId(Integer.parseInt(userId));
             user.setMobile(mobile);
+            user.setUpdateTime(LocalDateTime.now());
             LitemallUserExample userExample = new LitemallUserExample();
             LitemallUserExample.Criteria criteria1 = userExample.createCriteria();
             criteria1.andIdEqualTo(Integer.parseInt(userId));
@@ -225,6 +321,7 @@ public class LitemallMerchantService {
     /*
    查询具体店员的信息
     */
+    @Transactional(propagation = Propagation.REQUIRED, readOnly = false, rollbackFor = {Exception.class})
     public Object findOneMerchantUser(String userId) {
         try {
             LitemallUser user = litemallUserMapper.selectByPrimaryKey(Integer.parseInt(userId));
@@ -237,13 +334,21 @@ public class LitemallMerchantService {
     /*
   设置门店默认收货人
    */
-    public Object setConsignee(String userId,String storeId) {
+    public Object setConsignee(String userId,String storeId,Integer roleType) {
         try {
             LitemallMerchant merchant =new LitemallMerchant();
             LitemallUser user = litemallUserMapper.selectByPrimaryKey(Integer.parseInt(userId));
-            merchant.setConsigneeName(user.getName());
-            merchant.setConsigneePhone(user.getMobile());
-            merchant.setConsigneeId(Integer.parseInt(userId));
+            if(roleType==3){//设置负责人为默认收货人
+                LitemallMerchant merchant1 = litemallMerchantMapper.selectByPrimaryKey(Integer.parseInt(storeId));
+                merchant.setConsigneeName(merchant1.getMerchantLeader());
+                merchant.setConsigneePhone(merchant1.getMerchantPhone());
+                merchant.setConsigneeId(Integer.parseInt(userId));
+            }else {
+                merchant.setConsigneeName(user.getName());
+                merchant.setConsigneePhone(user.getMobile());
+                merchant.setConsigneeId(Integer.parseInt(userId));
+            }
+            merchant.setEditTime(LocalDateTime.now());
             LitemallMerchantExample example = new LitemallMerchantExample();
             LitemallMerchantExample.Criteria criteria = example.createCriteria();
             criteria.andIdEqualTo(Integer.parseInt(storeId));

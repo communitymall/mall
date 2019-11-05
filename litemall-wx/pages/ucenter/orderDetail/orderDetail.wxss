@@ -194,13 +194,13 @@ page {
 }
 
 .order-bottom .address {
-  height: 128rpx;
+  height: 200rpx;
   padding-top: 25rpx;
   border-bottom: 1px solid #f4f4f4;
 }
 
 .order-bottom .address .t {
-  height: 35rpx;
+  height: 100rpx;
   line-height: 35rpx;
   margin-bottom: 7.5rpx;
 }

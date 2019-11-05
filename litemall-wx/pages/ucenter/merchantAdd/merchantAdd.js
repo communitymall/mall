@@ -11,6 +11,7 @@ Page({
       merchantPhone: '',
       merchantLeader: '',
     },
+    node : false,
   },
   onLoad: function (optons) {
 
@@ -38,7 +39,23 @@ Page({
   },
   bindinputMerchantPhone(event) {
     let merchant = this.data.merchant;
+    let node =this.data.node;
     merchant.merchantPhone = event.detail.value;
+    var phone = event.detail.value;
+    var myreg = /^(((13[0-9]{1})|(15[0-9]{1})|(18[0-9]{1})|(17[0-9]{1}))+\d{8})$/;
+    if (!myreg.test(phone)) {
+      util.showErrorToast('手机号有误！');
+      this.setData({
+        node: false
+      });
+    }else{
+      this.setData({
+        node: true
+      });
+    }
+   
+    
+
     this.setData({
       merchant: merchant
     });
@@ -59,7 +76,7 @@ Page({
   },
   merchantCreate(options) {
     let merchant = this.data.merchant;
-
+  
     if (merchant.merchantName == '') {
       util.showErrorToast('请输入门店名称');
       return false;
@@ -67,6 +84,11 @@ Page({
 
     if (merchant.merchantPhone == '') {
       util.showErrorToast('请输入门店电话');
+      return false;
+    }
+    let node = this.data.node;
+    if (node == false) {
+      util.showErrorToast('手机号有误！');
       return false;
     }
 
@@ -100,6 +122,8 @@ Page({
           console.log("set merchant");
         }
         wx.navigateBack();
+      }else {
+        util.showErrorToast('输入信息有误！');
       }
     });
   },

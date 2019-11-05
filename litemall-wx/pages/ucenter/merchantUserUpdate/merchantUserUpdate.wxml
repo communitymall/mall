@@ -1,31 +1,47 @@
 <view class="add-address">
   <view class="add-form">
-    <view class="form-item">
+    <view wx:if="{{roleType==3}}">
+      <view class="form-item">
+        负责人姓名：
+        <input class="input" disabled="disabled" bindinput="bindinputMerchantUserName" placeholder="请输入名称" value="{{merchantLeader}}" auto-focus/>
+      </view>
+      <view class="form-item">
+        负责人手机：
+        <input disabled="disabled" class="input" bindinput="bindinputMerchantUserMobile" placeholder="请输入手机号" value="{{merchantUserInfo.mobile}}" auto-focus/>
+      </view>
+    </view>
+
+
+    <view class="form-item" wx:if="{{roleType!=3}}">
       店员姓名：
       <input class="input" bindinput="bindinputMerchantUserName" placeholder="请输入名称" value="{{merchantUserInfo.name}}" auto-focus/>
     </view>
-    <view class="form-item">
+    <view class="form-item" wx:if="{{roleType!=3}}">
       店员手机：
       <input class="input" bindinput="bindinputMerchantUserMobile" placeholder="请输入手机号" value="{{merchantUserInfo.mobile}}" auto-focus/>
     </view>
 
-    <view class="form-item">
-      用户角色:
-      <radio-group class="radio-group" bindchange="bindinputMerchantRoleType">
-        <label class="radio">
-          管理员
-          <radio value="0" checked="{{roleType==0}}" />
-        </label>
-        <label class="radio">
-          厨师
-          <radio value="1" checked="{{roleType==1}}" />
-        </label>
-        <label class="radio">
-          店员
-          <radio value="2" checked="{{roleType==2}}" />
-        </label>
-      </radio-group>
+    <view wx:if="{{roleType!=3}}">
+      <view class="form-item">
+        用户角色:
+        <radio-group class="radio-group" bindchange="bindinputMerchantRoleType">
+          <label class="radio">
+            管理员
+            <radio value="0" checked="{{roleType==0}}" />
+          </label>
+          <label class="radio">
+            厨师
+            <radio value="1" checked="{{roleType==1}}" />
+          </label>
+          <label class="radio">
+            店员
+            <radio value="2" checked="{{roleType==2}}" />
+          </label>
+        </radio-group>
+      </view>
     </view>
+
+
   </view>
   <button class="save" bindtap="setConsignee">设置为默认收货人</button>
   <view class="btns">
