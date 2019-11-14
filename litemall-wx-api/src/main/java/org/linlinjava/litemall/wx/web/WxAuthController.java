@@ -4,6 +4,7 @@ import cn.binarywang.wx.miniapp.api.WxMaService;
 import cn.binarywang.wx.miniapp.bean.WxMaJscode2SessionResult;
 import cn.binarywang.wx.miniapp.bean.WxMaPhoneNumberInfo;
 import com.github.pagehelper.util.StringUtil;
+import com.izton.sms.entity.SmsRetMsg;
 import com.newxtc.fw.FwApi;
 import com.newxtc.fw.impl.FwImpl;
 import org.apache.commons.logging.Log;
@@ -71,23 +72,20 @@ public class WxAuthController {
     public Object login(@RequestBody String body, HttpServletRequest request) {
         String mobile = JacksonUtil.parseString(body, "mobile");
         String password = JacksonUtil.parseString(body, "password");
-        //获得验证码
         String code = JacksonUtil.parseString(body, "code");
         if (mobile == null) {
             return ResponseUtil.badArgument();
         }
-
         //判断登录的手机号是否是注册过的
         List<LitemallUser> userList = userService.queryByMobile(mobile);
         LitemallUser user = null;
         if (userList.size() > 1) {
             return ResponseUtil.serious();
         } else if (userList.size() == 0) {
-            return ResponseUtil.fail(AUTH_INVALID_ACCOUNT, "手机号没有注册！");
+            return ResponseUtil.fail(AUTH_INVALID_ACCOUNT, "请输入正确的手机号！");
         } else {
             user = userList.get(0);
         }
-
         //判断账号是否可用
         if (user.getStatus() == 1) {
             return ResponseUtil.fail(AUTH_INVALID_ACCOUNT, "账号被禁用！");
@@ -95,18 +93,16 @@ public class WxAuthController {
         if (user.getStatus() == 2) {
             return ResponseUtil.fail(AUTH_INVALID_ACCOUNT, "账号被注销！");
         }
-
-
-//        FwApi fwApi = new FwImpl();
-//        // 1 调用【短信防火墙】验证请求
-//        HashMap<String, Object> paramMap = fwApi.getLoginReq(request, mobile);
-//        String jsonReq = fwApi.req(paramMap);
-//        logger.debug("login() fireware res =" + jsonReq);
-//        int smsSendRet = fwApi.getRet(jsonReq);
-//        if (smsSendRet == 1) {
-//            // 2 调用【短信防火墙】失败结果
-//            fwApi.fail(paramMap);
-//        }
+        FwApi fwApi = new FwImpl();
+        // 1 调用【短信防火墙】验证请求
+        HashMap<String, Object> paramMap = fwApi.getLoginReq(request, mobile);
+        String jsonReq = fwApi.req(paramMap);
+        logger.debug("login() fireware res =" + jsonReq);
+        int smsSendRet = fwApi.getRet(jsonReq);
+        if (smsSendRet == 1) {
+            // 2 调用【短信防火墙】失败结果
+            fwApi.fail(paramMap);
+        }
         //验证码登录的判断
         if (!(code == null || code.length() <= 0)) {//验证码登录
             String cachedCaptcha = CaptchaCodeManager.getCachedCaptcha(mobile);
@@ -115,21 +111,21 @@ public class WxAuthController {
             }
             if (!(code.equals(cachedCaptcha))) {
                 //调用【短信防火墙】失败结果
-              //  fwApi.fail(paramMap);
+                fwApi.fail(paramMap);
                 return ResponseUtil.fail(AUTH_CAPTCHA_UNSUPPORT, "验证码过期或错误！");
             } else {
                 //调用【短信防火墙】成功结果
-                //fwApi.succ(paramMap);
+                fwApi.succ(paramMap);
             }
         } else {//验证码是空值 ，用手机号与密码登录
             BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
             if (!encoder.matches(password, user.getPassword())) {
                 //调用【短信防火墙】失败结果
-                //fwApi.fail(paramMap);
+                fwApi.fail(paramMap);
                 return ResponseUtil.fail(AUTH_INVALID_ACCOUNT, "手机号或密码不对");
             } else {
                 //调用【短信防火墙】成功结果
-               // fwApi.succ(paramMap);
+                fwApi.succ(paramMap);
             }
         }
         // 更新登录情况
@@ -253,46 +249,35 @@ public class WxAuthController {
             return ResponseUtil.fail(405, "该手机不能注册了！");
         }
 
-//        if (!notifyService.isSmsEnable()) {
-//            return ResponseUtil.fail(AUTH_CAPTCHA_UNSUPPORT, "小程序后台验证码服务不支持");
-//        }
-//        FwApi fwApi = new FwImpl();
-//        // 1 调用【短信防火墙】短信发送请求
-//        HashMap<String, Object> paramMap = fwApi.getSendReq(request, phoneNumber);
-//        String jsonReq = fwApi.req(paramMap);
-//        logger.debug("registerCaptcha() fireware res =" + jsonReq);
-//        int smsSendRet = fwApi.getRet(jsonReq);
-//        if (smsSendRet == 1) {
-//            // 2 调用【短信防火墙】失败结果
-//            fwApi.fail(paramMap);
-//            return ResponseUtil.fail();
-//        } else {
-//            String code = CharUtil.getRandomNum(6);
-//            //notifyService.notifySmsTemplate(phoneNumber, NotifyType.CAPTCHA, new String[]{code});
-//            boolean successful = CaptchaCodeManager.addToCache(phoneNumber, code);
-//            if (!successful) {
-//                // 2 调用【短信防火墙】失败结果
-//                fwApi.fail(paramMap);
-//                return ResponseUtil.fail(AUTH_CAPTCHA_FREQUENCY, "验证码未超时1分钟，不能发送");
-//            }
-//            System.out.println("注册的code=" + code);
-////            SmsRetMsg smsRetMsg = smsUtil.send(phoneNumber, code);
-////            if (smsRetMsg != null && smsRetMsg.getRet() == 0) {
-////                // 2 调用【短信防火墙】成功结果
-////                fwApi.succ(paramMap);
-////            } else {
-////                // 2 调用【短信防火墙】失败结果
-////                fwApi.fail(paramMap);
-////            }
-//        }
-
-        String code = CharUtil.getRandomNum(6);
-        //notifyService.notifySmsTemplate(phoneNumber, NotifyType.CAPTCHA, new String[]{code});
-        boolean successful = CaptchaCodeManager.addToCache(phoneNumber, code);
-        if (!successful) {
-            return ResponseUtil.fail(AUTH_CAPTCHA_FREQUENCY, "验证码未超时1分钟，不能发送");
+        FwApi fwApi = new FwImpl();
+        // 1 调用【短信防火墙】短信发送请求
+        HashMap<String, Object> paramMap = fwApi.getSendReq(request, phoneNumber);
+        String jsonReq = fwApi.req(paramMap);
+        logger.debug("registerCaptcha() fireware res =" + jsonReq);
+        int smsSendRet = fwApi.getRet(jsonReq);
+        if (smsSendRet == 1) {
+            // 2 调用【短信防火墙】失败结果
+            fwApi.fail(paramMap);
+            return ResponseUtil.fail();
+        } else {
+            String code = CharUtil.getRandomNum(6);
+            //notifyService.notifySmsTemplate(phoneNumber, NotifyType.CAPTCHA, new String[]{code});
+            boolean successful = CaptchaCodeManager.addToCache(phoneNumber, code);
+            if (!successful) {
+                // 2 调用【短信防火墙】失败结果
+                fwApi.fail(paramMap);
+                return ResponseUtil.fail(AUTH_CAPTCHA_FREQUENCY, "验证码未超时1分钟，不能发送");
+            }
+            System.out.println("注册的code=" + code);
+            SmsRetMsg smsRetMsg = smsUtil.send(phoneNumber, code);
+            if (smsRetMsg != null && smsRetMsg.getRet() == 0) {
+                // 2 调用【短信防火墙】成功结果
+                fwApi.succ(paramMap);
+            } else {
+                // 2 调用【短信防火墙】失败结果
+                fwApi.fail(paramMap);
+            }
         }
-        System.out.println("注册的code=" + code);
         return ResponseUtil.ok();
     }
 
@@ -344,6 +329,9 @@ public class WxAuthController {
             fwApi.fail(paramMap);
         }
         List<LitemallUser> litemallUsers = userService.queryByMobile(mobile);
+        if (!(litemallUsers.isEmpty())) {
+            return ResponseUtil.fail(AUTH_CAPTCHA_UNSUPPORT, "手机号已经被注册了！");
+        }
 
         String cachedCaptcha = CaptchaCodeManager.getCachedCaptcha(mobile);
         if (StringUtil.isEmpty(cachedCaptcha)) {
@@ -357,10 +345,6 @@ public class WxAuthController {
             //调用【短信防火墙】成功结果
             fwApi.succ(paramMap);
         }
-        if (!(litemallUsers.isEmpty())) {
-            return ResponseUtil.fail(AUTH_CAPTCHA_UNSUPPORT, "手机号已经被注册了！");
-        }
-
         LitemallUser user = new LitemallUser();
         user.setMobile(mobile);
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
@@ -536,15 +520,16 @@ public class WxAuthController {
             }
 
             System.out.println("登录的code" + code);
-//            SmsRetMsg smsRetMsg = smsUtil.send(phoneNumber, code);
-//            System.out.println(CaptchaCodeManager.getCachedCaptcha(phoneNumber));
-//            if (smsRetMsg != null && smsRetMsg.getRet() == 0) {
-//                // 2 调用【短信防火墙】成功结果
-//                fwApi.succ(paramMap);
-//            } else {
-//                // 2 调用【短信防火墙】失败结果
-//                fwApi.fail(paramMap);
-//            }
+            logger.debug("登录的code =" + code);
+            SmsRetMsg smsRetMsg = smsUtil.send(phoneNumber, code);
+            System.out.println(CaptchaCodeManager.getCachedCaptcha(phoneNumber));
+            if (smsRetMsg != null && smsRetMsg.getRet() == 0) {
+                // 2 调用【短信防火墙】成功结果
+                fwApi.succ(paramMap);
+            } else {
+                // 2 调用【短信防火墙】失败结果
+                fwApi.fail(paramMap);
+            }
         }
         return ResponseUtil.ok();
     }
@@ -660,10 +645,10 @@ public class WxAuthController {
         if (!(code.equals(cachedCaptcha))) {
             return ResponseUtil.fail(AUTH_CAPTCHA_UNSUPPORT, "验证码错误！");
         }
-//        //判断验证码是否正确
-//        String cacheCode = CaptchaCodeManager.getCachedCaptcha(mobile);
-//        if (cacheCode == null || cacheCode.isEmpty() || !cacheCode.equals(code))
-//            return ResponseUtil.fail(AUTH_CAPTCHA_UNMATCH, "验证码错误");
+        //判断验证码是否正确
+        String cacheCode = CaptchaCodeManager.getCachedCaptcha(mobile);
+        if (cacheCode == null || cacheCode.isEmpty() || !cacheCode.equals(code))
+            return ResponseUtil.fail(AUTH_CAPTCHA_UNMATCH, "验证码错误");
 
         List<LitemallUser> userList = userService.queryByMobile(mobile);
         LitemallUser user = null;

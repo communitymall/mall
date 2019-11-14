@@ -18,19 +18,17 @@
                         <span>  {{ merchantStatus | detailMerchantStatusFilter }}</span>
                     </van-cell>
                     <van-cell title="门店照片" class="cell_middle">
-<!--                        <van-uploader :afterRead="avatarAfterRead">-->
-<!--                            <div class="user_avatar_upload">-->
-<!--                                <img-->
-<!--                                        :src="avatar + '?x-oss-process=image/resize,m_fill,h_50,w_50'"-->
-<!--                                        alt="你的头像"-->
-<!--                                        v-if="avatar"-->
-<!--                                >-->
-<!--                                <van-icon :after-read="afterRead" name="camera_full" v-else></van-icon>-->
-<!--                            </div>-->
-<!--                        </van-uploader>-->
-                        <van-uploader v-model="fileList" multiple name="camera_full" :after-read="afterRead" />
+                        <van-uploader :afterRead="afterRead" name="camera_full"  accept=".jpg,.jpeg,.png,.gif">
+                            <div class="user_avatar_upload">
+                                <van-icon :after-read="afterRead" name="camera_full" ></van-icon>
+                            </div>
+
+                        </van-uploader>
+<!--                        <van-uploader v-model="fileList" multiple name="camera_full" :after-read="afterRead" />-->
                     </van-cell>
                 </van-cell-group>
+                <img v-if="activeIndex===0"  :src="pic" width="100%">
+
 
                 <van-cell-group v-if="activeIndex===1" >
 <!--                    <van-cell value="" is-link @click="onEditLeader()">-->
@@ -73,15 +71,13 @@
 </template>
 
 <script>
-    import {merchantDetail, listUserStore, findMerchantLeader} from '@/api/api';
+    import {merchantDetail, listUserStore, findMerchantLeader,merchantPicVueUpload} from '@/api/api';
     import _ from 'lodash';
     import {Tab, Tabs, Panel, Card, List, Tag, NavBar} from 'vant';
 
     import Vue from 'vue';
-    import { Uploader } from 'vant';
-
-    Vue.use(Uploader);
-
+    import { Uploader, Image} from 'vant';
+    Vue.use(Uploader, Image);
     const detailMap = {
         0: '管理员',
         1: '厨师',
@@ -152,15 +148,25 @@
                 roleType: '',
                 mobile: '',
                 storeId: '',
-
+                pic: '',
             };
         },
 
         methods: {
             afterRead(file) {
                 // 此时可以自行将文件上传至服务器
-                console.log(file);
-                alert(file)
+                let id = this.$route.query.storeId
+                let content = file.file;
+                let merchantPic = this.merchantPic
+                let data = new FormData();
+                data.append('imagefile',content);
+                data.append('storeId',id);
+                data.append('merchantPic',merchantPic);
+                merchantPicVueUpload(data).then(res =>{
+                    this.merchantPic = res.data.data;
+                    this.pic = res.data.data+"?"+Math.random();
+                    //this.$router.go(0)
+                })
             },
             init() {
                 this.page = 0;
@@ -243,6 +249,7 @@
                     this.merchantPhone = res.data.data.merchantPhone;
                     this.merchantLeader = res.data.data.merchantLeader;
                     this.merchantStatus = res.data.data.merchantStatus;
+                    this.pic=res.data.data.merchantPic+"?"+Math.random();
                 });
                 this.page++;
                 // orderList({

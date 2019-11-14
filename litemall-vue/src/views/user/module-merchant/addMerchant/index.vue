@@ -1,5 +1,4 @@
 <template>
-
     <van-cell-group>
         <van-field
                 v-model="shipData.merchantName"
@@ -13,13 +12,11 @@
                 label="门店地址"
                 placeholder="请输入门店地址"
         />
-
         <van-field
                 v-model="shipData.merchantPhone"
                 label="门店电话"
                 placeholder="请输入门店电话"
         />
-
         <van-field
                 v-model="shipData.merchantCode"
                 label="营业执照编号"
@@ -33,22 +30,19 @@
                 placeholder="请输入门店负责人"
                 required
         />
-
         <van-cell title="门店照片" class="cell_middle">
             <van-uploader :after-read="afterRead"/>
         </van-cell>
-
-        <van-button type="primary" size="large"  @click="submit">提交</van-button>
+        <img  :src="pic" width="100%">
+        <van-button type="primary" size="large" @click="submit">提交</van-button>
     </van-cell-group>
-
-
 </template>
 
 <script>
     import field from '@/components/field/';
     import fieldGroup from '@/components/field-group/';
 
-    import {merchantCreate,authInfo} from '@/api/api';
+    import {merchantCreate, authInfo, merchantPicVueUpload} from '@/api/api';
     //导入错误的验证
     import {Toast, Uploader, Field} from 'vant';
     import Vue from 'vue';
@@ -60,16 +54,21 @@
     export default {
         data() {
             return {
-                shipData :{
+                shipData: {
                     merchantName: '',
                     merchantAddress: '',
                     merchantPhone: '',
                     merchantLeader: '',
-                    merchantPic:'',
-                    merchantCode:'',
-                    userId:'',
+                    merchantPic: '',
+                    merchantCode: '',
+                    userId: '',
                 },
                 avatar: '',
+                formData: {
+                    imagefile: '',
+                    storeId: '',
+                },
+                pic: '',
             };
 
         },
@@ -79,22 +78,37 @@
         },
         methods: {
             afterRead(file) {
-                // 此时可以自行将文件上传至服务器
-                console.log(file);
-                alert(file)
+                var isFlag = (file.file.type == 'image/jpeg' || file.file.type == 'image/png')? true : false;
+                if(!isFlag){
+                    this.$message({
+                        type: 'warning',
+                        message: '上传图片只能是 JPG、PNG 格式!'
+                    })
+                    return false
+                }
+                let content = file.file;
+                let data = new FormData();
+                data.append('imagefile',content);
+                data.append('merchantPic',this.shipData.merchantPic,);
+                merchantPicVueUpload(data).then(res =>{
+                    this.shipData.merchantPic = res.data.data
+                    this.pic = res.data.data +"?"+Math.random();
+                })
             },
-            submit(){//提交的请求
+            submit() {//提交的请求
                 if (!(/^1[34578]\d{9}$/.test(this.shipData.merchantPhone))) {
                     alert("电话号码格式错误");
                     return false;
                 }
-                merchantCreate(this.shipData)
-                    .then(res => {
-                        return this.$dialog.alert({message: '保存成功'});
-                    })
-                    .then(() => {
-                        this.$router.go(-1);
-                    });
+                let id = null;
+                merchantCreate(this.shipData).then(res => {
+                    alert(res.data.data.storeid)
+                    return this.$dialog.alert({message: '保存成功'});
+                    id = res.data.data.storeid
+                }).then(res => {
+                    this.$router.go(-1);
+                })
+
             },
 
             getUserInfo() {

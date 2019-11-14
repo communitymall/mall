@@ -96,6 +96,10 @@ page {
   font-size: 24rpx;
 }
 
+.order .img {
+   margin-left: 50px;
+}
+
 .order .goods {
   display: flex;
   align-items: center;

@@ -3,6 +3,35 @@ page {
   background: #f4f4f4;
 }
 
+.order {
+  margin-top: 20rpx;
+  background: #fff;
+}
+
+.order .h {
+  height: 83.3rpx;
+  line-height: 83.3rpx;
+  margin-left: 31.25rpx;
+  padding-right: 31.25rpx;
+  border-bottom: 1px solid #f4f4f4;
+  font-size: 30rpx;
+  color: #333;
+}
+
+.order .h .l {
+  float: left;
+}
+
+.order .img {
+   margin-left: 50px;
+}
+
+.order .h .r {
+  float: right;
+  color: #b4282d;
+  font-size: 24rpx;
+}
+
 .add-address .add-form {
   background: #fff;
   width: 100%;

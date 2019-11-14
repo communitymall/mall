@@ -6,7 +6,7 @@ litemall:
     app-secret: b2b7e61915c41c0cb7667d929fa70652
     mch-id: 1556018971
     mch-key: hr6wwTWknH2hhEbbeaMbDZqosXpSfD23
-    notify-url: http://39.97.235.28/wx/order/pay-notify
+    notify-url: http://39.97.235.28:8082/wx/order/pay-notify
     # 商户证书文件路径
     # 请参考“商户证书”一节 https://pay.weixin.qq.com/wiki/doc/api/wxa/wxa_api.php?chapter=4_3
     key-path: xxxxx
@@ -93,7 +93,7 @@ litemall:
     local:
       storagePath: storage
       # 这个地方应该是wx模块的WxStorageController的fetch方法对应的地址
-      address: http://localhost:8080/wx/storage/fetch/
+      address: http://39.97.235.28:8080/admin/
     # 阿里云对象存储配置信息
     aliyun:
       endpoint: oss-cn-shenzhen.aliyuncs.com

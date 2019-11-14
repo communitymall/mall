@@ -92,7 +92,7 @@ public class WxStoreController {
         if(merchantStatus==null){
             return ResponseUtil.fail();
         }
-        List<LitemallMerchant> list = litemallMerchantService.merchantStatusList(String.valueOf(userId),merchantStatus);
+        List<LitemallMerchant> list = litemallMerchantService.merchantStatusList(userId,merchantStatus);
         return ResponseUtil.okList(list);
     }
 

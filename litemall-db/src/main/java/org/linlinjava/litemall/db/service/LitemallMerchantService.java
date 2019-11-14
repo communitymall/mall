@@ -162,9 +162,27 @@ public class LitemallMerchantService {
         }catch (Exception e){
             throw  e;
         }
+    }
 
-
-
+    /*
+    更新商户门店的图片
+     */
+    @Transactional(propagation = Propagation.REQUIRED, readOnly = false, rollbackFor = {Exception.class})
+    public Object updateMerchantPic(Integer storeId, String merchantPic) {
+        LitemallMerchant merchant = new LitemallMerchant();
+        LitemallMerchantExample example = new LitemallMerchantExample();
+        LitemallMerchantExample.Criteria criteria = example.createCriteria();
+        criteria.andIdEqualTo(storeId);
+        if (!StringUtil.isEmpty(merchantPic)) {
+            merchant.setMerchantPic(merchantPic);
+        }
+        //设置更新时间
+        merchant.setEditTime(LocalDateTime.now());
+        try{
+            return litemallMerchantMapper.updateByExampleSelective(merchant, example);
+        }catch (Exception e){
+            throw  e;
+        }
     }
 
     /*
@@ -202,8 +220,8 @@ public class LitemallMerchantService {
      /*
     查询登录用户所注册的商户的门店（商户的状态）
      */
-     public List<LitemallMerchant> merchantStatusList(String userId,Integer merchantStatus) {
-         return litemallMerchantMapper.selectByMerchantStatus(Integer.parseInt(userId),merchantStatus);
+     public List<LitemallMerchant> merchantStatusList(Integer userId,Integer merchantStatus) {
+         return litemallMerchantMapper.selectByMerchantStatus(userId,merchantStatus);
      }
 
 
@@ -358,4 +376,9 @@ public class LitemallMerchantService {
             throw e;
         }
     }
+
+    /*
+    门店图片的上传
+     */
+
 }

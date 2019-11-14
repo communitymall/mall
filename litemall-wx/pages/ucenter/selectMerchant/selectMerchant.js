@@ -2,8 +2,8 @@ var util = require('../../../utils/util.js');
 var api = require('../../../config/api.js');
 var check = require('../../../utils/check.js');
 var area = require('../../../utils/area.js');
-
 var app = getApp();
+
 Page({
   data: {
     merchantList: [],//门店地址列表

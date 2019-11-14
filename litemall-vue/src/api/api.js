@@ -1,5 +1,34 @@
 import request from '@/utils/request'
 
+
+/*
+用户查看门店图片的上传
+ */
+const MerchantPicVueUpload='wx/wxImageUpload/vueUpload';
+export function merchantPicVueUpload(data) {
+  return request({
+    url: MerchantPicVueUpload,
+    method: 'post',
+    headers: {'Content-Type': 'multipart/form-data'},
+    data
+  })
+}
+
+
+// /*
+// 用户查看门店图片的上传
+//  */
+// const MerchantPicUpload='wx/wxImageUpload/upload';
+// export function merchantPicUpload(data) {
+//   return request({
+//     url: MerchantPicUpload,
+//     method: 'post',
+//     headers: {'Content-Type': 'multipart/form-data'},
+//     data
+//   })
+// }
+
+
 /*
 用户查看门店中通过审核门店
  */

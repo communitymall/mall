@@ -97,7 +97,7 @@
           <span>{{ merchantDetail.merchantPhone }}</span>
         </el-form-item>
         <el-form-item label="门店图片">
-          <img :src="merchantDetail.merchantPic" width="40">
+          <img :src="merchantDetail.merchantPic" width="500">
         </el-form-item>
 
         <el-form-item v-if="merchantDetail.merchantStatus==0" label="操作">

@@ -4,93 +4,91 @@
             <div class="store_avatar">
                 <img src="../../assets/images/avatar_default.png" alt="头像" width="55" height="55">
             </div>
-            <div class="store_name">litemall-vue</div>
+            <div class="store_name">菜鸟易购</div>
         </div>
-
         <div class="login_warp">
             <div class="login_header">
-                <span @click="cur=0" :class="{active:cur==0}">手机登录</span>
-                <span @click="cur=1" :class="{active:cur==1}">短信登录</span>
-            </div>
-
-            <div class="login_content">
-                <div v-show="cur==0" class="Cbody_item">
-                    <md-field-group>
-                        <md-field
-                                v-model="account"
-                                icon="mobile"
-                                placeholder="请输入测试手机号 "
-                                right-icon="clear-full"
-                                name="user"
-                                data-vv-as="帐号"
-                                @right-click="clearText"
-                        />
-                        <md-field
-                                v-model="password"
-                                icon="lock"
-                                placeholder="请输入测试密码"
-                                :type="visiblePass ? 'text' : 'password'"
-                                :right-icon="visiblePass ? 'eye-open' : 'eye-close'"
-                                data-vv-as="密码"
-                                name="password"
-                                @right-click="visiblePass = !visiblePass"
-                        />
-                        <div class="clearfix">
-                            <div class="float-l">
-                                <router-link to="/login/registerGetCode">免费注册</router-link>
+                <van-tabs >
+                    <van-tab title="手机登录"><div  class="Cbody_item">
+                        <md-field-group>
+                            <md-field
+                                    v-model="account"
+                                    icon="mobile"
+                                    placeholder="请输入手机号 "
+                                    right-icon="clear-full"
+                                    name="user"
+                                    data-vv-as="帐号"
+                                    @right-click="clearText"
+                            />
+                            <md-field
+                                    v-model="password"
+                                    icon="lock"
+                                    placeholder="请输入密码"
+                                    :type="visiblePass ? 'text' : 'password'"
+                                    :right-icon="visiblePass ? 'eye-open' : 'eye-close'"
+                                    data-vv-as="密码"
+                                    name="password"
+                                    @right-click="visiblePass = !visiblePass"
+                            />
+                            <div class="clearfix">
+                                <div class="float-l">
+                                    <router-link to="/login/registerGetCode">免费注册</router-link>
+                                </div>
+                                <div class="float-r">
+                                    <router-link to="/login/forget">忘记密码</router-link>
+                                </div>
                             </div>
-                            <div class="float-r">
-                                <router-link to="/login/forget">忘记密码</router-link>
-                            </div>
-                        </div>
+                            <van-button  size="large" type="primary" :loading="isLogining" @click="loginSubmit">
+                                <span class="button_login">登录</span>
+                            </van-button>
+                        </md-field-group>
+                    </div>
+                    </van-tab>
+                    <van-tab title="短信登录"><div  class="Cbody_item">
+                        <md-field-group>
+                            <md-field
+                                    v-model="account"
+                                    icon="mobile"
+                                    placeholder="请输入手机号"
+                                    right-icon="clear-full"
+                                    name="user"
+                                    data-vv-as="帐号"
+                                    @right-click="clearText"
+                            />
+                            <md-field
+                                    v-model="code"
+                                    icon="lock"
+                                    placeholder="请输入验证码"
+                                    data-vv-as="验证码"
+                                    name="code"
+                            >
 
-                        <van-button size="large" type="danger" :loading="isLogining" @click="loginSubmit">登录
-                        </van-button>
-                    </md-field-group>
-                </div>
+                                <div slot="rightIcon" @click="getCode" class="getCode red">
+                                    <countdown v-if="counting" :time="60000" @countdownend="countdownend">
+                                        <template slot-scope="props">{{ +props.seconds || 60 }}秒后获取</template>
+                                    </countdown>
+                                    <span class="yzm" v-else>获取验证码</span>
+                                </div>
 
-                <div v-show="cur==1" class="Cbody_item">
-                    <md-field-group>
-                        <md-field
-                                v-model="account"
-                                icon="mobile"
-                                placeholder="请输入测试手机号"
-                                right-icon="clear-full"
-                                name="user"
-                                data-vv-as="帐号"
-                                @right-click="clearText"
-                        />
-                        <md-field
-                                v-model="code"
-                                icon="lock"
-                                placeholder="请输入验证码"
-                                data-vv-as="验证码"
-                                name="code"
-                        >
-
-                            <div slot="rightIcon" @click="getCode" class="getCode red">
-                                <countdown v-if="counting" :time="60000" @countdownend="countdownend">
-                                    <template slot-scope="props">{{ +props.seconds || 60 }}秒后获取</template>
-                                </countdown>
-                                <span v-else>获取验证码</span>
+                            </md-field>
+                            <div class="clearfix">
+                                <div class="float-l">
+                                    <router-link to="/login/registerGetCode">免费注册</router-link>
+                                </div>
+                                <div class="float-r">
+                                    <router-link to="/login/forget">忘记密码</router-link>
+                                </div>
                             </div>
-
-                        </md-field>
-                        <div class="clearfix">
-                            <div class="float-l">
-                                <router-link to="/login/registerGetCode">免费注册</router-link>
-                            </div>
-                            <div class="float-r">
-                                <router-link to="/login/forget">忘记密码</router-link>
-                            </div>
-                        </div>
-                        <van-button size="large" type="danger" :loading="isLogining" @click="loginSubmit">登录
-                        </van-button>
-                    </md-field-group>
-                </div>
+                            <van-button  size="large" type="primary" :loading="isLogining" @click="loginSubmit">
+                                <span class="button_login">登录</span>
+                            </van-button>
+                        </md-field-group>
+                    </div>
+                    </van-tab>
+                </van-tabs>
             </div>
         </div>
-        <div class="text-desc text-center bottom_positon">技术支持: litemall</div>
+        <div class="text-desc text-center bottom_positon">技术支持: 北京华夏景泓科技有限公司</div>
 
     </div>
 
@@ -103,10 +101,13 @@
     import {authLoginByAccount} from '@/api/api';
     import {setLocalStorage} from '@/utils/local-storage';
     import {emailReg, mobileReg} from '@/utils/validate';
-
     import {Toast} from 'vant';
-
     import {authCaptcha,getMobiles} from '@/api/api';
+    import Vue from 'vue';
+    import { Tab, Tabs } from 'vant';
+
+    Vue.use(Tab).use(Tabs);
+
     export default {
         name: 'login-request',
         components: {
@@ -231,6 +232,13 @@
         position: relative;
         background-color: #fff;
     }
+    .button_login{
+        margin-left: 180px;
+    }
+    .yzm{
+        margin-left: 400px;
+    }
+
     .store_header {
         text-align: center;
         padding: 30px 0;
@@ -268,9 +276,16 @@
         margin-bottom: 20px;
         border-right: 20px;
     }
+    .dx_txt {
+        margin-right: 0px;
+    }
+    .mobile_txt {
+        margin-left: 100px;
+    }
+
     .login_header span {
         text-align: center;
-        margin-right: 80px;
+        margin-right: 90px;
         cursor: pointer;
     }
     .getCode {
