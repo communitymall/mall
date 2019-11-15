@@ -8,86 +8,89 @@
         </div>
         <div class="login_warp">
             <div class="login_header">
-                <van-tabs >
-                    <van-tab title="手机登录"><div  class="Cbody_item">
-                        <md-field-group>
-                            <md-field
-                                    v-model="account"
-                                    icon="mobile"
-                                    placeholder="请输入手机号 "
-                                    right-icon="clear-full"
-                                    name="user"
-                                    data-vv-as="帐号"
-                                    @right-click="clearText"
-                            />
-                            <md-field
-                                    v-model="password"
-                                    icon="lock"
-                                    placeholder="请输入密码"
-                                    :type="visiblePass ? 'text' : 'password'"
-                                    :right-icon="visiblePass ? 'eye-open' : 'eye-close'"
-                                    data-vv-as="密码"
-                                    name="password"
-                                    @right-click="visiblePass = !visiblePass"
-                            />
-                            <div class="clearfix">
-                                <div class="float-l">
-                                    <router-link to="/login/registerGetCode">免费注册</router-link>
+                <van-tabs>
+                    <van-tab title="手机登录">
+                        <div class="Cbody_item">
+                            <md-field-group>
+                                <md-field
+                                        v-model="account"
+                                        icon="mobile"
+                                        placeholder="请输入手机号 "
+                                        right-icon="clear-full"
+                                        name="user"
+                                        data-vv-as="帐号"
+                                        @right-click="clearText"
+                                />
+                                <md-field
+                                        v-model="password"
+                                        icon="lock"
+                                        placeholder="请输入密码"
+                                        :type="visiblePass ? 'text' : 'password'"
+                                        :right-icon="visiblePass ? 'eye-open' : 'eye-close'"
+                                        data-vv-as="密码"
+                                        name="password"
+                                        @right-click="visiblePass = !visiblePass"
+                                />
+                                <div class="clearfix">
+                                    <div class="float-l">
+                                        <router-link to="/login/registerGetCode">免费注册</router-link>
+                                    </div>
+                                    <div class="float-r">
+                                        <router-link to="/login/forget">忘记密码</router-link>
+                                    </div>
                                 </div>
-                                <div class="float-r">
-                                    <router-link to="/login/forget">忘记密码</router-link>
-                                </div>
-                            </div>
-                            <van-button  size="large" type="primary" :loading="isLogining" @click="loginSubmit">
-                                <span class="button_login">登录</span>
-                            </van-button>
-                        </md-field-group>
-                    </div>
+                            </md-field-group>
+                        </div>
                     </van-tab>
-                    <van-tab title="短信登录"><div  class="Cbody_item">
-                        <md-field-group>
-                            <md-field
-                                    v-model="account"
-                                    icon="mobile"
-                                    placeholder="请输入手机号"
-                                    right-icon="clear-full"
-                                    name="user"
-                                    data-vv-as="帐号"
-                                    @right-click="clearText"
-                            />
-                            <md-field
-                                    v-model="code"
-                                    icon="lock"
-                                    placeholder="请输入验证码"
-                                    data-vv-as="验证码"
-                                    name="code"
-                            >
+                    <van-tab title="短信登录">
+                        <div class="Cbody_item">
+                            <md-field-group>
+                                <md-field
+                                        v-model="account"
+                                        icon="mobile"
+                                        placeholder="请输入手机号"
+                                        right-icon="clear-full"
+                                        name="user"
+                                        data-vv-as="帐号"
+                                        @right-click="clearText"
+                                />
+                                <md-field
+                                        v-model="code"
+                                        icon="lock"
+                                        placeholder="请输入验证码"
+                                        data-vv-as="验证码"
+                                        name="code"
+                                >
 
-                                <div slot="rightIcon" @click="getCode" class="getCode red">
-                                    <countdown v-if="counting" :time="60000" @countdownend="countdownend">
-                                        <template slot-scope="props">{{ +props.seconds || 60 }}秒后获取</template>
-                                    </countdown>
-                                    <span class="yzm" v-else>获取验证码</span>
-                                </div>
+                                    <div slot="rightIcon" @click="getCode" class="getCode red">
+                                        <countdown v-if="counting" :time="60000" @end="countdownend">
+                                            <template slot-scope="props">
+                                                <p class="yzm">{{ +props.seconds || 60 }}秒后获取</p>
+                                            </template>
+                                        </countdown>
+                                        <p  class="yzm" v-else>获取验证码</p>
+                                    </div>
 
-                            </md-field>
-                            <div class="clearfix">
-                                <div class="float-l">
-                                    <router-link to="/login/registerGetCode">免费注册</router-link>
+                                </md-field>
+                                <div class="clearfix">
+                                    <div class="float-l">
+                                        <router-link to="/login/registerGetCode">免费注册</router-link>
+                                    </div>
+                                    <div class="float-r">
+                                        <router-link to="/login/forget">忘记密码</router-link>
+                                    </div>
                                 </div>
-                                <div class="float-r">
-                                    <router-link to="/login/forget">忘记密码</router-link>
-                                </div>
-                            </div>
-                            <van-button  size="large" type="primary" :loading="isLogining" @click="loginSubmit">
-                                <span class="button_login">登录</span>
-                            </van-button>
-                        </md-field-group>
-                    </div>
+                            </md-field-group>
+                        </div>
                     </van-tab>
                 </van-tabs>
             </div>
         </div>
+
+        <van-button size="large" type="primary" :loading="isLogining" @click="login">
+            <span class="button_login">登录</span>
+        </van-button>
+
         <div class="text-desc text-center bottom_positon">技术支持: 北京华夏景泓科技有限公司</div>
 
     </div>
@@ -102,9 +105,9 @@
     import {setLocalStorage} from '@/utils/local-storage';
     import {emailReg, mobileReg} from '@/utils/validate';
     import {Toast} from 'vant';
-    import {authCaptcha,getMobiles} from '@/api/api';
+    import {authCaptcha, getMobiles} from '@/api/api';
     import Vue from 'vue';
-    import { Tab, Tabs } from 'vant';
+    import {Tab, Tabs} from 'vant';
 
     Vue.use(Tab).use(Tabs);
 
@@ -119,7 +122,6 @@
         data() {
             return {
                 counting: false,
-                cur: 0, //默认选中第一个tab
                 account: '',
                 password: '',
                 mobile: '',
@@ -129,16 +131,16 @@
                 userInfo: {}
             };
         },
-        created(){
+        created() {
             this.init();
         },
 
         methods: {
-            init(){
+            init() {
                 //默认手机号
-                if(typeof NXT_GET_TOKEN === "function"){
-                    getMobiles(NXT_GET_TOKEN()).then(res=> {
-                        if(res != null && res.data != null && res.data.length>0){
+                if (typeof NXT_GET_TOKEN === "function") {
+                    getMobiles(NXT_GET_TOKEN()).then(res => {
+                        if (res != null && res.data != null && res.data.length > 0) {
                             this.account = res.data[0];
                         }
                     }).catch(error => {
@@ -152,7 +154,7 @@
             },
             getCode() {
                 authCaptcha(this.getMobile()).then(res => {
-
+                    this.counting=true;
                 }).catch(error => {
                     Toast.fail(error.data.errmsg);
                 })
@@ -164,12 +166,7 @@
             },
             countdownend() {
                 this.counting = false;
-
             },
-            validate() {
-
-            },
-
             login() {
                 let loginData = this.getLoginData();
                 authLoginByAccount(loginData).then(res => {
@@ -186,7 +183,7 @@
                 });
             },
             loginSubmit() {
-                this.isLogining = true;
+                //this.isLogining = true;
                 try {
                     this.validate();
                     this.login();
@@ -228,36 +225,39 @@
 </script>
 <style lang="scss" scoped>
     @import '../../assets/scss/mixin';
+
     .login {
         position: relative;
         background-color: #fff;
     }
-    .button_login{
-        margin-left: 180px;
-    }
-    .yzm{
-        margin-left: 400px;
+
+    .yzm {
+        font-size: 10px;
+        margin-right: 10px;
     }
 
     .store_header {
         text-align: center;
         padding: 30px 0;
+
         .store_avatar img {
             border-radius: 50%;
         }
+
         .store_name {
             padding-top: 5px;
             font-size: 16px;
         }
     }
-    .register {
-        padding-top: 40px;
-        color: $font-color-gray;
+
+    .Cbody_item {
+        padding-top: 10px;
         a {
             color: $font-color-gray;
         }
+
         > div {
-            width: 50%;
+            width: 100%;
             box-sizing: border-box;
             padding: 0 20px;
         }
@@ -266,19 +266,23 @@
             text-align: right;
         }
     }
+
     .bottom_positon {
         position: absolute;
         bottom: 30px;
         width: 100%;
     }
+
     .login_header {
         text-align: center;
         margin-bottom: 20px;
         border-right: 20px;
     }
+
     .dx_txt {
         margin-right: 0px;
     }
+
     .mobile_txt {
         margin-left: 100px;
     }
@@ -288,6 +292,7 @@
         margin-right: 90px;
         cursor: pointer;
     }
+
     .getCode {
         @include one-border(left);
         text-align: center;
