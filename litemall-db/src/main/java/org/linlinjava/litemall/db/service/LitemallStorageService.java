@@ -4,16 +4,16 @@ import com.github.pagehelper.PageHelper;
 import org.linlinjava.litemall.db.dao.LitemallStorageMapper;
 import org.linlinjava.litemall.db.domain.LitemallStorage;
 import org.linlinjava.litemall.db.domain.LitemallStorageExample;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import javax.annotation.Resource;
 import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
 public class LitemallStorageService {
-    @Autowired
+    @Resource
     private LitemallStorageMapper storageMapper;
 
     public void deleteByKey(String key) {

@@ -113,7 +113,7 @@ public class HttpUtil {
     }
 
 
-    public static String smsSendPost(String url, Map<String, String> params) {
+    public static String smsSendPost(String url, Map<Object, Object> params) {
         String s = JSONUtils.toJSONString(params);
         CloseableHttpResponse response = null;
         BufferedReader in = null;
