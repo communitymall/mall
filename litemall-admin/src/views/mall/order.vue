@@ -101,10 +101,10 @@
         <el-form-item label="用户留言">
           <span>{{ orderDetail.order.message }}</span>
         </el-form-item>
-        <el-form-item label="收货信息">
-          <span>（收货人）{{ orderDetail.order.consignee }}</span>
-          <span>（手机号）{{ orderDetail.order.mobile }}</span>
-          <span>（地址）{{ orderDetail.order.address }}</span>
+        <el-form-item label="收货信息"><br>
+          <span>&nbsp;&nbsp;&nbsp;&nbsp;收货人:{{ orderDetail.order.consignee }} </span><br>
+          <span>&nbsp;&nbsp;&nbsp;&nbsp;手机号:{{ orderDetail.order.mobile }}</span><br>
+          <span>&nbsp;&nbsp;&nbsp;&nbsp;地址:{{ orderDetail.order.address }}</span><br>
         </el-form-item>
         <el-form-item label="商品信息">
           <el-table :data="orderDetail.orderGoods" border fit highlight-current-row>
@@ -130,16 +130,16 @@
           </span>
         </el-form-item>
         <el-form-item label="支付信息">
-          <span>（支付渠道）微信支付</span>
-          <span>（支付时间）{{ orderDetail.order.payTime }}</span>
+          <span>支付渠道:微信支付 &nbsp;&nbsp;支付时间:{{ orderDetail.order.payTime }}</span>
+          <!--          <span>支付时间:{{ orderDetail.order.payTime }}</span>-->
         </el-form-item>
-        <el-form-item label="快递信息">
-          <span>（快递公司）{{ orderDetail.order.shipChannel }}</span>
-          <span>（快递单号）{{ orderDetail.order.shipSn }}</span>
-          <span>（发货时间）{{ orderDetail.order.shipTime }}</span>
+        <el-form-item label="快递信息"><br>
+          <span>&nbsp;&nbsp;&nbsp;&nbsp;物流公司:{{ orderDetail.order.shipChannel }}</span><br>
+          <span>&nbsp;&nbsp;&nbsp;&nbsp;物流单号:{{ orderDetail.order.shipSn }}</span><br>
+          <span>&nbsp;&nbsp;&nbsp;&nbsp;发货时间:{{ orderDetail.order.shipTime }}</span><br>
         </el-form-item>
         <el-form-item label="收货信息">
-          <span>（确认收货时间）{{ orderDetail.order.confirmTime }}</span>
+          <span>确认收货时间:{{ orderDetail.order.confirmTime }}</span>
         </el-form-item>
       </el-form>
     </el-dialog>
@@ -168,10 +168,10 @@
         <el-form-item label="用户留言">
           <span>{{ orderDetail.order.message }}</span>
         </el-form-item>
-        <el-form-item label="收货信息">
-          <span>（收货人）{{ orderDetail.order.consignee }}</span>
-          <span>（手机号）{{ orderDetail.order.mobile }}</span>
-          <span>（地址）{{ orderDetail.order.address }}</span>
+        <el-form-item label="收货信息"><br>
+          <span>&nbsp;&nbsp;&nbsp;&nbsp;收货人:{{ orderDetail.order.consignee }} </span><br>
+          <span>&nbsp;&nbsp;&nbsp;&nbsp;手机号:{{ orderDetail.order.mobile }}</span><br>
+          <span>&nbsp;&nbsp;&nbsp;&nbsp;地址:{{ orderDetail.order.address }}</span><br>
         </el-form-item>
         <el-form-item label="商品信息">
           <el-table :data="orderDetail.orderGoods" border fit highlight-current-row>

@@ -24,7 +24,7 @@
 	"compileType": "miniprogram",
 	"libVersion": "2.4.0",
 	"appid": "wx622540f256ee5276",
-	"projectname": "litemall-wx",
+	"projectname": "菜鸟易购",
 	"cloudfunctionTemplateRoot": "",
 	"debugOptions": {
 		"hidedInDevtools": []

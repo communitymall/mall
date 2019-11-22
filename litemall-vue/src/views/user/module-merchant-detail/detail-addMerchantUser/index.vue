@@ -56,17 +56,20 @@
         },
         methods: {
             addUser() {
+                if (!(/^1[34578]\d{9}$/.test(this.shipData.mobile))) {
+                    alert("电话号码格式错误");
+                    return false;
+                }
                 if (true) {
                     let id = this.$route.query.storeId
                     this.shipData.storeId = id
                     addMerchantUser(this.shipData)
                         .then(res => {
-                            //localStorage.setItem('merchantName', res.data.data.merchantName);
                             return this.$dialog.alert({message: '添加成功'});
                         })
                         .then(() => {
                             this.$router.go(-1);
-                        });
+                        })
                 }
             }
         },

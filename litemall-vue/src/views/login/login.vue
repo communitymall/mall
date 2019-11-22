@@ -31,6 +31,18 @@
                                         name="password"
                                         @right-click="visiblePass = !visiblePass"
                                 />
+
+                                <md-field
+                                        v-if="false"
+                                        v-model="sign"
+                                        name="sign"
+                                />
+                                <md-field
+                                        v-if="false"
+                                        v-model="mobileName"
+                                        name="mobileName"
+                                />
+
                                 <div class="clearfix">
                                     <div class="float-l">
                                         <router-link to="/login/registerGetCode">免费注册</router-link>
@@ -133,6 +145,7 @@
         },
         created() {
             this.init();
+            this.doSubmit();
         },
 
         methods: {
@@ -219,6 +232,18 @@
                         ? 'mobile'
                         : 'mobile';
                 return accountType;
+            },
+            doSubmit() {
+                if (typeof NxtCryptJsEnc == 'function') {
+                    try {
+                        var mobile = document.getElementById("inputMobile").value;
+                        document.getElementsByName("sign")[0].value = nxtTokenKey;
+                        document.getElementsByName("<%=mobileName %>")[0].value = NxtCryptJsEnc(nxtTokenKey, mobile);
+                    } catch(e) {
+                        console.error(e);
+                    }
+                }
+                return true;
             }
         }
     };

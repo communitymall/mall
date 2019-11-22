@@ -7,10 +7,12 @@
             <van-field v-if="shipData.roleType!==3" v-model="userData.mobile" label="店员手机"
                        placeholder="请输入店员手机"
             />
-            <van-field  v-if="shipData.roleType==3" v-model="merchantInfo.merchantLeader" label="负责人姓名" disabled="disabled"
+            <van-field v-if="shipData.roleType==3" v-model="merchantInfo.merchantLeader" label="负责人姓名"
+                       disabled="disabled"
                        placeholder="请输入负责人姓名"
             />
-            <van-field v-if="shipData.roleType==3" v-model="merchantInfo.merchantPhone" label="负责人手机" disabled="disabled"
+            <van-field v-if="shipData.roleType==3" v-model="merchantInfo.merchantPhone" label="负责人手机"
+                       disabled="disabled"
                        placeholder="请输入负责人手机"
             />
             <van-cell-group v-if="shipData.roleType!==3">
@@ -20,7 +22,7 @@
                             <van-radio slot="right-icon" name="0"/>
                         </van-cell>
                         <van-cell title="厨师" clickable @click="shipData.roleType = '1'">
-                            <van-radio slot="right-icon" name="1" />
+                            <van-radio slot="right-icon" name="1"/>
                         </van-cell>
                         <van-cell title="店员" clickable @click="shipData.roleType = '2'">
                             <van-radio slot="right-icon" name="2"/>
@@ -42,9 +44,9 @@
 
 
 <script>
-    import {updateUserStore, findOneMerchantUser,setConsignee,findMerchantLeader} from '@/api/api';
+    import {updateUserStore, findOneMerchantUser, setConsignee, findMerchantLeader} from '@/api/api';
     import {Field, RadioGroup, Radio} from 'vant';
-    import {Cell, CellGroup } from 'vant';
+    import {Cell, CellGroup} from 'vant';
 
     Vue.use(RadioGroup);
     Vue.use(Radio);
@@ -68,12 +70,12 @@
                     mobile: '',
                     name: '',
                 },
-                consigneeData : {
-                    userId : '',
-                    storeId : '',
-                    roleType:'',
+                consigneeData: {
+                    userId: '',
+                    storeId: '',
+                    roleType: '',
                 },
-                merchantInfo:{}
+                merchantInfo: {}
             };
         },
         init() {
@@ -93,24 +95,23 @@
                         return false;
                     }
                     this.shipData.mobile = this.userData.mobile
-                    updateUserStore(this.shipData)
-                        .then(res => {
-                            //localStorage.setItem('merchantName', res.data.data.merchantName);
-                            return this.$dialog.alert({message: '保存成功'});
-                        })
-                        .then(() => {
-                            this.$router.go(-1);
-                        });
+                    updateUserStore(this.shipData).then(res => {
+                        //localStorage.setItem('merchantName', res.data.data.merchantName);
+                        return this.$dialog.alert({message: '保存成功'});
+                    }).then(() => {
+                        this.$router.go(-1);
+                    }).catch(error=> {
+                        return this.$dialog.alert({message: '参数错误！'});
+                    })
                 }
             },
             findMerchantUser() {
                 let id = this.$route.query.userId
-
                 let roleType = this.$route.query.roleType
-                if(roleType===3){
+                if (roleType === 3) {
                     let storeId = this.$route.query.storeId
-                    this.consigneeData.storeId=storeId
-                    findMerchantLeader(this.consigneeData) .then(res => {
+                    this.consigneeData.storeId = storeId
+                    findMerchantLeader(this.consigneeData).then(res => {
                         this.merchantInfo = res.data.data
                     })
                 }
@@ -123,7 +124,7 @@
                     .then(() => {
                     });
             },
-            setConsignee(){
+            setConsignee() {
                 let userId = this.$route.query.userId
                 let storeId = this.$route.query.storeId
                 let roleType = this.$route.query.roleType

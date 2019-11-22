@@ -143,7 +143,7 @@ export default {
       });
     },
     addCollect() {
-      collectAddOrDelete({ valueId: this.itemId, type: 0 }).then(res => {
+      collectAddOrDelete({ valueId: this.itemId, type: 0 ,goodsName: this.goods.info.name }).then(res => {
         if (this.goods.userHasCollect === 1) {
           this.goods.userHasCollect = 0;
         } else {

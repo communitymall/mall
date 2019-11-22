@@ -78,6 +78,7 @@ public class LitemallCollectService {
             example.setOrderByClause(sort + " " + order);
         }
 
+
         PageHelper.startPage(page, size);
         return collectMapper.selectByExample(example);
     }

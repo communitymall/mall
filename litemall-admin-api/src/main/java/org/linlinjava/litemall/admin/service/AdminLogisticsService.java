@@ -92,11 +92,10 @@ public class AdminLogisticsService {
                 order.setShipSn(transitId1);
                 order.setShipChannel(company1.getName());
                 order.setUpdateTime(LocalDateTime.now());
+                order.setShipTime(LocalDateTime.now());
                 orderService.updateByOrderSn(order);
             }
             transportService.add(companyId, licensePlateNumber, thirdOrder, transitId1, driver, freight, createUser);
-
-
         } catch (Exception ex) {
             throw ex;
         }

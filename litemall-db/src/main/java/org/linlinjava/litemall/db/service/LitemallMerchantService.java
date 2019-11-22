@@ -315,6 +315,7 @@ public class LitemallMerchantService {
     /*
     添加新的店员
      */
+    @Transactional(propagation = Propagation.REQUIRED, readOnly = false, rollbackFor = {Exception.class})
     public Object addMerchantUser(String storeId, String name, String mobile, Integer roleType) {
         try {
             LitemallUser user = new LitemallUser();
