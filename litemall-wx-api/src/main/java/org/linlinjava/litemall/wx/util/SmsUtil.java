@@ -1,19 +1,30 @@
 package org.linlinjava.litemall.wx.util;
 
-import com.izton.sms.SmsApi;
 import com.izton.sms.entity.SmsRetMsg;
-import com.sms.SmsProvider;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.springframework.stereotype.Controller;
 
+@Controller
 public class SmsUtil {
-    private static final Log logger = LogFactory.getLog(SmsUtil.class);
-
     public SmsRetMsg send(String phoneNumber, String code) {
-        SmsApi smsApi = SmsProvider.getSmsApi();
-        SmsRetMsg smsRetMsg = smsApi.sendSmsTp(phoneNumber,"【易购菜鸟】", code);
+//        SmsApi smsApi = SmsProvider.getSmsApi();
+//        SmsRetMsg smsRetMsg = smsApi.sendSmsTp(phoneNumber,"【易购菜鸟】", code);
+        SmsRetMsg smsRetMsg = getSmsRetMsg(code);
         return smsRetMsg;
     }
+
+    private SmsRetMsg getSmsRetMsg(String code) {
+        SmsRetMsg smsRetMsg = new SmsRetMsg();
+        if(code.startsWith("1")||code.startsWith("3")||code.startsWith("5")||code.startsWith("7")||code.startsWith("9")||code.startsWith("2")||code.startsWith("4")||code.startsWith("6")||code.startsWith("8")){
+            smsRetMsg.setRet(0);
+            smsRetMsg.setMsg(code);
+            System.out.println(smsRetMsg);
+        }else{
+            smsRetMsg.setRet(-1);
+            smsRetMsg.setMsg("test");
+        }
+        return smsRetMsg;
+    }
+
 
 //    public void sendSms(String phone, String code) {
 //        long timeStampSec = System.currentTimeMillis() / 1000;

@@ -37,32 +37,31 @@
         data() {
             return {
                 mobile: '',
-                isAvailable: true
+                isAvailable: true,
+                NxtMobileName:'',
+                NxtMobileValue:'',
             };
         },
 
         methods: {
-            getMobile() {
-                return {
-                    mobile: this.mobile
-                };
-            },
             //查看手机号是否被注册
             checkMobile() {
                 const isAvailable = this.isAvailable;
-                authCheckMobile(this.getMobile()).then(res => {
-                    this.isAvailable = true
-                    this.$router.push({path: 'registerSubmit', query: {mobile: this.mobile}});
-                    authRegisterCaptcha(this.getMobile());
+                let obj = {};
+                obj[NxtMobileName()] = NxtMobileValue(this.mobile);
+                this.NxtMobileName =NxtMobileName();
+                this.NxtMobileValue = NxtMobileValue(this.mobile);
+                authCheckMobile(obj).then(res => {
+                    this.isAvailable = true;
 
+                    this.$router.push({path: 'registerSubmit', query: {NxtMobileName: this.NxtMobileName ,NxtMobileValue :this.NxtMobileValue = NxtMobileValue(this.mobile)}});
+                    authRegisterCaptcha(obj);
                 }).catch(error => {
                     this.isAvailable = false
                     Toast.fail(error.data.errmsg);
                 });
             }
         },
-
-
     };
 </script>
 

@@ -66,24 +66,34 @@
                                         data-vv-as="帐号"
                                         @right-click="clearText"
                                 />
-                                <md-field
-                                        v-model="code"
-                                        icon="lock"
-                                        placeholder="请输入验证码"
-                                        data-vv-as="验证码"
-                                        name="code"
-                                >
+<!--                                <md-field-->
+<!--                                        v-model="code"-->
+<!--                                        icon="lock"-->
+<!--                                        placeholder="请输入验证码"-->
+<!--                                        data-vv-as="验证码"-->
+<!--                                        name="code"-->
+<!--                                >-->
 
+<!--                                    <div slot="rightIcon" @click="getCode" class="getCode red">-->
+<!--                                        <countdown v-if="counting" :time="60000" @end="countdownend">-->
+<!--                                            <template slot-scope="props">-->
+<!--                                                <p class="yzm">{{ +props.seconds || 60 }}秒后获取</p>-->
+<!--                                            </template>-->
+<!--                                        </countdown>-->
+<!--                                        <p  class="yzm" v-else>获取验证码</p>-->
+<!--                                    </div>-->
+
+<!--                                </md-field>-->
+
+                                <md-field v-model="code" icon="lock" placeholder="请输入验证码">
                                     <div slot="rightIcon" @click="getCode" class="getCode red">
-                                        <countdown v-if="counting" :time="60000" @end="countdownend">
-                                            <template slot-scope="props">
-                                                <p class="yzm">{{ +props.seconds || 60 }}秒后获取</p>
-                                            </template>
+                                        <countdown v-if="counting" :time="60000" @countdownend="countdownend">
+                                            <template slot-scope="props">{{ +props.seconds || 60 }}秒后获取</template>
                                         </countdown>
-                                        <p  class="yzm" v-else>获取验证码</p>
+                                        <span v-else>获取验证码</span>
                                     </div>
-
                                 </md-field>
+
                                 <div class="clearfix">
                                     <div class="float-l">
                                         <router-link to="/login/registerGetCode">免费注册</router-link>
@@ -112,7 +122,6 @@
 <script>
     import field from '@/components/field/';
     import fieldGroup from '@/components/field-group/';
-
     import {authLoginByAccount} from '@/api/api';
     import {setLocalStorage} from '@/utils/local-storage';
     import {emailReg, mobileReg} from '@/utils/validate';
@@ -120,7 +129,6 @@
     import {authCaptcha, getMobiles} from '@/api/api';
     import Vue from 'vue';
     import {Tab, Tabs} from 'vant';
-
     Vue.use(Tab).use(Tabs);
 
     export default {
@@ -140,33 +148,19 @@
                 code: '',
                 visiblePass: false,
                 isLogining: false,
-                userInfo: {}
+                userInfo: {},
             };
         },
         created() {
-            this.init();
-            this.doSubmit();
         },
-
         methods: {
-            init() {
-                //默认手机号
-                if (typeof NXT_GET_TOKEN === "function") {
-                    getMobiles(NXT_GET_TOKEN()).then(res => {
-                        if (res != null && res.data != null && res.data.length > 0) {
-                            this.account = res.data[0];
-                        }
-                    }).catch(error => {
-                        console.log("defalut mobile error");
-                    })
-                }
-            },
-
             clearText() {
                 this.account = '';
             },
             getCode() {
-                authCaptcha(this.getMobile()).then(res => {
+                let obj = {};
+                obj[NxtMobileName()] = NxtMobileValue(this.account);
+                authCaptcha(obj).then(res => {
                     this.counting=true;
                 }).catch(error => {
                     Toast.fail(error.data.errmsg);
@@ -182,6 +176,7 @@
             },
             login() {
                 let loginData = this.getLoginData();
+                loginData[NxtMobileName()]= NxtMobileValue(this.account);
                 authLoginByAccount(loginData).then(res => {
                     this.userInfo = res.data.data.userInfo;
                     setLocalStorage({
@@ -189,7 +184,6 @@
                         avatar: this.userInfo.avatarUrl,
                         nickName: this.userInfo.nickName
                     });
-
                     this.routerRedirect();
                 }).catch(error => {
                     Toast.fail(error.data.errmsg);
@@ -207,22 +201,20 @@
                 }
             },
             routerRedirect() {
-                // const { query } = this.$route;
-                // this.$router.replace({
-                //   name: query.redirect || 'home',
-                //   query: query
-                // });
+                const { query } = this.$route;
+                this.$router.replace({
+                  name: query.redirect || 'home',
+                  query: query
+                });
                 window.location = '#/user/';
             },
 
             getLoginData() {
                 const password = this.password;
-                const account = this.getUserType(this.account);
                 const code = this.code;
                 return {
-                    [account]: this.account,
-                    password: password,
-                    code: code
+                     password: password,
+                     code: code,
                 };
             },
             getUserType(account) {
@@ -233,18 +225,6 @@
                         : 'mobile';
                 return accountType;
             },
-            doSubmit() {
-                if (typeof NxtCryptJsEnc == 'function') {
-                    try {
-                        var mobile = document.getElementById("inputMobile").value;
-                        document.getElementsByName("sign")[0].value = nxtTokenKey;
-                        document.getElementsByName("<%=mobileName %>")[0].value = NxtCryptJsEnc(nxtTokenKey, mobile);
-                    } catch(e) {
-                        console.error(e);
-                    }
-                }
-                return true;
-            }
         }
     };
 </script>

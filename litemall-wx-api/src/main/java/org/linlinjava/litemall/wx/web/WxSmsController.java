@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @RestController
 @RequestMapping("/wx/wxSms")
@@ -38,7 +39,15 @@ public class WxSmsController {
         smsStatusReport.setReportTime(reportTime);
         smsStatusReport.setCode(code);
         smsStatusReport.setExtend(extend);
-        smsStatusReport.setAddTime(LocalDateTime.now());
-        return smsStatusReportService.insert(smsStatusReport);
+        smsStatusReport.setUpdataTime(LocalDateTime.now());
+        List<LitemallSmsStatusReport> list = smsStatusReportService.select(msgId);
+        if(list.size()==1){
+            Integer id = list.get(0).getId();
+            smsStatusReport.setId(id);
+            return smsStatusReportService.update(smsStatusReport);
+        }else {
+            return null;
+        }
     }
+
 }

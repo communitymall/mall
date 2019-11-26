@@ -56,4 +56,14 @@ public class CaptchaCodeManager {
 
         return captchaCodeCache.get(phoneNumber).getCode();
     }
+    /**
+     * 删除缓存的验证码
+     *
+     * @param phoneNumber 关联的电话号码
+     * @return 验证码
+     */
+    public static void removeCachedCaptcha(String phoneNumber) {
+        captchaCodeCache.remove(phoneNumber);
+    }
+
 }

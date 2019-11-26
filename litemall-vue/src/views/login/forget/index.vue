@@ -77,6 +77,7 @@
                 const passwordRepeat = this.passwordRepeat;
                 if (password === passwordRepeat) {
                     let getResetData = this.getResetData();
+                    getResetData[NxtMobileName()]= NxtMobileValue(this.mobile);
                     authReset(getResetData).then(res => {
                         alert("您已经修改密码成功，点击跳转登录页面！")
                         this.$router.push({name: 'login'});
@@ -85,7 +86,6 @@
                         Toast.fail(error.data.errmsg);
 
                     });
-
                     //this.$router.push({name: 'forgetReset'});
                 }else {
                     this.isErrow = true;
@@ -94,17 +94,13 @@
             },
             getCode() {
                 this.counting = true;
-                authCaptcha(this.getMobile()).then(res => {
+                let mobile = {};
+                mobile[NxtMobileName()]= NxtMobileValue(this.mobile);
+                authCaptcha(mobile).then(res => {
                     this.data = res.data.data
                 }).catch(error => {
                     Toast.fail(error.data.errmsg);
                 });
-
-            },
-            getMobile() {
-                return {
-                    mobile: this.mobile
-                }
 
             },
             countdownend() {
@@ -118,11 +114,9 @@
                 const password = this.password;
                 const passwordRepeat = this.passwordRepeat;
                 const code = this.code;
-                const mobile = this.mobile;
                 return {
                     passwordRepeat: passwordRepeat,
                     password: password,
-                    mobile: mobile,
                     code: code
                 };
             }

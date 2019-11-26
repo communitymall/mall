@@ -36,7 +36,8 @@
     export default {
         data() {
             return {
-                mobile: this.$route.query.mobile,
+                NxtMobileName: this.$route.query.NxtMobileName,
+                NxtMobileValue: this.$route.query.NxtMobileValue,
                 counting: true,
                 code: '',
                 password: '',
@@ -49,8 +50,10 @@
                 const password = this.password
                 const repeatPassword = this.repeatPassword
                 let regData = this.getRegData();
+                regData[this.NxtMobileName]=this.NxtMobileValue;
                 if (password === repeatPassword) {
                     this.isErrow = false;
+
                     authRegister(regData).then(res => {
                         const status = 'success';
                         this.$router.push({
@@ -67,7 +70,7 @@
             },
             getRegData() {
                 return {
-                    mobile: this.mobile,
+                    // mobile: this.mobile,
                     code: this.code,
                     password: this.password
                 };

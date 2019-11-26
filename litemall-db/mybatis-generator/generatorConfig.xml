@@ -43,9 +43,9 @@
 
         <!--数据库连接信息-->
         <jdbcConnection driverClass="com.mysql.jdbc.Driver"
-                        connectionURL="jdbc:mysql://localhost:3306/litemall?useUnicode=true&amp;characterEncoding=UTF-8&amp;serverTimezone=UTC&amp;verifyServerCertificate=false&amp;useSSL=false"
-                        userId="root"
-                        password="lDo8P?EE2ovu"/>
+                        connectionURL="jdbc:mysql://192.168.1.66:3306/litemall?useUnicode=true&amp;characterEncoding=UTF-8&amp;serverTimezone=UTC&amp;verifyServerCertificate=false&amp;useSSL=false"
+                        userId="litemall"
+                        password="litemall123456"/>
 
         <javaTypeResolver>
             <property name="useJSR310Types" value="true"/>
@@ -59,9 +59,9 @@
 <!--        <table tableName="litemall_ad">-->
 <!--            <generatedKey column="id" sqlStatement="MySql" identity="true"/>-->
 <!--        </table>-->
-        <table tableName="litemall_address">
-            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
-        </table>
+<!--        <table tableName="litemall_address">-->
+<!--            <generatedKey column="id" sqlStatement="MySql" identity="true"/>-->
+<!--        </table>-->
 <!--        <table tableName="litemall_admin">-->
 <!--            <generatedKey column="id" sqlStatement="MySql" identity="true"/>-->
 <!--            <columnOverride column="role_ids" javaType="java.lang.Integer[]"-->
@@ -195,8 +195,8 @@
 <!--            <table tableName="litemall_logistics_trucks">-->
 <!--                <generatedKey column="id" sqlStatement="MySql" identity="true"/>-->
 <!--            </table>-->
-<!--            <table tableName="">-->
-<!--                <generatedKey column="id" sqlStatement="MySql" identity="true"/>-->
-<!--            </table>-->
+            <table tableName="litemall_sms_status_report">
+                <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+            </table>
     </context>
 </generatorConfiguration>
