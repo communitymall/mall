@@ -15,9 +15,9 @@ export default {
       chosenAddressId: -1,
       addressList: [],
       merchantList:[],
-      userId:'',
+      userId: '',
       shipData:{
-        userId:'',
+        userId:"",
         merchantStatus:2,
       }
     };
@@ -26,7 +26,6 @@ export default {
   created() {
     //this.loadAddress();
     this.findM()
-    this.getUserInfo();
   },
   methods: {
     getUserInfo() {
@@ -35,11 +34,11 @@ export default {
         this.nickName = res.data.data.nickName;
         this.gender = res.data.data.gender;
         this.mobile = res.data.data.mobile;
-        this.userId = res.data.data.userId;
+        this.shipData.userId = res.data.data.userId;
       })
     },
     findM(){
-      this.shipData.userId=this.userId;
+      this.getUserInfo();
       merchantStatusList(this.shipData).then(res => {
         var list = res.data.data.list;
         for(var i = 0; i < list.length; i++ ){
@@ -57,9 +56,9 @@ export default {
     onAdd() {
       //this.$router.push({ name: 'addMerchant'});
     },
-    onEdit(item, index) {
-      this.$router.push({ name: 'merchant-detail', query: { storeId: item.id } });
-    },
+    // onEdit(item, index) {
+    //   this.$router.push({ name: 'merchant-detail', query: { storeId: item.id } });
+    // },
     onSelect(item, index) {
       setLocalStorage({ storeId: item.id });
       this.$router.go(-1);

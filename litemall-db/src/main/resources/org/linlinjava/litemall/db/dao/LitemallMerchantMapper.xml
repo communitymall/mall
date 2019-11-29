@@ -497,6 +497,6 @@
     select
     t.id,t.merchant_name,t.merchant_address,t.merchant_leader,t.merchant_phone
     from (SELECT m.merchant_status,us.creater_id as createrId,m.id as id ,u.id as userId, m.merchant_name as merchant_name,m.merchant_address as merchant_address,m.merchant_leader AS merchant_leader,m.merchant_phone AS merchant_phone FROM litemall_user u,litemall_merchant m,litemall_user_store us WHERE u.id = us.user_id and us.store_id=m.id) t
-    where t.createrId = #{arg0} and t.merchant_status=  #{arg1}
+    where t.createrId = #{userId} and t.merchant_status=  #{merchantStatus}
   </select>
 </mapper>

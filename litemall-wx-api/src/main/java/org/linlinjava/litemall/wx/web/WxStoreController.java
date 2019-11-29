@@ -84,7 +84,7 @@ public class WxStoreController {
 
     @PostMapping("/merchantStatusList")
     @ResponseBody
-    public Object merchantStatusList(HttpServletRequest request,@LoginUser Integer userId,@RequestBody String body){
+    public Object merchantStatusList(@LoginUser Integer userId,@RequestBody String body){
         if (userId == null) {
             return ResponseUtil.unlogin();
         }

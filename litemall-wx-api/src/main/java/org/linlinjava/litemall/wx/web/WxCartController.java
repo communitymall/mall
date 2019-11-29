@@ -47,6 +47,8 @@ public class WxCartController {
     private LitemallCouponUserService couponUserService;
     @Autowired
     private CouponVerifyService couponVerifyService;
+    @Autowired
+    private LitemallMerchantService merchantService;
 
     /**
      * 用户购物车信息
@@ -379,36 +381,37 @@ public class WxCartController {
      * @param cartId    购物车商品ID：
      *                  如果购物车商品ID是空，则下单当前用户所有购物车商品；
      *                  如果购物车商品ID非空，则只下单当前购物车商品。
-     * @param addressId 收货地址ID：
+     *  addressId 收货地址ID：
      *                  如果收货地址ID是空，则查询当前用户的默认地址。
      * @param couponId  优惠券ID：
      *                  如果优惠券ID是空，则自动选择合适的优惠券。
      * @return 购物车操作结果
      */
     @GetMapping("checkout")
-    public Object checkout(@LoginUser Integer userId, Integer cartId, Integer addressId, Integer couponId, Integer grouponRulesId) {
+    public Object checkout(@LoginUser Integer userId,Integer storeId, Integer cartId, Integer couponId, Integer grouponRulesId) {
         if (userId == null) {
             return ResponseUtil.unlogin();
         }
         System.out.println("userId"+userId);
         System.out.println("cartId"+cartId);
-        System.out.println("addressId"+addressId);
+        System.out.println("storeId"+storeId);
         System.out.println("couponId"+couponId);
         System.out.println("grouponRulesId"+grouponRulesId);
         // 收货地址
-//        LitemallAddress checkedAddress = null;
-//        if (addressId == null || addressId.equals(0)) {
+        if (storeId == null || storeId.equals(0)) {
+            //return ResponseUtil.fail(401,"请选择门店地址！");
 //            checkedAddress = addressService.findDefault(userId);
-//            // 如果仍然没有地址，则是没有收获地址
-//            // 返回一个空的地址id=0，这样前端则会提醒添加地址
-//            if (checkedAddress == null) {
-//                checkedAddress = new LitemallAddress();
-//                checkedAddress.setId(0);
-//                addressId = 0;
-//            } else {
+////            // 如果仍然没有地址，则是没有收获地址
+////            // 返回一个空的地址id=0，这样前端则会提醒添加地址
+////            if (checkedAddress == null) {
+////                checkedAddress = new LitemallAddress();
+////                checkedAddress.setId(0);
+////                addressId = 0;
+            }
+//            else {
 //                addressId = checkedAddress.getId();
 //            }
-//
+
 //        } else {
 //            checkedAddress = addressService.query(userId, addressId);
 //            // 如果null, 则报错
@@ -416,6 +419,7 @@ public class WxCartController {
 //                return ResponseUtil.badArgumentValue();
 //            }
 //        }
+
 
         // 团购优惠
         BigDecimal grouponPrice = new BigDecimal(0.00);
@@ -504,7 +508,7 @@ public class WxCartController {
         BigDecimal actualPrice = orderTotalPrice.subtract(integralPrice);
 
         Map<String, Object> data = new HashMap<>();
-        data.put("addressId", addressId);
+       // data.put("addressId", addressId);
         data.put("couponId", couponId);
         data.put("cartId", cartId);
         data.put("grouponRulesId", grouponRulesId);

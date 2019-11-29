@@ -252,7 +252,7 @@ public class WxAuthController {
         if (ret == 1) {
             // 2 调用【短信防火墙】失败结果
             fwApi.fail(paramMap);
-            return ResponseUtil.fail();
+            return ResponseUtil.fail(401,"发送验证码过于频繁！");
         }
         String code = CharUtil.getRandomNum(6);// 生成6位随机数
         SmsUtil smsUtil = new SmsUtil();
@@ -478,7 +478,7 @@ public class WxAuthController {
         String key = fingerApi.getMobileName(request, response);
         String s = stringStringMap.get(key);
         String phoneNumber = fingerApi.mobileDecrypt(request, response, s);
-
+        System.out.println("phoneNumber"+phoneNumber);
         if (StringUtils.isEmpty(phoneNumber)) {
             return ResponseUtil.badArgument();
         }
@@ -500,7 +500,7 @@ public class WxAuthController {
         if (smsSendRet == 1) {
             // 2 调用【短信防火墙】失败结果
             fwApi.fail(paramMap);
-            return ResponseUtil.fail();
+            return ResponseUtil.fail(409,"发送验证码过于频繁！");
         } else {
             String code = CharUtil.getRandomNum(6);
             SmsRetMsg smsRetMsg = smsUtil.send(phoneNumber, code);
@@ -591,6 +591,7 @@ public class WxAuthController {
         if (userList.size() > 1) {
             return ResponseUtil.serious();
         } else if (userList.size() == 0) {
+            fwApi.fail(paramMap);
             return ResponseUtil.fail(AUTH_MOBILE_UNREGISTERED, "手机号未注册");
         } else {
             user = userList.get(0);
@@ -603,6 +604,7 @@ public class WxAuthController {
         if (userService.updateById(user) == 0) {
             return ResponseUtil.updatedDataFailed();
         }
+        CaptchaCodeManager.removeCachedCaptcha(mobile);
         return ResponseUtil.ok();
     }
 

@@ -8,6 +8,7 @@ import com.github.binarywang.wxpay.bean.result.BaseWxPayResult;
 import com.github.binarywang.wxpay.constant.WxPayConstants;
 import com.github.binarywang.wxpay.exception.WxPayException;
 import com.github.binarywang.wxpay.service.WxPayService;
+import com.github.pagehelper.util.StringUtil;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -257,7 +258,6 @@ public class WxOrderService {
             return ResponseUtil.badArgument();
         }
         Integer cartId = JacksonUtil.parseInteger(body, "cartId");
-        Integer addressId = JacksonUtil.parseInteger(body, "addressId");
         Integer couponId = JacksonUtil.parseInteger(body, "couponId");
         String message = JacksonUtil.parseString(body, "message");
         Integer grouponRulesId = JacksonUtil.parseInteger(body, "grouponRulesId");
@@ -269,6 +269,9 @@ public class WxOrderService {
         System.out.println(payType+ "==payType");
         //收货的门店id
         String storeId = JacksonUtil.parseString(body, "storeId");
+        if(StringUtil.isEmpty(storeId)){
+            return ResponseUtil.fail(401,"请选择收货门店！");
+        }
        // 如果是团购项目,验证活动是否有效
         if (grouponRulesId != null && grouponRulesId > 0) {
             LitemallGrouponRules rules = grouponRulesService.queryById(grouponRulesId);

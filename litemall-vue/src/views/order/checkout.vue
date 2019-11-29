@@ -150,6 +150,7 @@
                 this.isDisabled = true;
                 orderSubmit({
                     //addressId: AddressId,
+                    storeId:this.$route.query.storeId,
                     cartId: CartId,
                     couponId: CouponId,
                     grouponLinkId: 0,
@@ -159,7 +160,7 @@
                     storeId: storeId,
                 }).then(res => {
                     // 下单成功，重置下单参数。
-                    setLocalStorage({AddressId: 0, CartId: 0, CouponId: 0});
+                    setLocalStorage({storeId: 0, CartId: 0, CouponId: 0});
                     //如果是货到付款的订单，直接跳转到相应的页面
                     if(this.payType==2){
                         this.$router.push({
@@ -230,10 +231,9 @@
             },
             init() {
                 const {AddressId, CartId, CouponId} = getLocalStorage('AddressId', 'CartId', 'CouponId');
-
                 cartCheckout({
                     cartId: CartId,
-                    addressId: AddressId,
+                    //addressId: AddressId,
                     couponId: CouponId,
                     grouponRulesId: 0
                 }).then(res => {

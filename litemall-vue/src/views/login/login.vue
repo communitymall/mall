@@ -66,33 +66,36 @@
                                         data-vv-as="帐号"
                                         @right-click="clearText"
                                 />
-<!--                                <md-field-->
-<!--                                        v-model="code"-->
-<!--                                        icon="lock"-->
-<!--                                        placeholder="请输入验证码"-->
-<!--                                        data-vv-as="验证码"-->
-<!--                                        name="code"-->
-<!--                                >-->
+                                <md-field
+                                        v-model="code"
+                                        icon="lock"
+                                        placeholder="请输入验证码"
+                                        data-vv-as="验证码"
+                                        name="code"
+                                >
 
+                                    <div slot="rightIcon" @click="getCode" class="getCode red">
+                                        <countdown v-if="counting" :time="60000" @end="countdownend">
+                                            <template slot-scope="props">
+                                                <p class="yzm">{{ +props.seconds || 60 }}秒后获取</p>
+                                            </template>
+                                        </countdown>
+                                        <p  class="yzm" v-else>获取验证码</p>
+                                    </div>
+
+                                </md-field>
+
+<!--                                <md-field v-model="code" icon="lock" placeholder="请输入验证码">-->
 <!--                                    <div slot="rightIcon" @click="getCode" class="getCode red">-->
 <!--                                        <countdown v-if="counting" :time="60000" @end="countdownend">-->
-<!--                                            <template slot-scope="props">-->
-<!--                                                <p class="yzm">{{ +props.seconds || 60 }}秒后获取</p>-->
-<!--                                            </template>-->
+<!--                                            <p>-->
+<!--                                                -->
+<!--                                            </p>-->
+<!--                                           -->
 <!--                                        </countdown>-->
-<!--                                        <p  class="yzm" v-else>获取验证码</p>-->
+<!--                                        <span  v-else>获取验证码</span>-->
 <!--                                    </div>-->
-
 <!--                                </md-field>-->
-
-                                <md-field v-model="code" icon="lock" placeholder="请输入验证码">
-                                    <div slot="rightIcon" @click="getCode" class="getCode red">
-                                        <countdown v-if="counting" :time="60000" @countdownend="countdownend">
-                                            <template slot-scope="props">{{ +props.seconds || 60 }}秒后获取</template>
-                                        </countdown>
-                                        <span v-else>获取验证码</span>
-                                    </div>
-                                </md-field>
 
                                 <div class="clearfix">
                                     <div class="float-l">
@@ -149,19 +152,38 @@
                 visiblePass: false,
                 isLogining: false,
                 userInfo: {},
+
+                // 超时定时器
+                overTimer: null,
+                // 是否超时
+                isOvertime: false,
             };
         },
         created() {
+            // 开启定时器
+            this.overTimer = setTimeout(() => {
+                this.isOvertime = true;
+            }, 900000)
+        },
+        destroyed () {
+            // 销毁定时器
+            clearTimeout(this.overTimer)
         },
         methods: {
             clearText() {
                 this.account = '';
             },
             getCode() {
+                if (this.isOvertime) {
+                    alert('页面超时，重新刷新！');
+                    window.location.reload()
+                }
                 let obj = {};
                 obj[NxtMobileName()] = NxtMobileValue(this.account);
                 authCaptcha(obj).then(res => {
-                    this.counting=true;
+                    if(res.data.errmsg===409){
+                        Toast.fail(res.data.errmsg);
+                    }
                 }).catch(error => {
                     Toast.fail(error.data.errmsg);
                 })
