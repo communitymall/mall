@@ -37,7 +37,10 @@ public class WxStoreController {
         if (userId == null) {
             return ResponseUtil.unlogin();
         }
-        litemallMerchantService.update(userId,id, merchantName, merchantCode, merchantAddress, merchantPic, merchantPhone, merchantLeader);
+        Integer update = litemallMerchantService.update(userId, id, merchantName, merchantCode, merchantAddress, merchantPic, merchantPhone, merchantLeader);
+        if(update==-1){
+            return ResponseUtil.fail(407,"门店名称已被注册！");
+        }
         return ResponseUtil.ok();
 
     }
@@ -55,7 +58,10 @@ public class WxStoreController {
         if (userId == null) {
             return ResponseUtil.unlogin();
         }
-        Object storeId = litemallMerchantService.add(String.valueOf(userId),merchantAddress,merchantCode,merchantLeader,merchantName,merchantPhone,merchantPic);
+        Integer storeId = litemallMerchantService.add(String.valueOf(userId),merchantAddress,merchantCode,merchantLeader,merchantName,merchantPhone,merchantPic);
+        if(storeId==-1){
+            return ResponseUtil.fail(407,"门店名称已被注册！");
+        }
         return ResponseUtil.createStoreOk(storeId);
     }
 

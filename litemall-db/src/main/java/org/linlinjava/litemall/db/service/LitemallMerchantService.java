@@ -38,7 +38,7 @@ public class LitemallMerchantService {
     添加商户的门店
      */
     @Transactional(propagation = Propagation.REQUIRED, readOnly = false, rollbackFor = {Exception.class})
-    public Object add(String userId, String merchantAddress, String merchantCode, String merchantLeader, String merchantName, String merchantPhone, String merchantPic) {
+    public Integer add(String userId, String merchantAddress, String merchantCode, String merchantLeader, String merchantName, String merchantPhone, String merchantPic) {
         try {
             LitemallMerchant merchant = new LitemallMerchant();
             LitemallUserStore userStore = new LitemallUserStore();
@@ -56,6 +56,13 @@ public class LitemallMerchantService {
                 merchant.setConsigneeName(merchantLeader);//创建门店时，设置默认收货人为负责人
             }
             if (!StringUtil.isEmpty(merchantName)) {
+                LitemallMerchantExample example = new LitemallMerchantExample();
+                LitemallMerchantExample.Criteria criteria = example.createCriteria();
+                criteria.andMerchantNameEqualTo(merchantName);
+                List<LitemallMerchant> litemallMerchants = litemallMerchantMapper.selectByExample(example);
+                if(litemallMerchants.size()>=1){
+                    return -1;
+                }
                 merchant.setMerchantName(merchantName);
             }
             if (!StringUtil.isEmpty(merchantPhone)) {
@@ -65,7 +72,6 @@ public class LitemallMerchantService {
             if (!StringUtil.isEmpty(merchantPic)) {
                 merchant.setMerchantPic(merchantPic);
             }
-
 
             LitemallUserExample example  = new LitemallUserExample();
             LitemallUserExample.Criteria criteria = example.createCriteria();
@@ -112,7 +118,7 @@ public class LitemallMerchantService {
     更新商户的门店
      */
     @Transactional(propagation = Propagation.REQUIRED, readOnly = false, rollbackFor = {Exception.class})
-    public Object update(Integer userId,int id, String merchantName, String merchantCode, String merchantAddress, String merchantPic, String merchantPhone, String merchantLeader) {
+    public Integer update(Integer userId,int id, String merchantName, String merchantCode, String merchantAddress, String merchantPic, String merchantPhone, String merchantLeader) {
         LitemallMerchant merchant = new LitemallMerchant();
         LitemallMerchantExample example = new LitemallMerchantExample();
         LitemallMerchantExample.Criteria criteria = example.createCriteria();
@@ -121,7 +127,15 @@ public class LitemallMerchantService {
         LitemallUser user = new LitemallUser();
 
         if (!StringUtil.isEmpty(merchantName)) {
+            LitemallMerchantExample example1 = new LitemallMerchantExample();
+            LitemallMerchantExample.Criteria criteria1 = example1.createCriteria();
+            criteria1.andMerchantNameEqualTo(merchantName);
+            List<LitemallMerchant> litemallMerchants = litemallMerchantMapper.selectByExample(example1);
+            if(litemallMerchants.size()>=1){
+                return -1;
+            }
             merchant.setMerchantName(merchantName);
+            merchant.setMerchantStatus(0);
         }
         if (!StringUtil.isEmpty(merchantCode)) {
             LitemallMerchant merchant1 = litemallMerchantMapper.selectByPrimaryKey(id);
@@ -178,6 +192,28 @@ public class LitemallMerchantService {
         }
         //设置更新时间
         merchant.setEditTime(LocalDateTime.now());
+        try{
+            return litemallMerchantMapper.updateByExampleSelective(merchant, example);
+        }catch (Exception e){
+            throw  e;
+        }
+    }
+
+    /*
+更新商户营业执照的图片
+ */
+    @Transactional(propagation = Propagation.REQUIRED, readOnly = false, rollbackFor = {Exception.class})
+    public Object updateMerchantCodePic(Integer storeId, String merchantCodePic) {
+        LitemallMerchant merchant = new LitemallMerchant();
+        LitemallMerchantExample example = new LitemallMerchantExample();
+        LitemallMerchantExample.Criteria criteria = example.createCriteria();
+        criteria.andIdEqualTo(storeId);
+        if (!StringUtil.isEmpty(merchantCodePic)) {
+            merchant.setMerchantCodePic(merchantCodePic);
+        }
+        //设置更新时间
+        merchant.setEditTime(LocalDateTime.now());
+        merchant.setMerchantStatus(0);
         try{
             return litemallMerchantMapper.updateByExampleSelective(merchant, example);
         }catch (Exception e){

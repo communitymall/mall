@@ -1,5 +1,17 @@
 import request from '@/utils/request'
 
+/*
+用户门店营业执照图片的上传
+ */
+const MerchantCodePicUpload='wx/wxImageUpload/businessLicensesPicUpload';
+export function merchantCodePicUpload(data) {
+  return request({
+    url: MerchantCodePicUpload,
+    method: 'post',
+    headers: {'Content-Type': 'multipart/form-data'},
+    data
+  })
+}
 
 /*
 用户查看门店图片的上传

@@ -1,41 +1,44 @@
 <template>
-    <van-cell-group>
-        <van-field
-                v-model="shipData.merchantName"
-                required
-                label="门店名称"
-                placeholder="请输入门店名称"
-        />
+    <div class="order_list">
+        <van-nav-bar title="添加门店" left-text="返回" left-arrow @click-left="goback"/>
+        <van-cell-group>
+            <van-field
+                    v-model="shipData.merchantName"
+                    required
+                    label="门店名称"
+                    placeholder="请输入门店名称"
+            />
 
-        <van-field
-                v-model="shipData.merchantAddress"
-                label="门店地址"
-                placeholder="请输入门店地址"
-        />
-        <van-field
-                v-model="shipData.merchantPhone"
-                label="门店电话"
-                placeholder="请输入门店电话"
-        />
-        <van-field
-                v-model="shipData.merchantCode"
-                label="营业执照编号"
-                placeholder="请输入营业执照编号"
-                required
-        />
+            <van-field
+                    v-model="shipData.merchantAddress"
+                    label="门店地址"
+                    placeholder="请输入门店地址"
+            />
+            <van-field
+                    v-model="shipData.merchantPhone"
+                    label="门店电话"
+                    placeholder="请输入门店电话"
+            />
+<!--            <van-field-->
+<!--                    v-model="shipData.merchantCode"-->
+<!--                    label="营业执照编号"-->
+<!--                    placeholder="请输入营业执照编号"-->
+<!--                    required-->
+<!--            />-->
 
-        <van-field
-                v-model="shipData.merchantLeader"
-                label="门店负责人"
-                placeholder="请输入门店负责人"
-                required
-        />
-        <van-cell title="门店照片" class="cell_middle">
-            <van-uploader :after-read="afterRead"/>
-        </van-cell>
-        <img  :src="pic" width="100%">
-        <van-button type="primary" size="large" @click="submit">提交</van-button>
-    </van-cell-group>
+            <van-field
+                    v-model="shipData.merchantLeader"
+                    label="门店负责人"
+                    placeholder="请输入门店负责人"
+                    required
+            />
+<!--            <van-cell title="门店照片" class="cell_middle">-->
+<!--                <van-uploader :after-read="afterRead"/>-->
+<!--            </van-cell>-->
+<!--            <img  :src="pic" width="100%">-->
+            <van-button type="primary" size="large" @click="submit">下一步</van-button>
+        </van-cell-group>
+    </div>
 </template>
 
 <script>
@@ -44,7 +47,7 @@
 
     import {merchantCreate, authInfo, merchantPicVueUpload} from '@/api/api';
     //导入错误的验证
-    import {Toast, Uploader, Field} from 'vant';
+    import {Toast, Uploader, Field,NavBar} from 'vant';
     import Vue from 'vue';
 
     Vue.use(Uploader);
@@ -102,15 +105,19 @@
                 }
                 let id = null;
                 merchantCreate(this.shipData).then(res => {
-                    alert(res.data.data.storeid)
-                    return this.$dialog.alert({message: '保存成功'});
                     id = res.data.data.storeid
-                }).then(res => {
-                    this.$router.go(-1);
+                    this.$router.push({name: 'merchant-audit', query: {storeId: id}});
+                }).catch(res => {
+                    if(res.data.errno==407){
+                        Toast.fail("门店名称已被注册！")
+                        return false;
+                    }
                 })
 
             },
-
+            goback() {
+                this.$router.go(-1);
+            },
             getUserInfo() {
                 authInfo().then(res => {
                     this.shipData.userId = res.data.data.userId;
@@ -123,13 +130,35 @@
             [field.name]: field,
             [fieldGroup.name]: fieldGroup,
             [Uploader.name]: Uploader,
+            [NavBar.name]: NavBar,
         }
     };
 </script>
 
 
 <style lang="scss" scoped>
+    .order_list {
+        .van-panel {
+            margin-top: 20px;
+        }
 
+        .van-card {
+            background-color: #fff;
+        }
+
+        .total {
+            text-align: right;
+            padding: 10px;
+        }
+
+        .footer_btn {
+            text-align: right;
+
+            .van-button {
+                margin-left: 10px;
+            }
+        }
+    }
 
     .register_submit {
         padding-top: 40px;

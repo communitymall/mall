@@ -12,8 +12,8 @@ Page({
   data: {
     load_statue: true,
     shopInfo: {
-      name: 'litemall',
-      address: 'https://github.com/linlinjava/litemall',
+      name: '源鸿腾盛贸易有限公司',
+      address: '新疆乌鲁木齐经济开发区迎宾154号迎宾丽舍小区8号楼502室',
       latitude: 31.201900,
       longitude: 121.587839,
       linkPhone: '021-xxxx-xxxx',

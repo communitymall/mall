@@ -26,7 +26,7 @@
     </view>
   </view>
 
-  <view class="coupon-box">
+  <!-- <view class="coupon-box">
     <view class="coupon-item" bindtap="selectCoupon">
       <view class="l" wx:if="{{couponId == 0}}">
         <text class="name">没有可用的优惠券</text>
@@ -44,7 +44,7 @@
         <image src="/static/images/address_right.png"></image>
       </view>
     </view>
-  </view>
+  </view> -->
 
    <view class="coupon-box">
     <view class="coupon-item" bindtap="selectPayType">

@@ -59,7 +59,7 @@ public class WxImageUpload {
             fileName = UUID.randomUUID() + suffixName; // 新图片进行生产
 
             String filePath = "D://images/upload//"; // 上传后的路径
-            File dest = new File(UPLOAD_FILE_BASE_PATH + fileName);
+            File dest = new File(filePath + fileName);
             if (!dest.getParentFile().exists()) {
                 dest.getParentFile().mkdirs();
             }
@@ -123,6 +123,59 @@ public class WxImageUpload {
                 litemallMerchantService.updateMerchantPic(Integer.parseInt(storeId), merchantPic);
             }
             fileName = "http://39.97.235.28:8080/pictures/" + fileName;
+            return ResponseUtil.ok(fileName);
+        } catch (Exception e) {
+            return "上传失败";
+        }
+    }
+
+    @PostMapping("/businessLicensesPicUpload")
+    public Object businessLicensesPicUpload(HttpServletRequest request, HttpServletResponse response,
+                            @RequestParam(value = "imagefile", required = false) MultipartFile imagefile,
+                            @RequestParam(value = "merchantPic", required = false) String merchantPic,
+                            @RequestParam(value = "storeId", required = false) String storeId
+    ) throws Exception {
+        try {
+            String fileName = imagefile.getOriginalFilename();  // 文件名
+            String suffixName = fileName.substring(fileName.lastIndexOf("."));  // 后缀
+            if (!suffixName.equals(".jpg") && !suffixName.equals(".png")) {
+                return ResponseUtil.fail(401, "请上传正确格式的图片！");
+            }
+            BufferedImage bufferedImage = ImageIO.read(imagefile.getInputStream());
+            int height = bufferedImage.getHeight();
+            int width = bufferedImage.getWidth();
+            if (height == 0 || width == 0) {
+                return ResponseUtil.fail(401, "请上传正确的图片文件！");
+            }
+
+            if (!StringUtil.isEmpty(merchantPic)) {
+                if (merchantPic.equals("undefined")) {
+                    fileName = UUID.randomUUID() + suffixName; // 新图片进行生产
+                } else {
+                    System.out.println("merchantPic=" + merchantPic);
+                    String substring = merchantPic.substring(merchantPic.lastIndexOf("/"));
+                    System.out.println("substring=" + substring);
+                    fileName = substring.substring(1);
+                }
+            } else {
+                fileName = UUID.randomUUID() + suffixName; // 新图片进行生产
+            }
+            String filePath = "D://images/upload//"; // 上传后的路径
+            File dest = new File(filePath + fileName);
+            if (!dest.getParentFile().exists()) {
+                dest.getParentFile().mkdirs();
+            }
+            try {
+                imagefile.transferTo(dest);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            fileName = "http://39.97.235.28:8080/pictures/" + fileName;
+//            fileName = filePath + fileName;
+            System.out.println("merchantPic="+merchantPic);
+            if (!StringUtil.isEmpty(storeId)) {
+                litemallMerchantService.updateMerchantCodePic(Integer.parseInt(storeId), fileName);
+            }
             return ResponseUtil.ok(fileName);
         } catch (Exception e) {
             return "上传失败";

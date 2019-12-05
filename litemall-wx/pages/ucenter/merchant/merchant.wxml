@@ -9,7 +9,7 @@
         <view class="address">{{item.merchantAddress}}</view>
       </view>
       <view class="r">
-        <view>详情</view>
+        <view class="text">详情</view>
         <!-- <image catchtap="deleteAddress" data-address-id="{{item.id}}" class="del" src="/static/images/del-address.png"></image> -->
       </view>
     </view>

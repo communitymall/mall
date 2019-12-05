@@ -48,6 +48,10 @@
 		"game": {
 			"list": []
 		},
+		"gamePlugin": {
+			"current": -1,
+			"list": []
+		},
 		"miniprogram": {
 			"current": 42,
 			"list": [
@@ -311,6 +315,20 @@
 					"id": -1,
 					"name": "选择支付类型",
 					"pathName": "pages/ucenter/payTypeSelect/payTypeSelect",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/ucenter/merchantAudit/merchantAudit",
+					"pathName": "pages/ucenter/merchantAudit/merchantAudit",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "门店审核",
+					"pathName": "pages/ucenter/merchantAudit/merchantAudit",
 					"scene": null
 				}
 			]

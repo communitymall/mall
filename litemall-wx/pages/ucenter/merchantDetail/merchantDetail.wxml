@@ -28,17 +28,18 @@
         <view class="l">门店电话：{{merchantInfo.merchantPhone}}</view>
         <view class="r">编辑</view>
       </view>
-      <view class="h">
+      <!-- <view class="h">
         <view class="l">门店营业执照：{{merchantInfo.merchantCode}}</view>
         <view class="r">编辑</view>
-      </view>
+      </view> -->
       <!-- <view class="h" bindtap="changeAvatar">
         <view class="l">门店照片</view>
         <view class="r">上传</view>
       </view> -->
     </navigator>
 
-    <view class="order">
+    <navigator url="../merchantAudit/merchantAudit" >
+      <view class="order">
       <view class="h">
         <view class="l">门店状态：</view>
          <view class="r" wx:if="{{merchantInfo.merchantStatus==0}}">审核中</view>
@@ -46,7 +47,7 @@
          <view class="r" wx:if="{{merchantInfo.merchantStatus==2}}">审核成功</view>
       </view>
     </view>
-
+    </navigator>
     <view class="order">
       <view class="h" >
         <view class="l">门店照片</view>

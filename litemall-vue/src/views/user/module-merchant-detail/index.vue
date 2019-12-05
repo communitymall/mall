@@ -9,26 +9,17 @@
                      :title="tabTitle"
                      :key="index">
                 <van-cell-group v-if="activeIndex===0">
-                    <van-cell title="门店营业执照编号" @click="onSetManchantCode" :value="merchantCode" isLink/>
                     <van-cell title="商户名称" @click="onSetManchantName" :value="merchantName" isLink/>
                     <van-cell title="商户地址" @click="onSetManchantAddress" :value="merchantAddress" isLink/>
                     <van-cell title="商户电话" @click="onSetManchantPhone" :value="merchantPhone" isLink/>
                     <van-cell title="商户负责人" @click="onSetManchantLeader" :value="merchantLeader" isLink/>
-                    <van-cell title="商户状态"  >
+                    <van-cell title="商户状态"  @click="onSetManchantAudit"  isLink>
                         <span>  {{ merchantStatus | detailMerchantStatusFilter }}</span>
                     </van-cell>
                     <van-cell title="门店照片" class="cell_middle">
-                        <van-uploader :afterRead="afterRead" name="camera_full"  accept=".jpg,.jpeg,.png,.gif">
-                            <div class="user_avatar_upload">
-                                <van-icon :after-read="afterRead" name="camera_full" ></van-icon>
-                            </div>
-
-                        </van-uploader>
-<!--                        <van-uploader v-model="fileList" multiple name="camera_full" :after-read="afterRead" />-->
                     </van-cell>
                 </van-cell-group>
                 <img v-if="activeIndex===0"  :src="pic" width="100%">
-
 
                 <van-cell-group v-if="activeIndex===1" >
 <!--                    <van-cell value="" is-link @click="onEditLeader()">-->
@@ -192,6 +183,11 @@
                 let id = this.$route.query.storeId
                 this.$router.push({name: 'merchant-detail-setMerchantCode', query: {storeId: id}});
             },
+            onSetManchantAudit() {
+                let id = this.$route.query.storeId
+                this.$router.push({name: 'merchant-audit', query: {storeId: id}});
+            },
+
 
             onEdit(item, index) {
                 this.$router.push({

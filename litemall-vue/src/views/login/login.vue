@@ -74,13 +74,8 @@
                                         name="code"
                                 >
 
-                                    <div slot="rightIcon" @click="getCode" class="getCode red">
-                                        <countdown v-if="counting" :time="60000" @end="countdownend">
-                                            <template slot-scope="props">
-                                                <p class="yzm">{{ +props.seconds || 60 }}秒后获取</p>
-                                            </template>
-                                        </countdown>
-                                        <p  class="yzm" v-else>获取验证码</p>
+                                    <div  slot="rightIcon" @click="getCode" class="getCode red">
+                                        <p  class="yzm" >获取验证码</p>
                                     </div>
 
                                 </md-field>
@@ -141,7 +136,6 @@
             [fieldGroup.name]: fieldGroup,
             Toast
         },
-
         data() {
             return {
                 counting: false,
@@ -174,16 +168,17 @@
                 this.account = '';
             },
             getCode() {
-                if (this.isOvertime) {
-                    alert('页面超时，重新刷新！');
-                    window.location.reload()
-                }
+                // if (this.isOvertime) {
+                //     alert('页面超时，重新刷新！');
+                //     window.location.reload()
+                // }
                 let obj = {};
                 obj[NxtMobileName()] = NxtMobileValue(this.account);
                 authCaptcha(obj).then(res => {
                     if(res.data.errmsg===409){
                         Toast.fail(res.data.errmsg);
                     }
+                    Toast.success("验证码已发送！")
                 }).catch(error => {
                     Toast.fail(error.data.errmsg);
                 })
@@ -321,6 +316,7 @@
     }
 
     .getCode {
+
         @include one-border(left);
         text-align: center;
     }

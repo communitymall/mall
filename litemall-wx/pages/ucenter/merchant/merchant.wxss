@@ -75,7 +75,7 @@ page {
 }
 
 .address-list .r {
-  width: 52rpx;
+  width: 90rpx;
   height: auto;
   overflow: hidden;
   margin-right: 16.5rpx;
@@ -134,5 +134,9 @@ page {
   width: auto;
   font-size: 28rpx;
   line-height: 35rpx;
+  color: #999;
+}
+
+.text {
   color: #999;
 }

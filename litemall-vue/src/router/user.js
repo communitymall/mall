@@ -17,6 +17,8 @@ const UserSetMerchantPhone= () => import('@/views/user/module-merchant-detail/de
 const UserAddMerchantUser= () => import('@/views/user/module-merchant-detail/detail-addMerchantUser');
 const UserSetMerchantCode= () => import('@/views/user/module-merchant-detail/detail-setMerchantCode');
 
+const UserMerchantAudit = () => import('@/views/user/module-merchant-audit');
+
 const UserSelectMerchant = () => import('@/views/user/module-selectMerchant');
 
 const MerchantSetUser= () => import('@/views/user/module-merchant-detail/detail-setMerchantUser');
@@ -75,6 +77,15 @@ export default [
       login: true
     },
     component: UserMerchantDetail
+  },
+
+  {
+    path: '/user/merchant/audit',
+    name: 'merchant-audit',
+    meta: {
+      login: true
+    },
+    component: UserMerchantAudit
   },
 
   {
