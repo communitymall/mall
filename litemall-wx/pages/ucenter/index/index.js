@@ -226,5 +226,11 @@ Page({
       }
     })
 
-  }
+  },
+  callPhone: function (e) {
+    var that = this
+    wx.makePhoneCall({
+      phoneNumber: 1231231,
+    })
+  },
 })

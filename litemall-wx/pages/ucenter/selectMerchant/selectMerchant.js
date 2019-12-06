@@ -12,6 +12,19 @@ Page({
     let that = this;
     util.request(api.MerchantStatusList, {merchantStatus:2}, 'POST').then(function (res) {
       if (res.errno === 0) {
+        if (res.data.list.length ===0){
+          wx.showModal({
+            title: '提示！',
+            content: '您没有创建门店！',
+            success :function(){
+              wx.redirectTo({
+                url: '/pages/ucenter/merchant/merchant'
+              })
+            }
+            
+          })
+         
+        }
         that.setData({
           merchantList: res.data.list,
           total: res.data.total

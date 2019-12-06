@@ -7,7 +7,7 @@
 
 <script>
 import { merchantStatusList,authInfo } from '@/api/api';
-import { AddressList, NavBar} from 'vant';
+import { AddressList, NavBar,Toast,Dialog } from 'vant';
 import { setLocalStorage } from '@/utils/local-storage';
 export default {
   data() {
@@ -41,6 +41,18 @@ export default {
       this.getUserInfo();
       merchantStatusList(this.shipData).then(res => {
         var list = res.data.data.list;
+        if(list.length==0){
+          Dialog.confirm({
+            title: '提示',
+            message: '没有通过审核的门店！点击确定添加门店，点击取消返回。'
+          }).then(() => {
+            // on confirm
+            this.$router.push({ name: 'merchant' });
+          }).catch(() => {
+            // on cancel
+            this.$router.go(-1);
+          })
+        }
         for(var i = 0; i < list.length; i++ ){
           var item = list[i]
           this.merchantList.push({

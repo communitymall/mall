@@ -7,6 +7,7 @@ Page({
   data: {
     checkedGoodsList: [],
     checkedAddress: {},
+    checkedMerchant: {},
     availableCouponLength: 0, // 可用的优惠券数量
     goodsTotalPrice: 0.00, //商品总价
     freightPrice: 0.00, //快递费
@@ -16,6 +17,7 @@ Page({
     actualPrice: 0.00, //实际需要支付的总价
     cartId: 0,
     addressId: 0,
+    storeId: 0,
     couponId: 0,
     message: '',
     grouponLinkId: 0, //参与的团购，如果是发起则为0
@@ -36,10 +38,12 @@ Page({
 
   //获取checkou信息
   getCheckoutInfo: function() {
+    var storeId = wx.getStorageSync('storeId');
     let that = this;
     util.request(api.CartCheckout, {
       cartId: that.data.cartId,
       addressId: that.data.addressId,
+      storeId: storeId,
       couponId: that.data.couponId,
       grouponRulesId: that.data.grouponRulesId,
 
@@ -110,9 +114,29 @@ Page({
     })
   },
   selectPayType() {
-    wx.navigateTo({
-      url: '/pages/ucenter/payTypeSelect/payTypeSelect',
+    let that = this
+    wx.showActionSheet({
+      itemList: ['在线支付', '货到付款'],//显示的列表项
+      success: function (res) {//res.tapIndex点击的列表项
+        console.log("点击了列表项：" + res.tapIndex)
+        if(res.tapIndex === 0){
+            that.setData({
+              payType:1
+            })
+        }
+        if (res.tapIndex === 1) {
+          that.setData({
+            payType: 2
+          })
+        }
+
+      },
+      fail: function (res) { },
+      complete: function (res) { }
     })
+    // wx.navigateTo({
+    //   url: '/pages/ucenter/payTypeSelect/payTypeSelect',
+    // })
   },
 
   bindMessageInput: function(e) {

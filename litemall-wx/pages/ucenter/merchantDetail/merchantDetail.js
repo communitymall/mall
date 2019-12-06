@@ -28,12 +28,8 @@ Page({
           storeId: res.data.id,
           merchantPic:res.data.merchantPic
         });
-        console.log(res.data.merchantName)
-       
         wx.setStorageSync("merchantName", res.data.merchantName)
         wx.setStorageSync("storeId", res.data.id)
-        wx.setStorageSync("merchantPic", res.data.merchantPic)
-        wx.setStorageSync("merchantCodePic", res.data.merchantCodePic)
       }
     });
   },

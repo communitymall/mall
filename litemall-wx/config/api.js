@@ -14,7 +14,7 @@ module.exports = {
   CatalogCurrent: WxApiRoot + 'catalog/current', //分类目录当前分类数据接口
 
   AuthLoginByWeixin: WxApiRoot + 'auth/login_by_weixin', //微信登录
-  AuthLoginByAccount: WxApiRoot + 'auth/login', //账号登录
+  AuthLoginByAccount: WxApiRoot + 'auth/loginWxMobile', //账号登录
   AuthLogout: WxApiRoot + 'auth/logout', //账号登出
   AuthRegister: WxApiRoot + 'auth/register', //账号注册
   AuthReset: WxApiRoot + 'auth/reset', //账号密码重置

@@ -24,7 +24,7 @@
   </view>
 
   <view class="btns">
-    <button class="cannel" bindtap="cancelAddress">取消</button>
+    <button class="cannel" bindtap="cancelMerchant">取消</button>
     <button class="save" bindtap="merchantPicUpload">保存</button>
   </view>
 </view>

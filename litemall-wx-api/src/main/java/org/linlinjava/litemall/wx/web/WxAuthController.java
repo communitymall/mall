@@ -149,6 +149,58 @@ public class WxAuthController {
         return ResponseUtil.ok(result);
     }
 
+
+    @PostMapping("loginWxMobile")
+    public Object loginWxMobile(@RequestBody String body, HttpServletRequest request, HttpServletResponse response) {
+        String mobile = JacksonUtil.parseString(body, "mobile");
+        String password = JacksonUtil.parseString(body, "password");
+        if (mobile == null) {
+            return ResponseUtil.badArgument();
+        }
+        //判断登录的手机号是否是注册过的
+        List<LitemallUser> userList = userService.queryByMobile(mobile);
+        LitemallUser user = null;
+        if (userList.size() > 1) {
+            return ResponseUtil.serious();
+        } else if (userList.size() == 0) {
+            return ResponseUtil.fail(AUTH_INVALID_ACCOUNT, "请输入正确的手机号！");
+        } else {
+            user = userList.get(0);
+        }
+        //判断账号是否可用
+        if (user.getStatus() == 1) {
+            return ResponseUtil.fail(AUTH_INVALID_ACCOUNT, "账号被禁用！");
+        }
+        if (user.getStatus() == 2) {
+            return ResponseUtil.fail(AUTH_INVALID_ACCOUNT, "账号被注销！");
+        }
+
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        if (!encoder.matches(password, user.getPassword())) {
+            return ResponseUtil.fail(AUTH_INVALID_ACCOUNT, "手机号或密码不对!");
+        }
+
+        // 更新登录情况
+        user.setLastLoginTime(LocalDateTime.now());
+        user.setLastLoginIp(IpUtil.getIpAddr(request));
+        if (userService.updateById(user) == 0) {
+            return ResponseUtil.updatedDataFailed();
+        }
+        //获得user的ID
+        Integer id = user.getId();
+        // userInfo
+        UserInfo userInfo = new UserInfo();
+        userInfo.setNickName(mobile);
+        userInfo.setAvatarUrl(user.getAvatar());
+        userInfo.setId(id);
+        // token
+        String token = UserTokenManager.generateToken(user.getId());
+        Map<Object, Object> result = new HashMap<Object, Object>();
+        result.put("token", token);
+        result.put("userInfo", userInfo);
+        return ResponseUtil.ok(result);
+    }
+
     /**
      * 微信登录
      *
@@ -252,12 +304,12 @@ public class WxAuthController {
         if (ret == 1) {
             // 2 调用【短信防火墙】失败结果
             fwApi.fail(paramMap);
-            return ResponseUtil.fail(401,"发送验证码过于频繁！");
+            return ResponseUtil.fail(401, "发送验证码过于频繁！");
         }
         String code = CharUtil.getRandomNum(6);// 生成6位随机数
         SmsUtil smsUtil = new SmsUtil();
         SmsRetMsg smsRetMsg = smsUtil.send(phoneNumber, code);
-        if(smsRetMsg.getRet()==0){
+        if (smsRetMsg.getRet() == 0) {
             boolean successful = CaptchaCodeManager.addToCache(phoneNumber, code);
             if (!successful) {
                 fwApi.fail(paramMap);
@@ -478,7 +530,7 @@ public class WxAuthController {
         String key = fingerApi.getMobileName(request, response);
         String s = stringStringMap.get(key);
         String phoneNumber = fingerApi.mobileDecrypt(request, response, s);
-        System.out.println("phoneNumber"+phoneNumber);
+        System.out.println("phoneNumber" + phoneNumber);
         if (StringUtils.isEmpty(phoneNumber)) {
             return ResponseUtil.badArgument();
         }
@@ -500,11 +552,11 @@ public class WxAuthController {
         if (smsSendRet == 1) {
             // 2 调用【短信防火墙】失败结果
             fwApi.fail(paramMap);
-            return ResponseUtil.fail(409,"发送验证码过于频繁！");
+            return ResponseUtil.fail(409, "发送验证码过于频繁！");
         } else {
             String code = CharUtil.getRandomNum(6);
             SmsRetMsg smsRetMsg = smsUtil.send(phoneNumber, code);
-            if(smsRetMsg.getRet()==0){
+            if (smsRetMsg.getRet() == 0) {
                 boolean successful = CaptchaCodeManager.addToCache(phoneNumber, code);
                 if (!successful) {
                     return ResponseUtil.fail(AUTH_CAPTCHA_FREQUENCY, "验证码未超时5分钟，不能发送");

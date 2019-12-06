@@ -58,8 +58,8 @@ public class WxImageUpload {
             }
             fileName = UUID.randomUUID() + suffixName; // 新图片进行生产
 
-            String filePath = "D://images/upload//"; // 上传后的路径
-            File dest = new File(filePath + fileName);
+            //String filePath = "D://images/upload//"; // 上传后的路径
+            File dest = new File(UPLOAD_FILE_BASE_PATH + fileName);
             if (!dest.getParentFile().exists()) {
                 dest.getParentFile().mkdirs();
             }
@@ -160,8 +160,8 @@ public class WxImageUpload {
             } else {
                 fileName = UUID.randomUUID() + suffixName; // 新图片进行生产
             }
-            String filePath = "D://images/upload//"; // 上传后的路径
-            File dest = new File(filePath + fileName);
+            //String filePath = "D://images/upload//"; // 上传后的路径
+            File dest = new File(UPLOAD_FILE_BASE_PATH + fileName);
             if (!dest.getParentFile().exists()) {
                 dest.getParentFile().mkdirs();
             }
