@@ -124,11 +124,11 @@
                 // 此时可以自行将文件上传至服务器
                 let id = this.$route.query.storeId
                 let content = file.file;
-                let merchantPic = this.merchantPic
+                let merchantCodePic = this.merchantCodePicPic
                 let data = new FormData();
                 data.append('imagefile', content);
                 data.append('storeId', id);
-                data.append('merchantPic', merchantPic);
+                data.append('merchantPic', merchantCodePic);
                 merchantCodePicUpload(data).then(res => {
                     this.codePic = res.data.data + "?" + Math.random();
                     //this.$router.go(0)
@@ -166,6 +166,9 @@
                     this.merchantName = res.data.data.merchantName;
                     this.merchantStatus = res.data.data.merchantStatus;
                     this.pic = res.data.data.merchantPic + "?" + Math.random();
+                    this.codePic = res.data.data.merchantCodePic + "?" + Math.random();
+                    this.merchantPic = res.data.data.merchantPic;
+                    this.merchantCodePic = res.data.data.merchantCodePic;
                 });
                 this.page++;
             },

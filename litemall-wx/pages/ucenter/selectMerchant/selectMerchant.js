@@ -21,7 +21,7 @@ Page({
                 url: '/pages/ucenter/merchant/merchant'
               })
             }
-            
+      
           })
          
         }

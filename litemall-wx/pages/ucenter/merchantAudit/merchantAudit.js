@@ -27,11 +27,16 @@ Page({
       storeId: that.data.storeId
     }, 'POST').then(function (res) {
       if (res.errno === 0) {
-        that.setData({
-          merchantPic: res.data.merchantPic,
-          merchantCodePic: res.data.merchantCodePic
-        });
-    
+        if(res.data.merchantPic!=null){
+          that.setData({
+            merchantPic: res.data.merchantPic,
+          });
+        }
+        if (res.data.merchantCodePic != null) {
+          that.setData({
+            merchantCodePic: res.data.merchantCodePic
+          });
+        }
       }
     });
   },

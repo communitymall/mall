@@ -221,7 +221,7 @@
 </template>
 
 <script>
-import { listOrder, shipOrder, refundOrder, detailOrder, approvedOrder, completeGoods } from '@/api/order'
+import { listOrder, unApprovedOrder, refundOrder, detailOrder, approvedOrder, completeGoods } from '@/api/order'
 import Pagination from '@/components/Pagination' // Secondary package based on el-pagination
 import checkPermission from '@/utils/permission' // 权限判断函数
 
@@ -236,7 +236,8 @@ const statusMap = {
   7: '待支付',
   8: '取消订单',
   9: '订单超时',
-  10: '交易完成'
+  10: '交易完成',
+  11: '订单未过审'
 }
 
 export default {
@@ -338,59 +339,88 @@ export default {
     },
     // 审核通过的方法
     approved() {
-      this.$refs['approvedForm'].validate((valid) => {
-        if (valid) {
-          approvedOrder(this.approvedForm).then(response => {
-            this.auditOrderDialogVisible = false
-            this.$notify.success({
-              title: '成功',
-              message: '订单审核成功'
+      this.$confirm('此操作将货到付款的订单通过审核, 是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        this.$refs['approvedForm'].validate((valid) => {
+          if (valid) {
+            approvedOrder(this.approvedForm).then(response => {
+              this.auditOrderDialogVisible = false
+              this.$notify.success({
+                title: '成功',
+                message: '订单审核成功'
+              })
+              this.getList()
+            }).catch(response => {
+              this.$notify.error({
+                title: '失败',
+                message: response.data.errmsg
+              })
             })
-            this.getList()
-          }).catch(response => {
-            this.$notify.error({
-              title: '失败',
-              message: response.data.errmsg
-            })
-          })
-        }
+          }
+        })
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '已取消操作'
+        })
       })
     },
     // 订单备货完成
     completeGoods(row) {
-      this.approvedForm.orderSn = row.orderSn
-      this.approvedForm.orderId = row.id
-      completeGoods(this.approvedForm).then(response => {
-        this.$notify.success({
-          title: '成功',
-          message: '操作成功'
+      this.$confirm('此操作将完成商品的备货, 是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        this.approvedForm.orderSn = row.orderSn
+        this.approvedForm.orderId = row.id
+        completeGoods(this.approvedForm).then(response => {
+          this.$notify.success({
+            title: '成功',
+            message: '操作成功'
+          })
+          this.getList()
+        }).catch(response => {
+          this.$notify.error({
+            title: '失败',
+            message: response.data.errmsg
+          })
         })
-        this.getList()
-      }).catch(response => {
-        this.$notify.error({
-          title: '失败',
-          message: response.data.errmsg
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '已取消操作'
         })
       })
     },
 
     confirmShip() {
-      this.$refs['shipForm'].validate((valid) => {
-        if (valid) {
-          shipOrder(this.shipForm).then(response => {
-            this.shipDialogVisible = false
-            this.$notify.success({
-              title: '成功',
-              message: '确认发货成功'
-            })
-            this.getList()
-          }).catch(response => {
-            this.$notify.error({
-              title: '失败',
-              message: response.data.errmsg
-            })
+      this.$confirm('此操作将该订单驳回, 是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        unApprovedOrder(this.approvedForm).then(response => {
+          this.auditOrderDialogVisible = false
+          this.$notify.success({
+            title: '成功',
+            message: '操作成功'
           })
-        }
+          this.getList()
+        }).catch(response => {
+          this.$notify.error({
+            title: '失败',
+            message: response.data.errmsg
+          })
+        })
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '已取消删除'
+        })
       })
     },
     handleRefund(row) {

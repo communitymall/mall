@@ -56,6 +56,17 @@ export function approvedOrder(data) {
 }
 
 /*
+  订单的未审核
+ */
+export function unApprovedOrder(data) {
+  return request({
+    url: '/order/unApproved',
+    method: 'post',
+    data
+  })
+}
+
+/*
 订单的备货
 */
 export function completeGoods(data) {

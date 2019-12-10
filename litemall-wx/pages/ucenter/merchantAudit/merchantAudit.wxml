@@ -20,7 +20,6 @@
       </view>
       <image class="img" src="{{merchantPic}}" background-size="cover"></image>
     </view>
-    
   </view>
 
   <view class="btns">
@@ -28,4 +27,4 @@
     <button class="save" bindtap="merchantPicUpload">保存</button>
   </view>
 </view>
-<view class="bg-mask" bindtap="cancelSelectRegion" wx:if="{{openSelectRegion}}"></view>
+<!-- <view class="bg-mask" bindtap="cancelSelectRegion" wx:if="{{openSelectRegion}}"></view> -->

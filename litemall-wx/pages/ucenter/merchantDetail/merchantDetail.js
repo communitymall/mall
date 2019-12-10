@@ -26,8 +26,12 @@ Page({
         that.setData({
           merchantInfo: res.data,
           storeId: res.data.id,
-          merchantPic:res.data.merchantPic
         });
+        if (res.data.merchantPic!=null){
+          that.setData({
+            merchantPic: res.data.merchantPic
+          });
+        }
         wx.setStorageSync("merchantName", res.data.merchantName)
         wx.setStorageSync("storeId", res.data.id)
       }
@@ -42,8 +46,7 @@ Page({
       if (res.errno === 0) {
         //console.log(res.data);
         that.setData({
-          userList: res.data,
-          
+          userList: res.data,  
         });
       }
     });
@@ -155,7 +158,7 @@ Page({
     // 页面显示
     this.getMerchantDetail();
     this.findMerchantLeader();
-    this.onLoad();
+    this.getMerchantUser();
   },
   onHide: function () {
     // 页面隐藏

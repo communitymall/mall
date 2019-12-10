@@ -96,6 +96,9 @@
         <el-form-item label="门店联系电话">
           <span>{{ merchantDetail.merchantPhone }}</span>
         </el-form-item>
+        <el-form-item label="门店营业执照">
+          <img :src="merchantDetail.merchantCodePic" width="500">
+        </el-form-item>
         <el-form-item label="门店图片">
           <img :src="merchantDetail.merchantPic" width="500">
         </el-form-item>
@@ -182,37 +185,59 @@ export default {
     },
     // 门店审核通过的方法
     approved(id) {
-      this.approvedForm.id = id
-      this.approvedForm.merchantStatus = 2
-      auditMerchant(this.approvedForm).then(response => {
-        this.merchantDialogVisible = false
-        this.$notify.success({
-          title: '操作成功',
-          message: '该门店通过审核！'
+      this.$confirm('此操作将使该门店通过审核, 是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        this.approvedForm.id = id
+        this.approvedForm.merchantStatus = 2
+        auditMerchant(this.approvedForm).then(response => {
+          this.merchantDialogVisible = false
+          this.$notify.success({
+            title: '操作成功',
+            message: '该门店通过审核！'
+          })
+          this.getList()
+        }).catch(response => {
+          this.$notify.error({
+            title: '失败',
+            message: response.data.errmsg
+          })
         })
-        this.getList()
-      }).catch(response => {
-        this.$notify.error({
-          title: '失败',
-          message: response.data.errmsg
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '已取消操作'
         })
       })
     },
     // 门店没有通过审核通过的方法
     confirmShip(id) {
-      this.approvedForm.id = id
-      this.approvedForm.merchantStatus = 1
-      auditMerchant(this.approvedForm).then(response => {
-        this.merchantDialogVisible = false
-        this.$notify.success({
-          title: '操作成功',
-          message: '该门店没有通过审核！'
+      this.$confirm('此操作将驳回门店的审核请求, 是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        this.approvedForm.id = id
+        this.approvedForm.merchantStatus = 1
+        auditMerchant(this.approvedForm).then(response => {
+          this.merchantDialogVisible = false
+          this.$notify.success({
+            title: '操作成功',
+            message: '该门店没有通过审核！'
+          })
+          this.getList()
+        }).catch(response => {
+          this.$notify.error({
+            title: '失败',
+            message: response.data.errmsg
+          })
         })
-        this.getList()
-      }).catch(response => {
-        this.$notify.error({
-          title: '失败',
-          message: response.data.errmsg
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '已取消操作'
         })
       })
     },

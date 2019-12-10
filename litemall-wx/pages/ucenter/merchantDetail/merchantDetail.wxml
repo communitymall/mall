@@ -71,7 +71,7 @@
     <view class="order" wx:for="{{userList}}" wx:key="id" wx:if="{{item.roleType!=3}}">
       <view class="h">
         <view class="l">
-           <view class="l" wx:if="{{item.roleType!=3}}">{{item.name}}</view>
+          <view class="l" wx:if="{{item.roleType!=3}}">{{item.name}}</view>
           <view class="l" wx:if="{{item.roleType==0}}">(管理员)</view>
           <view class="l" wx:if="{{item.roleType==1}}">(厨师)</view>
           <view class="l" wx:if="{{item.roleType==2}}">(店员)</view>

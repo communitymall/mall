@@ -212,9 +212,6 @@ public class WxAuthController {
     public Object loginByWeixin(@RequestBody WxLoginInfo wxLoginInfo, HttpServletRequest request) {
         String code = wxLoginInfo.getCode();
         UserInfo userInfo = wxLoginInfo.getUserInfo();
-        //输出一下信息
-        System.out.println(userInfo);
-        System.out.println(code + "====code");
         if (code == null || userInfo == null) {
             return ResponseUtil.badArgument();
         }
@@ -267,6 +264,59 @@ public class WxAuthController {
         return ResponseUtil.ok(result);
     }
 
+    /**
+     * 微信的所有请求验证码
+     * <p>
+     * TODO
+     * 这里需要一定机制防止短信验证码被滥用
+     *
+     * @param body 手机号码 { mobile }
+     * @return
+     */
+    @PostMapping("wxRegCaptcha")
+    public Object wxRegCaptcha(@RequestBody String body, HttpServletResponse response, HttpServletRequest request) {
+        String mobile = JacksonUtil.parseString(body, "mobile");
+        if (StringUtils.isEmpty(mobile)) {
+            return ResponseUtil.badArgument();
+        }
+        if (!RegexUtil.isMobileExact(mobile)) {
+            return ResponseUtil.badArgumentValue();
+        }
+        List<LitemallUser> litemallUsers = userService.queryByMobile(mobile);
+        if (litemallUsers.size() > 0) {
+            return ResponseUtil.fail(405, "该手机不能注册了！");
+        }
+        FwApi fwApi = new FwImpl();
+        // 1 调用【短信防火墙】验证请求
+        HashMap<String, Object> paramMap = fwApi.getSendReq(request, response, mobile);
+        //请求防火墙
+        String jsonReq = fwApi.req(paramMap);
+        //报文处理
+        int ret = fwApi.getRet(jsonReq);
+        if (ret == 1) {
+            // 2 调用【短信防火墙】失败结果
+            fwApi.fail(paramMap);
+            //return ResponseUtil.fail(401, "发送验证码过于频繁！");
+        }
+        String code = CharUtil.getRandomNum(6);// 生成6位随机数
+        SmsUtil smsUtil = new SmsUtil();
+        SmsRetMsg smsRetMsg = smsUtil.send(mobile, code);
+        if (smsRetMsg.getRet() == 0) {
+            boolean successful = CaptchaCodeManager.addToCache(mobile, code);
+            if (!successful) {
+                fwApi.fail(paramMap);
+                return ResponseUtil.fail(AUTH_CAPTCHA_FREQUENCY, "验证码未超时5分钟，不能发送");
+            }
+        }
+        if (smsRetMsg.getRet() == 0) {//发送成功
+            String resp = smsRetMsg.getResp();
+            fwApi.succ(paramMap);
+            smsService.sendSucess(resp);
+        } else {
+            fwApi.fail(paramMap);
+        }
+        return ResponseUtil.ok();
+    }
 
     /**
      * 请求注册验证码
@@ -283,7 +333,6 @@ public class WxAuthController {
         String key = fingerApi.getMobileName(request, response);
         String mobileEn = JacksonUtil.parseString(body, key);
         String phoneNumber = fingerApi.mobileDecrypt(request, response, mobileEn);
-        System.out.println("phoneNumber=" + phoneNumber);
         if (StringUtils.isEmpty(phoneNumber)) {
             return ResponseUtil.badArgument();
         }
@@ -356,14 +405,10 @@ public class WxAuthController {
     /*帐号注册分H5及小程序注册，采用不同的接口进行注册*/
     @PostMapping("/registerH5")
     public Object register_h5(HttpServletRequest request, HttpServletResponse response, @RequestBody String body) {
-        System.out.println("body=" + body);
         FingerApi fingerApi = new FingerImpl();
         String key = fingerApi.getMobileName(request, response);
-        System.out.println("key=" + key);
         String mobileEn = JacksonUtil.parseString(body, key);
-        System.out.println("mobileEn=" + mobileEn);
         String mobile = fingerApi.mobileDecrypt(request, response, mobileEn);
-        System.out.println("mobile=" + mobile);
         //String mobile = JacksonUtil.parseString(body, "mobile");
         String code = JacksonUtil.parseString(body, "code");
         String password = JacksonUtil.parseString(body, "password");
@@ -530,7 +575,6 @@ public class WxAuthController {
         String key = fingerApi.getMobileName(request, response);
         String s = stringStringMap.get(key);
         String phoneNumber = fingerApi.mobileDecrypt(request, response, s);
-        System.out.println("phoneNumber" + phoneNumber);
         if (StringUtils.isEmpty(phoneNumber)) {
             return ResponseUtil.badArgument();
         }
@@ -591,14 +635,10 @@ public class WxAuthController {
      */
     @PostMapping("reset")
     public Object reset(@RequestBody String body, HttpServletRequest request, HttpServletResponse response) {
-        System.out.println("body=" + body);
         FingerApi fingerApi = new FingerImpl();
         String key = fingerApi.getMobileName(request, response);
-        System.out.println("key=" + key);
         String mobileEn = JacksonUtil.parseString(body, key);
-        System.out.println("mobileEn=" + mobileEn);
         String mobile = fingerApi.mobileDecrypt(request, response, mobileEn);
-        System.out.println("mobile=" + mobile);
 
         String password = JacksonUtil.parseString(body, "password");
         String passwordRepeat = JacksonUtil.parseString(body, "passwordRepeat");
@@ -758,10 +798,6 @@ public class WxAuthController {
         if (!StringUtils.isEmpty(nickName)) {
             user.setNickname(nickName);
         }
-
-        System.out.println(oldPassword);
-        System.out.println(password);
-        System.out.println(mobile);
         //判断旧密码是否正确
         if (!StringUtil.isEmpty(mobile)) {
             user.setMobile(mobile);
@@ -785,12 +821,9 @@ public class WxAuthController {
         } else {
             ResponseUtil.fail(407, "传入参数错误");
         }
-
-
         if (userService.updateById(user) == 0) {
             return ResponseUtil.updatedDataFailed();
         }
-
         return ResponseUtil.ok();
     }
 
@@ -851,14 +884,10 @@ public class WxAuthController {
      */
     @PostMapping("checkMobile")
     public Object checkMobile(@RequestBody String body, HttpServletRequest request, HttpServletResponse response) {
-        System.out.println("body=" + body);
         FingerApi fingerApi = new FingerImpl();
         String key = fingerApi.getMobileName(request, response);
-        System.out.println("key=" + key);
         String mobileEn = JacksonUtil.parseString(body, key);
-        System.out.println("mobileEn=" + mobileEn);
         String mobile = fingerApi.mobileDecrypt(request, response, mobileEn);
-        System.out.println("mobile=" + mobile);
         if (mobile == null || mobile.length() <= 0) {
             return ResponseUtil.fail(701, "手机号不能为空！");
         }
@@ -869,7 +898,7 @@ public class WxAuthController {
         }
         List<LitemallUser> litemallUsers = userService.queryByMobile(mobile);
         if (litemallUsers.size() > 0) {
-            return ResponseUtil.fail(701, "手机号已经被注册！");
+            return ResponseUtil.fail(701, "该手机号不可用！");
         }
         return ResponseUtil.ok();
     }

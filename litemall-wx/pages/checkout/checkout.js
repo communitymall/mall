@@ -220,6 +220,10 @@ Page({
       util.showErrorToast('请选择收货门店');
       return false;
     }
+    if(this.data.payType ===0){
+      util.showErrorToast('请选择支付类型');
+      return false;
+    }
     util.request(api.OrderSubmit, {
       payType: this.data.payType,
       storeId: this.data.storeId,

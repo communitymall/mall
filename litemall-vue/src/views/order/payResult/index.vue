@@ -12,7 +12,7 @@
     <div class="status_text" v-else>系统繁忙, 支付遇到问题, 请您稍后再试!</div>
 
     <div class="status_goLink">
-      <router-link class="red" :to="{name: 'user'}">查看订单
+      <router-link class="red" :to="{path: '/user/order/list/0'}">查看订单
         <van-icon name="arrow"/>
       </router-link>
     </div>

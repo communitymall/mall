@@ -269,6 +269,30 @@ public class AdminOrderService {
     }
 
     /**
+     * 订单未通过审核
+     *
+     * @param body 订单信息，{ orderId：xxx }
+     * @return 订单操作结果
+     * 成功则 { errno: 0, errmsg: '成功' }
+     * 失败则 { errno: XXX, errmsg: XXX }
+     */
+    public Object unApproved(String body) {
+        String orderSn = JacksonUtil.parseString(body, "orderSn");
+        Integer id = JacksonUtil.parseInteger(body, "orderId");
+        if(orderSn.isEmpty()){
+            return ResponseUtil.badArgument();
+        }
+        LitemallOrder order = new LitemallOrder();
+        //审核通过 设置订单状态为未审核通过
+        order.setOrderStatus((short)11);
+        order.setOrderSn(orderSn);
+        order.setId(id);
+        order.setUpdateTime(LocalDateTime.now());
+        orderService.approved(order);
+        return ResponseUtil.ok();
+    }
+
+    /**
      * 订单完成备货
      *
      * @param body 订单信息，{ orderId：xxx }

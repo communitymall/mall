@@ -129,10 +129,16 @@ public class LitemallMerchantService {
         if (!StringUtil.isEmpty(merchantName)) {
             LitemallMerchantExample example1 = new LitemallMerchantExample();
             LitemallMerchantExample.Criteria criteria1 = example1.createCriteria();
-            criteria1.andMerchantNameEqualTo(merchantName);
+            criteria1.andIdEqualTo(id);
             List<LitemallMerchant> litemallMerchants = litemallMerchantMapper.selectByExample(example1);
-            if(litemallMerchants.size()>=1){
-                return -1;
+            if(!(litemallMerchants.get(0).getMerchantName().equals(merchantName))){
+                LitemallMerchantExample example2 = new LitemallMerchantExample();
+                LitemallMerchantExample.Criteria criteria2 = example2.createCriteria();
+                criteria2.andMerchantNameEqualTo(merchantName);
+                List<LitemallMerchant> merchants = litemallMerchantMapper.selectByExample(example2);
+                if(merchants.size()>=1){
+                    return -1;
+                }
             }
             merchant.setMerchantName(merchantName);
             merchant.setMerchantStatus(0);

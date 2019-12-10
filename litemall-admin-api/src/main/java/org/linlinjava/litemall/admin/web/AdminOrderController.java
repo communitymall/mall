@@ -112,6 +112,17 @@ public class AdminOrderController {
     @PostMapping("/approved")
     public Object approved(@RequestBody String body){return adminOrderService.approved(body);}
 
+    /**
+     * 货到付款订单的未通过审核
+     *
+     * @param body 订单信息，{ orderId：xxx }
+     * @return 订单操作结果
+     */
+    @RequiresPermissions("admin:order:unApproved")
+    @RequiresPermissionsDesc(menu = {"商场管理", "订单管理"}, button = "订单审核")
+    @PostMapping("/unApproved")
+    public Object unApproved(@RequestBody String body){return adminOrderService.unApproved(body);}
+
 
     /*
     订单备货完成

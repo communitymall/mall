@@ -60,19 +60,20 @@ Page({
       mobile: merchantUserInfo.mobile,
     }, 'POST').then(function(res) {
       if (res.errno === 0) {
-        var pages = getCurrentPages();
-        var prevPage = pages[pages.length - 3];
-        console.log(prevPage);
-        if (prevPage.route == "pages/checkout/checkout") {
-          prevPage.setData({
-          })
-          try {
-            wx.setStorageSync('merchant', res.data);
-          } catch (e) {
-          }
-          console.log("set merchant");
-        }
-        wx.navigateBack();
+        // var pages = getCurrentPages();
+        // var prevPage = pages[pages.length - 3];
+        // console.log(prevPage);
+        // if (prevPage.route == "pages/checkout/checkout") {
+        //   prevPage.setData({
+        //   })
+        //   try {
+        //     wx.setStorageSync('merchant', res.data);
+        //   } catch (e) {
+        //   }
+        //   console.log("set merchant");
+        // }
+        
+        wx.navigateBack();       
       }
     });
   },
@@ -93,9 +94,14 @@ Page({
     let roleType = this.data.roleType;
     let merchantUer = this.data.merchantUer;
     let that = this;
+    console.log(this.options.roleType)
+    if (this.options.roleType==3){
+      that.setData({
+        merchantLeader: this.options.merchantLeader,
+      });
+    }
     that.setData({
       roleType: this.options.roleType,
-      merchantLeader: this.options.merchantLeader,
     });
   },
 
