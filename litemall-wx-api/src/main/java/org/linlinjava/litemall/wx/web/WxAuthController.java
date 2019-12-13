@@ -286,34 +286,18 @@ public class WxAuthController {
         if (litemallUsers.size() > 0) {
             return ResponseUtil.fail(405, "该手机不能注册了！");
         }
-        FwApi fwApi = new FwImpl();
-        // 1 调用【短信防火墙】验证请求
-        HashMap<String, Object> paramMap = fwApi.getSendReq(request, response, mobile);
-        //请求防火墙
-        String jsonReq = fwApi.req(paramMap);
-        //报文处理
-        int ret = fwApi.getRet(jsonReq);
-        if (ret == 1) {
-            // 2 调用【短信防火墙】失败结果
-            fwApi.fail(paramMap);
-            //return ResponseUtil.fail(401, "发送验证码过于频繁！");
-        }
         String code = CharUtil.getRandomNum(6);// 生成6位随机数
         SmsUtil smsUtil = new SmsUtil();
         SmsRetMsg smsRetMsg = smsUtil.send(mobile, code);
         if (smsRetMsg.getRet() == 0) {
             boolean successful = CaptchaCodeManager.addToCache(mobile, code);
             if (!successful) {
-                fwApi.fail(paramMap);
                 return ResponseUtil.fail(AUTH_CAPTCHA_FREQUENCY, "验证码未超时5分钟，不能发送");
             }
         }
         if (smsRetMsg.getRet() == 0) {//发送成功
             String resp = smsRetMsg.getResp();
-            fwApi.succ(paramMap);
             smsService.sendSucess(resp);
-        } else {
-            fwApi.fail(paramMap);
         }
         return ResponseUtil.ok();
     }
@@ -362,7 +346,7 @@ public class WxAuthController {
             boolean successful = CaptchaCodeManager.addToCache(phoneNumber, code);
             if (!successful) {
                 fwApi.fail(paramMap);
-                return ResponseUtil.fail(AUTH_CAPTCHA_FREQUENCY, "验证码未超时5分钟，不能发送");
+                return ResponseUtil.fail(AUTH_CAPTCHA_FREQUENCY, "验证码未超时2分钟，不能发送");
             }
         }
         if (smsRetMsg.getRet() == 0) {//发送成功
@@ -603,7 +587,7 @@ public class WxAuthController {
             if (smsRetMsg.getRet() == 0) {
                 boolean successful = CaptchaCodeManager.addToCache(phoneNumber, code);
                 if (!successful) {
-                    return ResponseUtil.fail(AUTH_CAPTCHA_FREQUENCY, "验证码未超时5分钟，不能发送");
+                    return ResponseUtil.fail(AUTH_CAPTCHA_FREQUENCY, "验证码未超时2分钟，不能发送");
                 }
             }
             if (smsRetMsg != null && smsRetMsg.getRet() == 0) {

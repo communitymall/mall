@@ -30,8 +30,8 @@ public class CaptchaCodeManager {
         CaptchaItem captchaItem = new CaptchaItem();
         captchaItem.setPhoneNumber(phoneNumber);
         captchaItem.setCode(code);
-        // 有效期为5分钟
-        captchaItem.setExpireTime(LocalDateTime.now().plusMinutes(5));
+        // 有效期为2分钟
+        captchaItem.setExpireTime(LocalDateTime.now().plusMinutes(2));
 
         captchaCodeCache.put(phoneNumber, captchaItem);
 

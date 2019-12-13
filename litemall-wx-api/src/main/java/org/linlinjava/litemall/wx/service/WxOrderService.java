@@ -225,10 +225,14 @@ public class WxOrderService {
 
         // 订单状态为已发货且物流信息不为空
         //"YTO", "800669400640887922"
-//        if (order.getOrderStatus().equals(OrderUtil.STATUS_DELIVERY)) {
+        if (order.getOrderStatus().equals(OrderUtil.STATUS_DELIVERY)) {
 //            ExpressInfo ei = expressService.getExpressInfo(order.getShipChannel(), order.getShipSn());
 //            result.put("expressInfo", ei);
-//        }
+            Map<String, Object> expressInfo = new HashMap<String, Object>();
+            expressInfo.put("shipperName",order.getShipChannel());
+            expressInfo.put("logisticCode",order.getShipSn());
+            result.put("expressInfo", expressInfo);
+        }
 
         return ResponseUtil.ok(result);
 

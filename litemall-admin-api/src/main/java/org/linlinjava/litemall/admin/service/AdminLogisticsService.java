@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
@@ -75,9 +76,12 @@ public class AdminLogisticsService {
         LitemallLogisticsCompany company = new LitemallLogisticsCompany();
         company.setId(Integer.parseInt(companyId));
         LitemallLogisticsCompany company1 = companyService.selectById(company);
-
         //获得运费
         Integer freight = JacksonUtil.parseInteger(body, "freight");
+
+        String ft = JacksonUtil.parseString(body, "freight");
+        BigDecimal f = new BigDecimal(ft);
+
         //得到司机
         LitemallLogisticsTrucks trucks = litemallLogisticsTrucks1.get(0);
         String driver = trucks.getDriver();
@@ -93,6 +97,7 @@ public class AdminLogisticsService {
                 order.setShipChannel(company1.getName());
                 order.setUpdateTime(LocalDateTime.now());
                 order.setShipTime(LocalDateTime.now());
+                order.setFreightPrice(f);
                 orderService.updateByOrderSn(order);
             }
             transportService.add(companyId, licensePlateNumber, thirdOrder, transitId1, driver, freight, createUser);
