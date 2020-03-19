@@ -51,6 +51,9 @@
                 const repeatPassword = this.repeatPassword
                 let regData = this.getRegData();
                 regData[this.NxtMobileName]=this.NxtMobileValue;
+
+                regData[NxtInputKeyName()] = NxtInputKey();
+
                 if (password === repeatPassword) {
                     this.isErrow = false;
 

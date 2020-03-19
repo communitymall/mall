@@ -22,8 +22,6 @@
     import field from '@/components/field/';
     import fieldGroup from '@/components/field-group/';
     import {authRegisterCaptcha} from '@/api/api';
-    //导入检测手机号是否可用
-    import {authCheckMobile} from '@/api/api';
     //导入错误的验证
     import {Toast} from 'vant';
 
@@ -49,13 +47,14 @@
                 const isAvailable = this.isAvailable;
                 let obj = {};
                 obj[NxtMobileName()] = NxtMobileValue(this.mobile);
+
+                obj[NxtInputKeyName()] = NxtInputKey();
+
                 this.NxtMobileName =NxtMobileName();
                 this.NxtMobileValue = NxtMobileValue(this.mobile);
-                authCheckMobile(obj).then(res => {
-                    this.isAvailable = true;
-
+                authRegisterCaptcha(obj).then(res => {
+                    this.isAvailable = true
                     this.$router.push({path: 'registerSubmit', query: {NxtMobileName: this.NxtMobileName ,NxtMobileValue :this.NxtMobileValue = NxtMobileValue(this.mobile)}});
-                    authRegisterCaptcha(obj);
                 }).catch(error => {
                     this.isAvailable = false
                     Toast.fail(error.data.errmsg);

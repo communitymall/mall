@@ -1,5 +1,6 @@
 <template>
     <div class="set_nickname">
+        <van-nav-bar title="修改商户名称" left-text="返回" left-arrow @click-left="goback"/>
         <van-cell-group>
             <van-field v-model="merchantName" label="商户名称"
                        placeholder="请输入新商户名称"
@@ -15,7 +16,7 @@
 
 <script>
     import {merchantUpdate} from '@/api/api';
-    import {Field,Toast} from 'vant';
+    import {Field,Toast,NavBar} from 'vant';
 
     export default {
         data() {
@@ -51,11 +52,16 @@
                         return false;
                     })
                 }
-            }
+            },
+            goback() {
+                this.$router.go(-1);
+            },
         },
 
+
         components: {
-            [Field.name]: Field
+            [Field.name]: Field,
+            [NavBar.name]: NavBar,
         }
     };
 </script>

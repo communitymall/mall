@@ -78,6 +78,7 @@
                 if (password === passwordRepeat) {
                     let getResetData = this.getResetData();
                     getResetData[NxtMobileName()]= NxtMobileValue(this.mobile);
+                    getResetData[NxtInputKeyName()] = NxtInputKey();
                     authReset(getResetData).then(res => {
                         alert("您已经修改密码成功，点击跳转登录页面！")
                         this.$router.push({name: 'login'});
@@ -96,6 +97,7 @@
                 this.counting = true;
                 let mobile = {};
                 mobile[NxtMobileName()]= NxtMobileValue(this.mobile);
+                mobile[NxtInputKeyName()] = NxtInputKey();
                 authCaptcha(mobile).then(res => {
                     this.data = res.data.data
                 }).catch(error => {
@@ -120,7 +122,6 @@
                     code: code
                 };
             }
-
         },
 
         components: {

@@ -1,5 +1,6 @@
 <template>
 	<div class="set_nickname">
+		<van-nav-bar title="修改商户电话" left-text="返回" left-arrow @click-left="goback"/>
 		<van-cell-group>
 			<van-field v-model="merchantPhone" label="商户电话"
 					   placeholder="请输入商户电话"
@@ -15,7 +16,7 @@
 
 <script>
 	import {merchantUpdate} from '@/api/api';
-	import {Field} from 'vant';
+	import {Field,NavBar} from 'vant';
 
 	export default {
 		data() {
@@ -37,7 +38,6 @@
 				this.merchantPhone = localStorage.getItem('merchantPhone') || '';
 			},
 			saveMerchantPhone() {
-
 				if (true) {
 					let id = this.$route.query.storeId
 					this.shipData.id = id
@@ -55,11 +55,15 @@
 								this.$router.go(-1);
 							});
 				}
-			}
+			},
+			goback() {
+				this.$router.go(-1);
+			},
 		},
 
 		components: {
-			[Field.name]: Field
+			[Field.name]: Field,
+			[NavBar.name]:NavBar
 		}
 	};
 </script>

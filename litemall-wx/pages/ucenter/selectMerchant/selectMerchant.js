@@ -21,9 +21,7 @@ Page({
                 url: '/pages/ucenter/merchant/merchant'
               })
             }
-      
-          })
-         
+          })     
         }
         that.setData({
           merchantList: res.data.list,

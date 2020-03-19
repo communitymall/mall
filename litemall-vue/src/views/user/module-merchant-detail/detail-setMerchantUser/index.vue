@@ -1,5 +1,6 @@
 <template>
     <div class="set_nickname">
+        <van-nav-bar title="修改店员信息" left-text="返回" left-arrow @click-left="goback"/>
         <van-cell-group>
             <van-field v-if="shipData.roleType!==3" v-model="userData.name" label="店员姓名"
                        placeholder="请输入店员姓名"
@@ -45,7 +46,7 @@
 
 <script>
     import {updateUserStore, findOneMerchantUser, setConsignee, findMerchantLeader} from '@/api/api';
-    import {Field, RadioGroup, Radio} from 'vant';
+    import {Field, RadioGroup, Radio,NavBar} from 'vant';
     import {Cell, CellGroup} from 'vant';
 
     Vue.use(RadioGroup);
@@ -137,11 +138,14 @@
                     })
                     .then(() => {
                     });
-            }
-
+            },
+            goback() {
+                this.$router.go(-1);
+            },
         },
         components: {
-            [Field.name]: Field
+            [Field.name]: Field,
+            [NavBar.name]:NavBar,
         }
     };
 </script>

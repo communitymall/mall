@@ -174,6 +174,7 @@
                 // }
                 let obj = {};
                 obj[NxtMobileName()] = NxtMobileValue(this.account);
+                obj[NxtInputKeyName()] = NxtInputKey();
                 authCaptcha(obj).then(res => {
                     if(res.data.errmsg===409){
                         Toast.fail(res.data.errmsg);
@@ -194,6 +195,7 @@
             login() {
                 let loginData = this.getLoginData();
                 loginData[NxtMobileName()]= NxtMobileValue(this.account);
+                loginData[NxtInputKeyName()] = NxtInputKey();
                 authLoginByAccount(loginData).then(res => {
                     this.userInfo = res.data.data.userInfo;
                     setLocalStorage({
