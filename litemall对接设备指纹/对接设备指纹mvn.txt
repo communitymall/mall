@@ -1,0 +1,56 @@
+litemall工程的设备指纹对接
+1、提供jar包nxt-finger-client.jar添加到mvn库
+mvn install:install-file -Dfile=D:/nxt-fw-sms-client.jar -DgroupId=com.newxtc -DartifactId=nxt-fw-sms-client -Dversion=1.0.0 -Dpackaging=jar
+
+2、修改litemall-wx-api的pom.xml，添加jar包依赖
+	<dependency>
+            <groupId>com.newxtc</groupId>
+            <artifactId>nxt-fw-sms-client</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>1.2.59</version>
+        </dependency>
+
+logback包已经有，不需要添加。
+3、把提供的newxtc.ini放到litemall-wx-api的src\main\resources下
+
+4、修改litemall-vue/public/index.html页面<body>中加如下：注意ip及端口号要根据实际情况进行修改
+   <script src="http://192.168.5.9:8080/NxtJsServlet" async></script>
+
+5、修改WxAuthController，实现逻辑
+   下发短信验证码 registerCaptcha、captcha
+
+6、修改litemall-vue/src/utils/request.js 添加 axios.defaults.withCredentials = true;
+
+7、litemall-core的org.linlinjava.litemall.core.config下添加CorsConfig
+    corsConfiguration.setAllowCredentials(true);//4 设置跨域
+
+    FilterRegistrationBean bean = new FilterRegistrationBean(new CorsFilter(source));
+        bean.setOrder(Ordered.HIGHEST_PRECEDENCE);
+8、litemall-wx-api中org.linlinjava.litemall.wx的Application，扫描添加"com.newxtc"
+   
+
+
+短信对接
+1、提供jar包sms-izton.jar，添加到mvn库
+mvn install:install-file -Dfile=D:/sms-izton.jar -DgroupId=com.izton -DartifactId=sms-izton -Dversion=1.0.0 -Dpackaging=jar
+
+2、修改litemall-wx-api的pom.xml，添加jar包依赖
+        <dependency>
+            <groupId>com.izton</groupId>
+            <artifactId>sms-izton</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+
+3、把提供的sms.ini 放到litemall-wx-api的src\main\resources下
+
+4、litemall-wx-api中org.linlinjava.litemall.wx的Application，扫描添加"com.izton.sms"
+
+
+
+说明：
+商城->nxt-fw-sms-client->nxt-fw-sms-server（8502）->设备指纹服务

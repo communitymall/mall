@@ -126,7 +126,9 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/litemall-wx/project.config.json">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-324" />
+            <state relative-caret-position="270">
+              <caret line="22" column="6" selection-start-line="22" selection-start-column="6" selection-end-line="22" selection-end-column="6" />
+            </state>
           </provider>
         </entry>
       </file>
@@ -787,7 +789,7 @@
       <workItem from="1587697137499" duration="3133000" />
       <workItem from="1588127898262" duration="7925000" />
       <workItem from="1588153404949" duration="2148000" />
-      <workItem from="1589072508462" duration="2915000" />
+      <workItem from="1589072508462" duration="2917000" />
     </task>
     <servers />
   </component>
@@ -806,7 +808,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="1522467000" />
+    <option name="totallyTimeSpent" value="1522469000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -818,7 +820,7 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="681" y="188" width="1680" height="586" extended-state="0" />
+    <frame x="694" y="317" width="1680" height="586" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.794702" visible="true" weight="0.26049381" />
@@ -1219,7 +1221,9 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/litemall-wx/project.config.json">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-324" />
+        <state relative-caret-position="270">
+          <caret line="22" column="6" selection-start-line="22" selection-start-column="6" selection-end-line="22" selection-end-column="6" />
+        </state>
       </provider>
     </entry>
   </component>
