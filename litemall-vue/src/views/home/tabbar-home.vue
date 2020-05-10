@@ -8,6 +8,7 @@
     <van-swipe :autoplay="3000"
                indicator-color="white">
       <van-swipe-item v-for="(banner, index) in shopInfos.banner"
+                      @click="goTopic(banner.link)"
                       :key="index">
         <img :src="banner.url"
              style="height:230px">
@@ -18,9 +19,13 @@
       <div class="item"
            @click="changeTabbar(channel)"
            v-for="(channel, index) in shopInfos.channel"
-           :key="index">
+           :key="index"
+            >
         <img :src="channel.iconUrl"
              background-size="cover" />
+
+
+
         <span>{{channel.name}}</span>
       </div>
     </div>
@@ -72,13 +77,13 @@
         </div>
       </van-card>
       <div slot='header'>
-        <van-cell-group>
-          <van-cell title="团购专区"
-                    isLink>
-            <router-link to="/items/groupon"
-                         class="text-desc">更多团购商品</router-link>
-          </van-cell>
-        </van-cell-group>
+<!--        <van-cell-group>-->
+<!--          <van-cell title="团购专区"-->
+<!--                    isLink>-->
+<!--            <router-link to="/items/groupon"-->
+<!--                         class="text-desc">更多团购商品</router-link>-->
+<!--          </van-cell>-->
+<!--        </van-cell-group>-->
       </div>
     </van-panel>
 

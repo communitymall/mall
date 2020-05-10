@@ -1,14 +1,16 @@
 package org.linlinjava.litemall.wx.util;
 
+import com.izton.sms.SmsApi;
 import com.izton.sms.entity.SmsRetMsg;
+import com.sms.SmsProvider;
 import org.springframework.stereotype.Controller;
 
 @Controller
 public class SmsUtil {
     public SmsRetMsg send(String phoneNumber, String code) {
-//        SmsApi smsApi = SmsProvider.getSmsApi();
-//        SmsRetMsg smsRetMsg = smsApi.sendSmsTp(phoneNumber,"【易购菜鸟】", code);
-        SmsRetMsg smsRetMsg = getSmsRetMsg(code);
+        SmsApi smsApi = SmsProvider.getSmsApi();
+        SmsRetMsg smsRetMsg = smsApi.sendSmsTp(phoneNumber,"【新疆买菜网】", code);
+//        SmsRetMsg smsRetMsg = getSmsRetMsg(code);
         return smsRetMsg;
     }
 
