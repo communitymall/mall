@@ -5,7 +5,7 @@ var user = require('../../../utils/user.js');
 var app = getApp();
 Page({
   data: {
-    username: '',
+    mobile: '',
     password: '',
     code: '',
     loginErrorCount: 0
@@ -32,7 +32,7 @@ Page({
   accountLogin: function() {
     var that = this;
 
-    if (this.data.password.length < 1 || this.data.username.length < 1) {
+    if (this.data.password.length < 1 || this.data.mobile.length < 1) {
       wx.showModal({
         title: '错误信息',
         content: '请输入用户名和密码',
@@ -44,7 +44,7 @@ Page({
     wx.request({
       url: api.AuthLoginByAccount,
       data: {
-        username: that.data.username,
+        mobile: that.data.mobile,
         password: that.data.password
       },
       method: 'POST',
@@ -77,10 +77,10 @@ Page({
       }
     });
   },
-  bindUsernameInput: function(e) {
+  bindMobileInput: function(e) {
 
     this.setData({
-      username: e.detail.value
+      mobile: e.detail.value
     });
   },
   bindPasswordInput: function(e) {
@@ -99,7 +99,7 @@ Page({
     switch (e.currentTarget.id) {
       case 'clear-username':
         this.setData({
-          username: ''
+          mobile: ''
         });
         break;
       case 'clear-password':

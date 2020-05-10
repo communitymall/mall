@@ -1,0 +1,25 @@
+<view class="container">
+  <scroll-view scroll-x="true" scroll-y="true" class="address-list" wx:if="{{ merchantList.length > 0 }}">
+    <view class="item" wx:for="{{merchantList}}" wx:key="id" bindtap="merchantDetail" data-merchant-id="{{item.id}}">
+      <view class="l">
+        <view class="name">{{item.merchantName}}</view>
+      </view>
+      <view class="c">
+        <view class="mobile">{{item.merchantPhone}}</view>
+        <view class="address">{{item.merchantAddress}}</view>
+      </view>
+      <view class="r">
+        <view class="text">详情</view>
+        <!-- <image catchtap="deleteAddress" data-address-id="{{item.id}}" class="del" src="/static/images/del-address.png"></image> -->
+      </view>
+    </view>
+  </scroll-view>
+  <view class="empty-view" wx:if="{{ merchantList.length <= 0 }}">
+    <text class="text">没有相关的门店信息</text>
+  </view>
+  <view class="add-address" bindtap="addressAddOrUpdate" data-address-id="0">
+    <navigator url="../merchantAdd/merchantAdd?userId={{item.uId}}">
+      <view class="add-address" bindtap="addressAddOrUpdate" data-address-id="0">新增门店</view>
+    </navigator>
+  </view>
+</view>

@@ -136,7 +136,8 @@ public class PermissionUtil {
                 }
                 // TODO
                 // 这里只支持GetMapping注解或者PostMapping注解，应该进一步提供灵活性
-                throw new RuntimeException("目前权限管理应该在method的前面使用GetMapping注解或者PostMapping注解");
+
+                //throw new RuntimeException("目前权限管理应该在method的前面使用GetMapping注解或者PostMapping注解");
             }
         }
         return permissions;

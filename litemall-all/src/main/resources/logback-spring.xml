@@ -22,6 +22,8 @@
         <encoder>
             <pattern>%date %level [%thread] %logger{36} [%file : %line] %msg%n
             </pattern>
+
+            <charset>UTF-8</charset> <!-- 设置字符集 -->
         </encoder>
     </appender>
 

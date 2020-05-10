@@ -20,7 +20,7 @@
 				@click-icon="getCode"
 				placeholder="请输入验证码">
 
-				<span slot="icon"
+				<spa0n slot="icon"
 					class="verifi_code red"
 					:class="{verifi_code_counting: counting}"
 					@click="getCode">
@@ -28,7 +28,7 @@
 					  <template slot-scope="props">{{ +props.seconds || 60 }}秒后获取</template>
 					</countdown>
 					<span v-else>获取验证码</span>
-				</span>
+				</spa0n>
 			</van-field>
 		</van-cell-group>
 

@@ -8,14 +8,17 @@ import org.linlinjava.litemall.db.domain.LitemallOrderGoods;
 import org.linlinjava.litemall.db.service.LitemallGoodsProductService;
 import org.linlinjava.litemall.db.service.LitemallOrderGoodsService;
 import org.linlinjava.litemall.db.service.LitemallOrderService;
+import org.linlinjava.litemall.db.service.LitemallSystemConfigService;
 import org.linlinjava.litemall.db.util.OrderUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 检测订单状态
@@ -31,6 +34,9 @@ public class OrderJob {
     @Autowired
     private LitemallGoodsProductService productService;
 
+    @Autowired
+    private LitemallSystemConfigService systemConfigService;
+
     /**
      * 自动取消订单
      * <p>
@@ -39,32 +45,56 @@ public class OrderJob {
      * <p>
      * TODO
      * 注意，因为是相隔半小时检查，因此导致订单真正超时时间是 [LITEMALL_ORDER_UNPAID, 30 + LITEMALL_ORDER_UNPAID]
+     *
+     * fixedDelay = 30 * 60 * 1000
      */
     @Scheduled(fixedDelay = 30 * 60 * 1000)
     @Transactional(rollbackFor = Exception.class)
     public void checkOrderUnpaid() {
         logger.info("系统开启任务检查订单是否已经超期自动取消订单");
 
+        //获得系统配置的过期时间
+        Map<String, String> stringStringMap = systemConfigService.listOrder();
+        String litemall_order_unpaid = stringStringMap.get("litemall_order_unpaid");
+        int outTime = Integer.parseInt(litemall_order_unpaid);
+        logger.info("系统配置的订单超期自动取消订单的时间是"+outTime+"分钟");
+
         List<LitemallOrder> orderList = orderService.queryUnpaid(SystemConfig.getOrderUnpaid());
         for (LitemallOrder order : orderList) {
-            // 设置订单已取消状态
-            order.setOrderStatus(OrderUtil.STATUS_AUTO_CANCEL);
-            order.setEndTime(LocalDateTime.now());
-            if (orderService.updateWithOptimisticLocker(order) == 0) {
-                throw new RuntimeException("更新数据已失效");
-            }
-
-            // 商品货品数量增加
-            Integer orderId = order.getId();
-            List<LitemallOrderGoods> orderGoodsList = orderGoodsService.queryByOid(orderId);
-            for (LitemallOrderGoods orderGoods : orderGoodsList) {
-                Integer productId = orderGoods.getProductId();
-                Short number = orderGoods.getNumber();
-                if (productService.addStock(productId, number) == 0) {
-                    throw new RuntimeException("商品货品库存增加失败");
+            Short orderStatus = order.getOrderStatus();
+            //获得订单的创建时间，和现在的时间进行对比，超时就取消
+            LocalDateTime addTime = order.getAddTime();
+            LocalDateTime now = LocalDateTime.now();//获得现在的时间
+            //计算时间的间隔
+            Duration duration = Duration.between(addTime,now);
+            long minutes = duration.toMinutes();//相差的分钟数
+            //订单超时30分钟并且订单是待支付的状态就把订单取消
+            if(minutes>outTime){
+                //当订单是待支付的状态下设置订单取消
+                logger.info("当前的订单状态是："+orderStatus);
+                if(orderStatus==7){
+                    System.out.println("okokokokokokokokok"+orderStatus);
+                }
+                if(orderStatus==7){
+                    // 设置订单已取消状态
+                    order.setOrderStatus(OrderUtil.STATUS_CANCELLATION);
+                    order.setEndTime(LocalDateTime.now());
+                    logger.info("订单 ID" + order.getId() + " 已经超期自动取消订单");
+                }
+                if (orderService.updateWithOptimisticLocker(order) == 0) {
+                    throw new RuntimeException("更新数据已失效");
+                }
+                // 商品货品数量增加
+                Integer orderId = order.getId();
+                List<LitemallOrderGoods> orderGoodsList = orderGoodsService.queryByOid(orderId);
+                for (LitemallOrderGoods orderGoods : orderGoodsList) {
+                    Integer productId = orderGoods.getProductId();
+                    Short number = orderGoods.getNumber();
+                    if (productService.addStock(productId, number) == 0) {
+                        throw new RuntimeException("商品货品库存增加失败");
+                    }
                 }
             }
-            logger.info("订单 ID" + order.getId() + " 已经超期自动取消订单");
         }
     }
 
@@ -81,16 +111,31 @@ public class OrderJob {
     public void checkOrderUnconfirm() {
         logger.info("系统开启任务检查订单是否已经超期自动确认收货");
 
+        //获得系统配置的自动收货时间
+        Map<String, String> stringStringMap = systemConfigService.listOrder();
+        String litemall_order_unconfirm = stringStringMap.get("litemall_order_unconfirm");
+        int outDay = Integer.parseInt(litemall_order_unconfirm);
+        logger.info("系统配置的订单自动收货时间是"+outDay+"天");
+
         List<LitemallOrder> orderList = orderService.queryUnconfirm(SystemConfig.getOrderUnconfirm());
         for (LitemallOrder order : orderList) {
 
-            // 设置订单已取消状态
-            order.setOrderStatus(OrderUtil.STATUS_AUTO_CONFIRM);
-            order.setConfirmTime(LocalDateTime.now());
-            if (orderService.updateWithOptimisticLocker(order) == 0) {
-                logger.info("订单 ID=" + order.getId() + " 数据已经更新，放弃自动确认收货");
-            } else {
-                logger.info("订单 ID=" + order.getId() + " 已经超期自动确认收货");
+            Short orderStatus = order.getOrderStatus();
+            if(orderStatus==4){//订单是发货状态
+                LocalDateTime updateTime = order.getUpdateTime();
+                LocalDateTime now = LocalDateTime.now();
+                Duration duration = Duration.between(updateTime,now);
+                long days = duration.toDays();//相差的天数
+                if(days>outDay){
+                    // 设置订单自动收货
+                    order.setOrderStatus(OrderUtil.STATUS_RECEIVING);
+                    order.setConfirmTime(LocalDateTime.now());
+                    if (orderService.updateWithOptimisticLocker(order) == 0) {
+                        logger.info("订单 ID=" + order.getId() + " 数据已经更新，放弃自动确认收货");
+                    } else {
+                        logger.info("订单 ID=" + order.getId() + " 已经超期自动确认收货");
+                    }
+                }
             }
         }
     }
@@ -108,6 +153,8 @@ public class OrderJob {
     public void checkOrderComment() {
         logger.info("系统开启任务检查订单是否已经超期未评价");
 
+        //获得系统配置的自动取消评价的时间
+
         List<LitemallOrder> orderList = orderService.queryComment(SystemConfig.getOrderComment());
         for (LitemallOrder order : orderList) {
             order.setComments((short) 0);
@@ -120,4 +167,5 @@ public class OrderJob {
             }
         }
     }
+
 }

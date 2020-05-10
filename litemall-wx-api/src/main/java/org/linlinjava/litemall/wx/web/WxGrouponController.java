@@ -141,10 +141,10 @@ public class WxGrouponController {
 
         // 订单状态为已发货且物流信息不为空
         //"YTO", "800669400640887922"
-        if (order.getOrderStatus().equals(OrderUtil.STATUS_SHIP)) {
-            ExpressInfo ei = expressService.getExpressInfo(order.getShipChannel(), order.getShipSn());
-            result.put("expressInfo", ei);
-        }
+//        if (order.getOrderStatus().equals(OrderUtil.STATUS_SHIP)) {
+//            ExpressInfo ei = expressService.getExpressInfo(order.getShipChannel(), order.getShipSn());
+//            result.put("expressInfo", ei);
+//        }
 
         UserVo creator = userService.findUserVoById(groupon.getCreatorUserId());
         List<UserVo> joiners = new ArrayList<>();

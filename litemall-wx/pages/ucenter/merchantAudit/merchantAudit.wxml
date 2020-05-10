@@ -1,0 +1,30 @@
+<view class="add-address">
+  <view class="add-form">
+    <view class="form-item">
+      门店名称： <input class="input" disabled="true"  value="{{merchantName}}"  auto-focus/>
+    </view>
+ 
+
+    <view class="order">
+      <view class="h" bindtap="changeAvatar2">
+        <view class="l">门店营业执照</view>
+        <view class="r">上传</view>
+      </view>
+      <image class="img" src="{{merchantCodePic}}" background-size="cover"></image>
+    </view>
+
+    <view class="order">
+      <view class="h" bindtap="changeAvatar">
+        <view class="l">门店照片</view>
+        <view class="r">上传</view>
+      </view>
+      <image class="img" src="{{merchantPic}}" background-size="cover"></image>
+    </view>
+  </view>
+
+  <view class="btns">
+    <button class="cannel" bindtap="cancelMerchant">取消</button>
+    <button class="save" bindtap="merchantPicUpload">保存</button>
+  </view>
+</view>
+<!-- <view class="bg-mask" bindtap="cancelSelectRegion" wx:if="{{openSelectRegion}}"></view> -->

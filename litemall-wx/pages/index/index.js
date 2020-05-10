@@ -21,8 +21,8 @@ Page({
 
   onShareAppMessage: function() {
     return {
-      title: 'litemall小程序商场',
-      desc: '开源微信小程序商城',
+      title: '菜鸟易购',
+      desc: '菜鸟易购小商城',
       path: '/pages/index/index'
     }
   },

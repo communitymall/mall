@@ -1,0 +1,33 @@
+<view class="add-address">
+  <view class="add-form">
+    <view class="form-item">
+      门店名称： <input class="input" bindinput="bindinputMerchantName" placeholder="请输入门店名称" value="{{merchant.merchantName}}" auto-focus/>
+    </view>
+    <view class="form-item">
+      门店地址:  <input class="input" bindinput="bindinputMerchantAddress" value="{{merchant.merchantAddress}}" placeholder="请输入门店地址" />
+    </view>
+    <view class="form-item">
+      门店负责人:  <input class="input" bindinput="bindinputMerchantLeader" value="{{merchant.merchantLeader}}" placeholder="请输入门店负责人 " />
+    </view>
+     <view class="form-item">
+      门店电话:  <input class="input" maxlength="11"  bindblur="bindinputMerchantPhone" value="{{merchant.merchantPhone}}" placeholder="请输入门店电话" />
+    </view>
+     <!-- <view class="form-item">
+      门店营业执照:  <input class="input" bindinput="bindinputMerchantCode" value="{{merchant.merchantCode}}" placeholder="请输入门店营业执照" />
+    </view>
+    <view class="order">
+      <view class="h" bindtap="changeAvatar">
+        <view class="l">门店照片</view>
+        <view class="r">上传</view>
+      </view>
+      <image class="img" src="{{merchantPic}}" background-size="cover"></image>
+    </view> -->
+    
+  </view>
+
+  <view class="btns">
+    <button class="cannel" bindtap="cancelAddress">取消</button>
+    <button class="save" bindtap="merchantCreate">下一步</button>
+  </view>
+</view>
+<view class="bg-mask" bindtap="cancelSelectRegion" wx:if="{{openSelectRegion}}"></view>

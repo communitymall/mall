@@ -72,20 +72,26 @@ export default {
       Dialog.alert({
         message: '你选择了' + (this.payWay === 'wx' ? '微信支付' : '支付宝支付')
       }).then(() => {
+        if(this.payWay==='wx'){
+          alert('微信支付')
+          this.orderPrepay()
+        }else {
+          alert('支付宝支付')
+        }
 
-        this.$router.push({
-          name: 'paymentStatus',
-          params: {
-            status: 'success'
-          }
-        });
+        // this.$router.push({
+        //   name: 'paymentStatus',
+        //   params: {
+        //     status: 'success'
+        //   }
+        // });
       });
 
-      // // 利用weixin-js-sdk调用微信支付
-      // orderPrepay({orderId: this.orderId}).then(res => {
-      //   var payParams = res.data.data;
+      // 利用weixin-js-sdk调用微信支付
+      orderPrepay({orderId: this.orderId,H5:1}).then(res => {
+        var payParams = res.data.data;
   
-      // });
+      });
     }
   },
 

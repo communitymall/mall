@@ -150,10 +150,10 @@ Page({
       });
     };
   },
-  goAddress() {
+  goMerchant() {
     if (this.data.hasLogin) {
       wx.navigateTo({
-        url: "/pages/ucenter/address/address"
+        url: "/pages/ucenter/merchant/merchant"
       });
     } else {
       wx.navigateTo({
@@ -226,5 +226,11 @@ Page({
       }
     })
 
-  }
+  },
+  callPhone: function (e) {
+    var that = this
+    wx.makePhoneCall({
+      phoneNumber: 1231231,
+    })
+  },
 })

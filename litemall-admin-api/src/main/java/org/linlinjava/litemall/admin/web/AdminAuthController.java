@@ -81,6 +81,8 @@ public class AdminAuthController {
 
         logHelper.logAuthSucceed("登录");
 
+
+
         // userInfo
         Map<String, Object> adminInfo = new HashMap<String, Object>();
         adminInfo.put("nickName", admin.getUsername());

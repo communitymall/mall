@@ -55,6 +55,29 @@ public class ResponseUtil {
         return obj;
     }
 
+    //物流订单创建的返回
+    public  static Object transportOk(List list){
+        Map<Object, Object> data = new HashMap<Object, Object>();
+       // data.put("data", list);
+        data.put("transitId",list.get(0));
+        return ok(data);
+    }
+    //创建门店创建的返回
+    public  static Object createStoreOk(Object storeId){
+        Map<Object, Object> data = new HashMap<Object, Object>();
+        // data.put("data", list);
+        data.put("storeid",storeId);
+        return ok(data);
+    }
+
+    //物流订单的详情
+    public static Object transportListOk(List list){
+        Map<Object, Object> data = new HashMap<Object, Object>();
+
+        data.put("list",list);
+        return  ok(data);
+    }
+
     public static Object okList(List list) {
         Map<String, Object> data = new HashMap<String, Object>();
         data.put("list", list);
@@ -139,6 +162,25 @@ public class ResponseUtil {
 
     public static Object unauthz() {
         return fail(506, "无操作权限");
+    }
+
+
+    /*
+    自己添加的错误返回
+     */
+    public  static Object badGroupBuy(){
+        return fail(401,"找不到团购的活动记录");
+    }
+    public  static Object badReceiveAddress(){
+        return fail(401,"找不到正确的收货地址");
+    }
+
+    public  static Object badCommodity(){
+        return fail(401,"找不到正确的商品信息");
+    }
+
+    public  static Object badCoupon(){
+        return fail(401,"找不到正确的优惠券");
     }
 }
 

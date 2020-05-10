@@ -94,6 +94,7 @@ public class WxCollectController {
 
         Byte type = JacksonUtil.parseByte(body, "type");
         Integer valueId = JacksonUtil.parseInteger(body, "valueId");
+        String goodsName = JacksonUtil.parseString(body, "goodsName");
         if (!ObjectUtils.allNotNull(type, valueId)) {
             return ResponseUtil.badArgument();
         }
@@ -107,6 +108,7 @@ public class WxCollectController {
             collect.setUserId(userId);
             collect.setValueId(valueId);
             collect.setType(type);
+            collect.setGoodsName(goodsName);
             collectService.add(collect);
         }
 

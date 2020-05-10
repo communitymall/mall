@@ -43,3 +43,51 @@ export function replyComment(data) {
     data
   })
 }
+
+/*
+  订单的审核
+ */
+export function approvedOrder(data) {
+  return request({
+    url: '/order/approved',
+    method: 'post',
+    data
+  })
+}
+
+/*
+  订单的未审核
+ */
+export function unApprovedOrder(data) {
+  return request({
+    url: '/order/unApproved',
+    method: 'post',
+    data
+  })
+}
+
+/*
+订单的备货
+*/
+export function completeGoods(data) {
+  return request({
+    url: '/order/completeGoods',
+    method: 'post',
+    data
+  })
+}
+
+/*
+查询所有备货完成的订单
+ */
+export function checkDeliveryOrder(query) {
+  return request({
+    url: '/order/checkDeliveryOrder',
+    method: 'get',
+    params: query,
+    paramsSerializer: function(params) {
+      return Qs.stringify(params, { arrayFormat: 'repeat' })
+    }
+  })
+}
+

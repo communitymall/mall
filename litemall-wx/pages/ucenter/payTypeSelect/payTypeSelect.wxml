@@ -1,0 +1,14 @@
+<view class="container">
+
+  <scroll-view class="coupon-list" scroll-y="true" scroll-top="{{scrollTop}}">
+    <view class="item" wx:for="{{payTypeInfo}}" wx:for-index="index" wx:for-item="item" wx:key="id" bindtap="selectCoupon" data-payType="{{item.payType}}">
+      <view class="tag">{{item.tag}}</view>
+      <view class="content">
+        <view class="right">
+          <view class="name">{{item.name}}</view>
+        </view>
+      </view>
+    </view>
+
+  </scroll-view>
+</view>

@@ -1,10 +1,10 @@
 // 以下是业务服务器API地址
 // 本机开发时使用
-var WxApiRoot = 'http://localhost:8080/wx/';
+//var WxApiRoot = 'http://localhost:8082/wx/';
 // 局域网测试使用
-// var WxApiRoot = 'http://192.168.0.101:8080/wx/';
+ //var WxApiRoot = 'http://192.168.1.223:8082/wx/';
 // 云平台部署时使用
-// var WxApiRoot = 'http://118.24.0.153:8080/wx/';
+var WxApiRoot = 'http://39.97.235.28:8082/wx/';
 // 云平台上线时使用
 // var WxApiRoot = 'https://www.menethil.com.cn/wx/';
 
@@ -14,11 +14,12 @@ module.exports = {
   CatalogCurrent: WxApiRoot + 'catalog/current', //分类目录当前分类数据接口
 
   AuthLoginByWeixin: WxApiRoot + 'auth/login_by_weixin', //微信登录
-  AuthLoginByAccount: WxApiRoot + 'auth/login', //账号登录
+  AuthLoginByAccount: WxApiRoot + 'auth/loginWxMobile', //账号登录
   AuthLogout: WxApiRoot + 'auth/logout', //账号登出
   AuthRegister: WxApiRoot + 'auth/register', //账号注册
   AuthReset: WxApiRoot + 'auth/reset', //账号密码重置
-  AuthRegisterCaptcha: WxApiRoot + 'auth/regCaptcha', //验证码
+  AuthCaptcha: WxApiRoot + 'auth/captcha', //账号密码重置请求的验证码
+  AuthRegisterCaptcha: WxApiRoot + 'auth/wxRegCaptcha', //验证码
   AuthBindPhone: WxApiRoot + 'auth/bindPhone', //绑定微信手机号
 
   GoodsCount: WxApiRoot + 'goods/count', //统计商品总数
@@ -60,6 +61,20 @@ module.exports = {
   AddressSave: WxApiRoot + 'address/save', //保存收货地址
   AddressDelete: WxApiRoot + 'address/delete', //保存收货地址
 
+  MerchantList: WxApiRoot + 'store/list',//门店列表
+  MerchantStatusList: WxApiRoot + 'store/merchantStatusList',//门店审核通过列表
+
+  MerchantDetail: WxApiRoot + 'store/detail',//用户门店具体信息
+  MerchantUpdate: WxApiRoot + 'store/update',//用户门店信息的更新
+  MerchantUser: WxApiRoot + 'store/listUserStore',//用户门店所有店员的信息
+  MerchantUserUpdate: WxApiRoot + 'store/updateUserStore',//修改门店店员的信息
+  MerchantCreate: WxApiRoot + 'store/create',//添加门店
+  MerchantAddUser: WxApiRoot + 'store/addMerchantUser',//添加门店中的店员
+  MerchantFindLeader: WxApiRoot + 'store/findMerchantLeader',//查找门店创建人信息
+  MerchantFindUser: WxApiRoot + 'store/findOneMerchantUser',//查询门店中具体店员的信息
+  MerchantSetConsignee: WxApiRoot + 'store/setConsignee',//设置门店默认收货人
+
+
   ExpressQuery: WxApiRoot + 'express/query', //物流查询
 
   RegionList: WxApiRoot + 'region/list', //获取区域列表
@@ -94,7 +109,10 @@ module.exports = {
 
   StorageUpload: WxApiRoot + 'storage/upload', //图片上传,
 
+  WxImageUpload: WxApiRoot + 'wxImageUpload/upload',
+
   UserIndex: WxApiRoot + 'user/index', //个人页面用户相关信息
   IssueList: WxApiRoot + 'issue/list', //帮助信息
+
 
 };

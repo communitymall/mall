@@ -1,13 +1,16 @@
 <view class="container">
   <view class="address-box">
-    <view class="address-item" bindtap="selectAddress" wx:if="{{checkedAddress.id > 0}}">
+    <view class="address-item" bindtap="selectAddress" wx:if="{{merchantInfo.id > 0}}">
       <view class="l">
-        <text class="name">{{checkedAddress.name}}</text>
+        <text class="name">收货门店：</text>
         <text class="default" wx:if="{{checkedAddress.isDefault}}">默认</text>
       </view>
       <view class="m">
-        <text class="mobile">{{checkedAddress.tel}}</text>
-        <text class="address">{{checkedAddress.addressDetail}}</text>
+        <text class="mobile">{{merchantInfo.merchantName}}</text>
+        <view ><text class="info">{{merchantInfo.consigneeName}} 手机:{{merchantInfo.consigneePhone}}</text></view>
+         <view wx:if="{{checked==1}}"> <text class="info">{{merchantConsigneeInfo.name}} 手机:{{merchantConsigneeInfo.mobile}}</text></view>
+       
+        <text class="address">{{merchantInfo.merchantAddress}}</text>
       </view>
       <view class="r">
         <image src="/static/images/address_right.png"></image>
@@ -15,7 +18,7 @@
     </view>
     <view class="address-item address-empty" bindtap="selectAddress" wx:else>
       <view class="m">
-        还没有收货地址，去添加
+        请选择收货地址!
       </view>
       <view class="r">
         <image src="/static/images/address_right.png"></image>
@@ -23,7 +26,7 @@
     </view>
   </view>
 
-  <view class="coupon-box">
+  <!-- <view class="coupon-box">
     <view class="coupon-item" bindtap="selectCoupon">
       <view class="l" wx:if="{{couponId == 0}}">
         <text class="name">没有可用的优惠券</text>
@@ -36,12 +39,31 @@
       <view class="l" wx:else>
         <text class="name">优惠券</text>
         <text class="txt">-￥{{couponPrice}}元</text>
-      </view>      
+      </view>
+      <view class="r">
+        <image src="/static/images/address_right.png"></image>
+      </view>
+    </view>
+  </view> -->
+
+   <view class="coupon-box">
+    <view class="coupon-item" bindtap="selectPayType">
+      <view class="l" wx:if="{{payType == 0}}">
+        <text class="name">请选择支付类型</text>
+      </view>
+      <view class="l" wx:elif="{{payType == 1}}">
+        <text class="name">在线支付</text>
+       
+      </view>
+       <view class="l" wx:elif="{{payType == 2}}">
+        <text class="name">货到付款</text>
+      </view>
       <view class="r">
         <image src="/static/images/address_right.png"></image>
       </view>
     </view>
   </view>
+
 
   <view class="message-box">
     <input class="message-item" bindinput="bindMessageInput" placeholder="如需要，请输入留言" value="{{message}}" />

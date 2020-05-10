@@ -23,6 +23,32 @@ export default {
     };
   },
 
+	created() {
+		this.goGrdoupRecor();
+	},
+	methods: {
+//  3秒后进入群发记录
+		goGrdoupRecor(){
+			const TIME_COUNT = 3;
+			if(!this.timer){
+				this.count = TIME_COUNT;
+				this.show = false;
+				this.timer = setInterval(()=>{
+					if(this.count > 0 && this.count <= TIME_COUNT){
+						this.count--;
+					}else{
+						this.show = true;
+						clearInterval(this.timer);
+						this.timer = null;
+						//跳转的页面写在此处
+						this.$router.push({name: 'login'});
+					}
+				},1000)
+			}
+		},
+	},
+
+
   computed: {
     statusText() {
       return this.isSuccess ? '注册成功' : '注册失败';

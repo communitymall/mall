@@ -35,5 +35,11 @@ export default [
     name: 'forgetStatus',
     props: true,
     component: () => import('@/views/login/forget-status')
-  }
+  },
+
+  {
+    path: '/login/wxgzhLogin',
+    name: 'wxgzhLogin',
+    component: () => import('@/views/login/wxgzhLogin')
+  },
 ];

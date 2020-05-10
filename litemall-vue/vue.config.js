@@ -11,7 +11,8 @@ module.exports = {
   productionSourceMap: false,
   devServer: {
     //九键输入法的 「mall」= 「6255」
-    port: 6255,
+    port: 8255,
+    disableHostCheck: true,//内网穿透配置
   },
   chainWebpack: config => {
     config.plugins.delete('prefetch');

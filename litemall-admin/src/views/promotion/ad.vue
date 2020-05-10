@@ -5,9 +5,27 @@
     <div class="filter-container">
       <el-input v-model="listQuery.name" clearable class="filter-item" style="width: 200px;" placeholder="请输入广告标题"/>
       <el-input v-model="listQuery.content" clearable class="filter-item" style="width: 200px;" placeholder="请输入广告内容"/>
-      <el-button v-permission="['GET /admin/ad/list']" class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">查找</el-button>
-      <el-button v-permission="['POST /admin/ad/create']" class="filter-item" type="primary" icon="el-icon-edit" @click="handleCreate">添加</el-button>
-      <el-button :loading="downloadLoading" class="filter-item" type="primary" icon="el-icon-download" @click="handleDownload">导出</el-button>
+      <el-button
+        v-permission="['GET /admin/ad/list']"
+        class="filter-item"
+        type="primary"
+        icon="el-icon-search"
+        @click="handleFilter">查找
+      </el-button>
+      <el-button
+        v-permission="['POST /admin/ad/create']"
+        class="filter-item"
+        type="primary"
+        icon="el-icon-edit"
+        @click="handleCreate">添加
+      </el-button>
+      <el-button
+        :loading="downloadLoading"
+        class="filter-item"
+        type="primary"
+        icon="el-icon-download"
+        @click="handleDownload">导出
+      </el-button>
     </div>
 
     <!-- 查询结果 -->
@@ -37,17 +55,39 @@
 
       <el-table-column align="center" label="操作" width="200" class-name="small-padding fixed-width">
         <template slot-scope="scope">
-          <el-button v-permission="['POST /admin/ad/update']" type="primary" size="mini" @click="handleUpdate(scope.row)">编辑</el-button>
-          <el-button v-permission="['POST /admin/ad/delete']" type="danger" size="mini" @click="handleDelete(scope.row)">删除</el-button>
+          <el-button
+            v-permission="['POST /admin/ad/update']"
+            type="primary"
+            size="mini"
+            @click="handleUpdate(scope.row)">编辑
+          </el-button>
+          <el-button
+            v-permission="['POST /admin/ad/delete']"
+            type="danger"
+            size="mini"
+            @click="handleDelete(scope.row)">删除
+          </el-button>
         </template>
       </el-table-column>
     </el-table>
 
-    <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit" @pagination="getList" />
+    <pagination
+      v-show="total>0"
+      :total="total"
+      :page.sync="listQuery.page"
+      :limit.sync="listQuery.limit"
+      @pagination="getList"/>
 
     <!-- 添加或修改对话框 -->
     <el-dialog :title="textMap[dialogStatus]" :visible.sync="dialogFormVisible">
-      <el-form ref="dataForm" :rules="rules" :model="dataForm" status-icon label-position="left" label-width="100px" style="width: 400px; margin-left:50px;">
+      <el-form
+        ref="dataForm"
+        :rules="rules"
+        :model="dataForm"
+        status-icon
+        label-position="left"
+        label-width="100px"
+        style="width: 400px; margin-left:50px;">
         <el-form-item label="广告标题" prop="name">
           <el-input v-model="dataForm.name"/>
         </el-form-item>
@@ -94,29 +134,32 @@
 </template>
 
 <style>
-.avatar-uploader .el-upload {
-  border: 1px dashed #d9d9d9;
-  border-radius: 6px;
-  cursor: pointer;
-  position: relative;
-  overflow: hidden;
-}
-.avatar-uploader .el-upload:hover {
-  border-color: #20a0ff;
-}
-.avatar-uploader-icon {
-  font-size: 28px;
-  color: #8c939d;
-  width: 120px;
-  height: 120px;
-  line-height: 120px;
-  text-align: center;
-}
-.avatar {
-  width: 145px;
-  height: 145px;
-  display: block;
-}
+  .avatar-uploader .el-upload {
+    border: 1px dashed #d9d9d9;
+    border-radius: 6px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .avatar-uploader .el-upload:hover {
+    border-color: #20a0ff;
+  }
+
+  .avatar-uploader-icon {
+    font-size: 28px;
+    color: #8c939d;
+    width: 120px;
+    height: 120px;
+    line-height: 120px;
+    text-align: center;
+  }
+
+  .avatar {
+    width: 145px;
+    height: 145px;
+    display: block;
+  }
 </style>
 
 <script>
@@ -302,28 +345,28 @@ export default {
     },
     handleDownload() {
       this.downloadLoading = true
-      import('@/vendor/Export2Excel').then(excel => {
-        const tHeader = [
-          '广告ID',
-          '广告标题',
-          '广告内容',
-          '广告图片',
-          '广告位置',
-          '活动链接',
-          '是否启用'
-        ]
-        const filterVal = [
-          'id',
-          'name',
-          'content',
-          'url',
-          'postion',
-          'link',
-          'enabled'
-        ]
-        excel.export_json_to_excel2(tHeader, this.list, filterVal, '广告信息')
-        this.downloadLoading = false
-      })
+        import('@/vendor/Export2Excel').then(excel => {
+          const tHeader = [
+            '广告ID',
+            '广告标题',
+            '广告内容',
+            '广告图片',
+            '广告位置',
+            '活动链接',
+            '是否启用'
+          ]
+          const filterVal = [
+            'id',
+            'name',
+            'content',
+            'url',
+            'postion',
+            'link',
+            'enabled'
+          ]
+          excel.export_json_to_excel2(tHeader, this.list, filterVal, '广告信息')
+          this.downloadLoading = false
+        })
     }
   }
 }

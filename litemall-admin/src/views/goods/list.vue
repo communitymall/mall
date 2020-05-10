@@ -48,11 +48,11 @@
         </template>
       </el-table-column>
 
-      <el-table-column align="center" property="iconUrl" label="分享图">
-        <template slot-scope="scope">
-          <img :src="scope.row.shareUrl" width="40">
-        </template>
-      </el-table-column>
+      <!--      <el-table-column align="center" property="iconUrl" label="分享图">-->
+      <!--        <template slot-scope="scope">-->
+      <!--          <img :src="scope.row.shareUrl" width="40">-->
+      <!--        </template>-->
+      <!--      </el-table-column>-->
 
       <el-table-column align="center" label="详情" prop="detail">
         <template slot-scope="scope">

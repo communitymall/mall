@@ -3,8 +3,6 @@ package org.linlinjava.litemall.wx.service;
 import org.linlinjava.litemall.wx.dto.CaptchaItem;
 
 import java.time.LocalDateTime;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -20,8 +18,6 @@ public class CaptchaCodeManager {
      * @param code        验证码
      */
     public static boolean addToCache(String phoneNumber, String code) {
-
-
         //已经发过验证码且验证码还未过期
         if (captchaCodeCache.get(phoneNumber) != null) {
             if (captchaCodeCache.get(phoneNumber).getExpireTime().isAfter(LocalDateTime.now())) {
@@ -31,12 +27,11 @@ public class CaptchaCodeManager {
                 captchaCodeCache.remove(phoneNumber);
             }
         }
-
         CaptchaItem captchaItem = new CaptchaItem();
         captchaItem.setPhoneNumber(phoneNumber);
         captchaItem.setCode(code);
-        // 有效期为1分钟
-        captchaItem.setExpireTime(LocalDateTime.now().plusMinutes(1));
+        // 有效期为2分钟
+        captchaItem.setExpireTime(LocalDateTime.now().plusMinutes(2));
 
         captchaCodeCache.put(phoneNumber, captchaItem);
 
@@ -61,4 +56,14 @@ public class CaptchaCodeManager {
 
         return captchaCodeCache.get(phoneNumber).getCode();
     }
+    /**
+     * 删除缓存的验证码
+     *
+     * @param phoneNumber 关联的电话号码
+     * @return 验证码
+     */
+    public static void removeCachedCaptcha(String phoneNumber) {
+        captchaCodeCache.remove(phoneNumber);
+    }
+
 }

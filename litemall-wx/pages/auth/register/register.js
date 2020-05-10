@@ -118,10 +118,19 @@ Page({
   startRegister: function() {
     var that = this;
 
-    if (this.data.password.length < 6 || this.data.username.length < 6) {
+    if (this.data.password.length < 6 ) {
       wx.showModal({
         title: '错误信息',
-        content: '用户名和密码不得少于6位',
+        content: '密码不得少于6位',
+        showCancel: false
+      });
+      return false;
+    }
+
+    if ( this.data.username.length < 2) {
+      wx.showModal({
+        title: '错误信息',
+        content: '用户名不得少于2位',
         showCancel: false
       });
       return false;

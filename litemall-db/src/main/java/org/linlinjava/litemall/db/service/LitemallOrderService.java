@@ -5,7 +5,6 @@ import org.linlinjava.litemall.db.dao.LitemallOrderMapper;
 import org.linlinjava.litemall.db.dao.OrderMapper;
 import org.linlinjava.litemall.db.domain.LitemallOrder;
 import org.linlinjava.litemall.db.domain.LitemallOrderExample;
-import org.linlinjava.litemall.db.util.OrderUtil;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
@@ -13,10 +12,7 @@ import javax.annotation.Resource;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
+import java.util.*;
 
 @Service
 public class LitemallOrderService {
@@ -69,14 +65,25 @@ public class LitemallOrderService {
         return orderSn;
     }
 
-    public List<LitemallOrder> queryByOrderStatus(Integer userId, List<Short> orderStatus, Integer page, Integer limit, String sort, String order) {
+    public List<LitemallOrder> queryByOrderStatus(Integer userId, List<Short> orderStatus,Integer payStatus,Integer page, Integer limit, String sort, String order) {
         LitemallOrderExample example = new LitemallOrderExample();
         example.setOrderByClause(LitemallOrder.Column.addTime.desc());
         LitemallOrderExample.Criteria criteria = example.or();
         criteria.andUserIdEqualTo(userId);
         if (orderStatus != null) {
+            if(orderStatus.get(0)==2){
+                List<Short> list = new LinkedList<>();
+                list.add((short)1);
+                list.add((short)2);
+                list.add((short)3);
+                criteria.andOrderStatusIn(list);
+            }
             criteria.andOrderStatusIn(orderStatus);
-        }
+       }
+        //添加支付方式的判断
+//        if(payStatus!=null){
+//            criteria.andPayTypeEqualTo(payStatus);
+//        }
         criteria.andDeletedEqualTo(false);
         if (!StringUtils.isEmpty(sort) && !StringUtils.isEmpty(order)) {
             example.setOrderByClause(sort + " " + order);
@@ -129,7 +136,7 @@ public class LitemallOrderService {
         LocalDateTime now = LocalDateTime.now();
         LocalDateTime expired = now.minusMinutes(minutes);
         LitemallOrderExample example = new LitemallOrderExample();
-        example.or().andOrderStatusEqualTo(OrderUtil.STATUS_CREATE).andAddTimeLessThan(expired).andDeletedEqualTo(false);
+        //example.or().andOrderStatusEqualTo(OrderUtil.STATUS_CREATE).andAddTimeLessThan(expired).andDeletedEqualTo(false);
         return litemallOrderMapper.selectByExample(example);
     }
 
@@ -137,7 +144,7 @@ public class LitemallOrderService {
         LocalDateTime now = LocalDateTime.now();
         LocalDateTime expired = now.minusDays(days);
         LitemallOrderExample example = new LitemallOrderExample();
-        example.or().andOrderStatusEqualTo(OrderUtil.STATUS_SHIP).andShipTimeLessThan(expired).andDeletedEqualTo(false);
+        //example.or().andOrderStatusEqualTo(OrderUtil.STATUS_SHIP).andShipTimeLessThan(expired).andDeletedEqualTo(false);
         return litemallOrderMapper.selectByExample(example);
     }
 
@@ -156,19 +163,19 @@ public class LitemallOrderService {
         int unship = 0;
         int unrecv = 0;
         int uncomment = 0;
-        for (LitemallOrder order : orders) {
-            if (OrderUtil.isCreateStatus(order)) {
-                unpaid++;
-            } else if (OrderUtil.isPayStatus(order)) {
-                unship++;
-            } else if (OrderUtil.isShipStatus(order)) {
-                unrecv++;
-            } else if (OrderUtil.isConfirmStatus(order) || OrderUtil.isAutoConfirmStatus(order)) {
-                uncomment += order.getComments();
-            } else {
-                // do nothing
-            }
-        }
+//        for (LitemallOrder order : orders) {
+//            if (OrderUtil.isCreateStatus(order)) {
+//                unpaid++;
+//            } else if (OrderUtil.isPayStatus(order)) {
+//                unship++;
+//            } else if (OrderUtil.isShipStatus(order)) {
+//                unrecv++;
+//            } else if (OrderUtil.isConfirmStatus(order) || OrderUtil.isAutoConfirmStatus(order)) {
+//                uncomment += order.getComments();
+//            } else {
+//                // do nothing
+//            }
+        //}
 
         Map<Object, Object> orderInfo = new HashMap<Object, Object>();
         orderInfo.put("unpaid", unpaid);
@@ -186,4 +193,55 @@ public class LitemallOrderService {
         example.or().andCommentsGreaterThan((short) 0).andConfirmTimeLessThan(expired).andDeletedEqualTo(false);
         return litemallOrderMapper.selectByExample(example);
     }
+    /*
+    订单审核通过
+     */
+
+    public int approved(LitemallOrder order) {
+        return litemallOrderMapper.updateByPrimaryKeySelective(order);
+    }
+
+    /*
+    查询所有已备货的订单
+     */
+
+    public List<LitemallOrder> checkDeliveryOrder(Integer userId, String orderSn,Short orderStatus, List<Short> orderStatusArray, Integer page, Integer limit, String sort, String order) {
+        LitemallOrderExample example = new LitemallOrderExample();
+        LitemallOrderExample.Criteria criteria = example.createCriteria();
+
+        if (orderStatus != null) {
+            criteria.andOrderStatusEqualTo(orderStatus);
+        }
+        if (userId != null) {
+            criteria.andUserIdEqualTo(userId);
+        }
+        if (!StringUtils.isEmpty(orderSn)) {
+            criteria.andOrderSnEqualTo(orderSn);
+        }
+        if (orderStatusArray != null && orderStatusArray.size() != 0) {
+            criteria.andOrderStatusIn(orderStatusArray);
+        }
+        criteria.andDeletedEqualTo(false);
+
+        if (!StringUtils.isEmpty(sort) && !StringUtils.isEmpty(order)) {
+            example.setOrderByClause(sort + " " + order);
+        }
+
+        PageHelper.startPage(page, limit);
+        return litemallOrderMapper.selectByExample(example);
+    }
+
+
+    /*
+    根据订单编号修改订单的状态
+     */
+    public int updateByOrderSn(LitemallOrder order) {
+        String orderSn = order.getOrderSn();
+        LitemallOrderExample example = new LitemallOrderExample();
+        LitemallOrderExample.Criteria criteria = example.createCriteria();
+        criteria.andOrderSnEqualTo(orderSn);
+        order.setUpdateTime(LocalDateTime.now());
+        return litemallOrderMapper.updateByExampleSelective(order,example);
+    }
+
 }

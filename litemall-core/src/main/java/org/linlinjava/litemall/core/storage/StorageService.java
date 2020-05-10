@@ -5,6 +5,7 @@ import org.linlinjava.litemall.db.domain.LitemallStorage;
 import org.linlinjava.litemall.db.service.LitemallStorageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.InputStream;
 import java.nio.file.Path;
@@ -35,6 +36,24 @@ public class StorageService {
         this.storage = storage;
     }
 
+
+    /*
+    自己的图片上传
+     */
+    public LitemallStorage upload(InputStream inputStream, long contentLength, String contentType, String fileName ,MultipartFile file) {
+        String key = generateKey(fileName);
+        storage.store(inputStream, contentLength, contentType, key);
+        String url = generateUrl(key);
+        LitemallStorage storageInfo = new LitemallStorage();
+        storageInfo.setName(fileName);
+        storageInfo.setSize((int) contentLength);
+        storageInfo.setType(contentType);
+        storageInfo.setKey(key);
+        storageInfo.setUrl(url);
+        litemallStorageService.add(storageInfo);
+        return storageInfo;
+    }
+
     /**
      * 存储一个文件对象
      *
@@ -46,7 +65,6 @@ public class StorageService {
     public LitemallStorage store(InputStream inputStream, long contentLength, String contentType, String fileName) {
         String key = generateKey(fileName);
         storage.store(inputStream, contentLength, contentType, key);
-
         String url = generateUrl(key);
         LitemallStorage storageInfo = new LitemallStorage();
         storageInfo.setName(fileName);
@@ -55,7 +73,6 @@ public class StorageService {
         storageInfo.setKey(key);
         storageInfo.setUrl(url);
         litemallStorageService.add(storageInfo);
-
         return storageInfo;
     }
 

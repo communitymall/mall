@@ -3,7 +3,7 @@
   <view class="about-item">
 
     <view class="item-left">
-      <label>项目名称: </label>
+      <label>公司名称: </label>
        <text>{{shopInfo.name}}</text> 
     </view>
 
@@ -11,7 +11,7 @@
 
   <view class="about-item">
     <view class="item-left">
-      <label>项目地址: </label>
+      <label>公司地址: </label>
        <text>{{shopInfo.address}}</text> 
     </view>
 
@@ -22,7 +22,7 @@
 
   <view class="about-item">
     <view class="item-left">
-      <label>电话号码:    </label>
+      <label>联系电话:   </label>
        <text>{{shopInfo.linkPhone}}</text> 
     </view>
     <view class="item-right" bindtap="callPhone">
@@ -30,7 +30,7 @@
     </view>
   </view>
 
-  <view class="about-item">
+  <!-- <view class="about-item">
     <view class="item-left">
       <label>QQ交流群: </label>
        <text>{{shopInfo.qqNumber}}</text> 
@@ -38,20 +38,20 @@
     <view class="item-right">
       <image src="/static/images/mobile.png" class="right-icon"></image>
     </view>
-  </view>
+  </view> -->
 
   <view class="about-item">
     <view class="item-left">
-      <label>当前版本: </label>
+      <label>公司信息: </label>
        <text>1.0.0</text> 
     </view>
   </view>
 
-  <view class="about-item">
+  <!-- <view class="about-item">
     <view class="item-left">
       <label>开源协议: </label>
        <text>MIT</text> 
     </view>
-  </view>
+  </view> -->
 
 </view>

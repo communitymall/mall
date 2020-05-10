@@ -88,7 +88,7 @@ export default {
   data() {
     return {
       activeIndex: Number(this.active),
-      tabTitles: ['全部', '待付款', '待发货', '待收货', '待评价'],
+      tabTitles: ['全部', '待付款', '待发货', '待收货', '审核单'],
       orderList: [],
       page: 0,
       limit: 10,
@@ -131,7 +131,7 @@ export default {
       this.$dialog
         .confirm({ message: '确定要取消该订单吗?' })
         .then(() => {
-          orderDelete({ orderId: id }).then(() => {
+          orderCancel({ orderId: id }).then(() => {
             this.init();
             this.$toast('已取消该订单');
           });

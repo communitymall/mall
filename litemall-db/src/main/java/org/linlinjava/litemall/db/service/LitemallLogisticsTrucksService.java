@@ -1,0 +1,152 @@
+package org.linlinjava.litemall.db.service;
+
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.util.StringUtil;
+import org.linlinjava.litemall.db.dao.LitemallLogicsticsTransportMapper;
+import org.linlinjava.litemall.db.dao.LitemallLogisticsTrucksMapper;
+import org.linlinjava.litemall.db.domain.LitemallLogicsticsTransport;
+import org.linlinjava.litemall.db.domain.LitemallLogicsticsTransportExample;
+import org.linlinjava.litemall.db.domain.LitemallLogisticsTrucks;
+import org.linlinjava.litemall.db.domain.LitemallLogisticsTrucksExample;
+import org.springframework.stereotype.Service;
+
+import javax.annotation.Resource;
+import java.time.Duration;
+import java.time.LocalDateTime;
+import java.util.List;
+
+@Service
+public class LitemallLogisticsTrucksService {
+    @Resource
+    private LitemallLogisticsTrucksMapper trucksMapper;
+
+    @Resource
+    LitemallLogicsticsTransportMapper transportMapper;
+    /*
+    添加车辆的信息
+     */
+    public void  add(LitemallLogisticsTrucks litemallLogisticsTrucks){
+        trucksMapper.insertSelective(litemallLogisticsTrucks);
+    }
+    /*
+    修改车辆的信息
+    修改车牌号时需检测最近一个月定单是否有物流配送，否则不允许修改
+     */
+    public int update(LitemallLogisticsTrucks trucks){
+        //获得车牌号
+        String licensePlateNumber = trucks.getLicensePlateNumber();
+        //最近一个月定单是否有物流配送
+        LitemallLogicsticsTransportExample example = new LitemallLogicsticsTransportExample();
+        LitemallLogicsticsTransportExample.Criteria criteria = example.createCriteria();
+        criteria.andLicensePlateNumberEqualTo(licensePlateNumber);
+        String sort = "create_time";
+        String order = "desc";
+        example.setOrderByClause(sort + " " + order);
+        List<LitemallLogicsticsTransport> litemallLogicsticsTransports = transportMapper.selectByExample(example);
+        System.out.println(litemallLogicsticsTransports);
+        if(litemallLogicsticsTransports.size()==0){
+            return trucksMapper.updateByPrimaryKeySelective(trucks);
+        }else {
+            //获得最近创建的订单信息
+            LitemallLogicsticsTransport litemallLogicsticsTransport1 = litemallLogicsticsTransports.get(0);
+            //获得创建的时间
+            LocalDateTime createTime = litemallLogicsticsTransport1.getCreateTime();
+            //获得现在的时间
+            LocalDateTime now = LocalDateTime.now();
+            //比较时间差
+            Duration duration = Duration.between(createTime,now);
+            //long between = ChronoUnit.DAYS.between(now, createTime);
+            long days = duration.toDays();
+            System.out.println("------------------------------------------------");
+            System.out.println(days);
+            //最近30天没有派送订单，不能修改
+            if(days>30l){
+                System.out.println(days);
+                System.out.println("*********************************************");
+                return 999;
+            }
+            return trucksMapper.updateByPrimaryKey(trucks);
+        }
+
+
+
+
+    }
+
+    public List<LitemallLogisticsTrucks> querySelective(String companyId,String id, String licensePlateNumber,String driver,String phone,int page,int limit){
+        LitemallLogisticsTrucksExample example = new LitemallLogisticsTrucksExample();
+        LitemallLogisticsTrucksExample.Criteria criteria = example.createCriteria();
+        //进行判断
+        if(!StringUtil.isEmpty(companyId)){
+            int i = Integer.parseInt(companyId);
+            criteria.andCompanyIdEqualTo(i);
+        }
+        if(!StringUtil.isEmpty(licensePlateNumber)){
+            criteria.andLicensePlateNumberEqualTo(licensePlateNumber);
+        }
+        //查询已有的数据（逻辑上没有删除的）
+        criteria.andDeletedEqualTo(1);
+
+        PageHelper.startPage(page, limit);
+
+        System.out.println("-----------------------ok");
+        System.out.println(trucksMapper.selectByExample(example));
+        return trucksMapper.selectByExample(example);
+    }
+
+    public Object deleteByPrimaryKey(String id,String comanpyId,String licensePlateNumber){
+        int i = Integer.parseInt(id);
+        int cid = Integer.parseInt(comanpyId);
+        //trucksMapper.updateByExampleSelective();
+        LitemallLogisticsTrucks trucks = new LitemallLogisticsTrucks();
+        //默认0删除
+        trucks.setDeleted(0);
+        trucks.setId(i);
+        trucks.setCompanyId(cid);
+        trucks.setLicensePlateNumber(licensePlateNumber);
+        System.out.println(trucks);
+//        //trucksMapper.deleteByPrimaryKey(i)
+//        LitemallLogisticsTrucksExample example = new LitemallLogisticsTrucksExample();
+//        LitemallLogisticsTrucksExample.Criteria criteria = example.createCriteria();
+//        criteria.andIdEqualTo(i);
+
+        return trucksMapper.updateByPrimaryKeySelective(trucks);
+    }
+
+    /*
+    根据车牌号查询
+     */
+
+    public  List<LitemallLogisticsTrucks> querySelectiveByLinNumber(String licenseNumber){
+        LitemallLogisticsTrucksExample example = new LitemallLogisticsTrucksExample();
+        LitemallLogisticsTrucksExample.Criteria criteria = example.createCriteria();
+        criteria.andLicensePlateNumberEqualTo(licenseNumber);
+        List<LitemallLogisticsTrucks> litemallLogisticsTrucks = trucksMapper.selectByExample(example);
+        return litemallLogisticsTrucks;
+    }
+
+    /*
+    根据CompanyId号查询
+     */
+
+    public  List<LitemallLogisticsTrucks> querySelectiveByCompanyId(String id){
+        LitemallLogisticsTrucksExample example = new LitemallLogisticsTrucksExample();
+        LitemallLogisticsTrucksExample.Criteria criteria = example.createCriteria();
+        criteria.andCompanyIdEqualTo(Integer.parseInt(id));
+        List<LitemallLogisticsTrucks> litemallLogisticsTrucks = trucksMapper.selectByExample(example);
+        return litemallLogisticsTrucks;
+    }
+
+    /*
+    根据CompanyId号查询和根据车牌号查询
+     */
+    public  List<LitemallLogisticsTrucks> querySelectiveByCompanyIdAndLn(String companyId,String licenseNumber){
+        LitemallLogisticsTrucksExample example = new LitemallLogisticsTrucksExample();
+        LitemallLogisticsTrucksExample.Criteria criteria = example.createCriteria();
+        criteria.andCompanyIdEqualTo(Integer.parseInt(companyId));
+        criteria.andLicensePlateNumberEqualTo(licenseNumber);
+        List<LitemallLogisticsTrucks> litemallLogisticsTrucks = trucksMapper.selectByExample(example);
+        return litemallLogisticsTrucks;
+    }
+
+}

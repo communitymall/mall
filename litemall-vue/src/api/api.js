@@ -1,5 +1,201 @@
 import request from '@/utils/request'
 
+/*
+用户门店营业执照图片的上传
+ */
+const MerchantCodePicUpload='wx/wxImageUpload/businessLicensesPicUpload';
+export function merchantCodePicUpload(data) {
+  return request({
+    url: MerchantCodePicUpload,
+    method: 'post',
+    headers: {'Content-Type': 'multipart/form-data'},
+    data
+  })
+}
+
+/*
+用户查看门店图片的上传
+ */
+const MerchantPicVueUpload='wx/wxImageUpload/vueUpload';
+export function merchantPicVueUpload(data) {
+  return request({
+    url: MerchantPicVueUpload,
+    method: 'post',
+    headers: {'Content-Type': 'multipart/form-data'},
+    data
+  })
+}
+
+
+// /*
+// 用户查看门店图片的上传
+//  */
+// const MerchantPicUpload='wx/wxImageUpload/upload';
+// export function merchantPicUpload(data) {
+//   return request({
+//     url: MerchantPicUpload,
+//     method: 'post',
+//     headers: {'Content-Type': 'multipart/form-data'},
+//     data
+//   })
+// }
+
+
+/*
+用户查看门店中通过审核门店
+ */
+const MerchantStatusList='wx/store/merchantStatusList';
+export function merchantStatusList(data) {
+  return request({
+    url: MerchantStatusList,
+    method: 'post',
+    data
+  })
+}
+
+
+/*
+通过openId来返回用户的信息进行登录
+ */
+const LoginByOpenid='wx/chat/loginByOpenid';
+export function loginByOpenid(data) {
+  return request({
+    url: LoginByOpenid,
+    method: 'post',
+    data
+  })
+}
+
+/*
+设置门店默认收货人员
+ */
+const SetConsignee='wx/store/setConsignee';
+export function setConsignee(data) {
+  return request({
+    url: SetConsignee,
+    method: 'post',
+    data
+  })
+}
+
+/*
+查询门店店员的具体信息
+ */
+const FindOneMerchantUser='wx/store/findOneMerchantUser';
+export function findOneMerchantUser(data) {
+  return request({
+    url: FindOneMerchantUser,
+    method: 'post',
+    data
+  })
+}
+
+/*
+添加门店人员
+ */
+const AddMerchantUser='wx/store/addMerchantUser';
+export function addMerchantUser(data) {
+  return request({
+    url: AddMerchantUser,
+    method: 'post',
+    data
+  })
+}
+/*
+查看门店中创建人的信息
+ */
+const FindMerchantLeader='wx/store/findMerchantLeader';
+export function findMerchantLeader(data) {
+  return request({
+    url: FindMerchantLeader,
+    method: 'post',
+    data
+  })
+}
+
+/*
+用户修改门店中人员的信息
+ */
+const UpdateUserStore='wx/store/updateUserStore';
+export function updateUserStore(data) {
+  return request({
+    url: UpdateUserStore,
+    method: 'post',
+    data
+  })
+}
+/*
+用户查看门店中人员的所有信息
+ */
+const ListUserStore='wx/store/listUserStore';
+export function listUserStore(data) {
+  return request({
+    url: ListUserStore,
+    method: 'post',
+    data
+  })
+}
+
+/*
+用户创建门店
+ */
+const MerchantCreate='wx/store/create';
+export function merchantCreate(data) {
+  return request({
+    url: MerchantCreate,
+    method: 'post',
+    data
+  })
+}
+
+/*
+修改门店信息
+ */
+const MerchantUpdate='wx/store/update';
+export function merchantUpdate(data) {
+  return request({
+    url: MerchantUpdate,
+    method: 'post',
+    data
+  })
+}
+
+/*
+查询当前用户的具体门店信息
+ */
+const MerchantDetail='wx/store/detail';
+export function merchantDetail(data) {
+  return request({
+    url: MerchantDetail,
+    method: 'post',
+    data
+  })
+}
+
+/*
+查询当前所有用户的门店
+ */
+const MerchantList='wx/store/list';
+export function merchantList(data) {
+  return request({
+    url: MerchantList,
+    method: 'post',
+  })
+}
+
+/*
+ 检测手机号是否可用
+ */
+const AuthCheckMobile='wx/auth/checkMobile';
+export function authCheckMobile(data) {
+  return request({
+    url: AuthCheckMobile,
+    method: 'post',
+    data
+  })
+}
+
+
 const IndexUrl= 'wx/home/index'; //首页数据接口
 export function getHome() {
   return request({
@@ -58,7 +254,14 @@ export function authProfile(data) {
     data    
   })
 }
-const AuthRegister='wx/auth/register'; //账号注册
+const AuthRegister='wx/auth/registerH5'; //账号注册
+export function authRegister(data) {
+  return request({
+    url: AuthRegister,
+    method: 'post',
+    data
+  })
+}
 const AuthReset='wx/auth/reset'; //账号密码重置
 export function authReset(data) {
   return request({
@@ -438,3 +641,11 @@ export function getList(api, query) {
 }
 
 export const REFUND_LIST = '';
+
+const NxtJsServlet='NxtJsServlet';
+export function getMobiles(token) {//设备指纹对接获取要显示的手机号
+  return request({
+    url: NxtJsServlet+'?mode=getMobiles&'+token,
+    method: 'get'
+  })
+}

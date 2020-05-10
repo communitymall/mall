@@ -7,7 +7,6 @@ import org.apache.commons.logging.LogFactory;
 import org.linlinjava.litemall.core.storage.StorageService;
 import org.linlinjava.litemall.core.system.SystemConfig;
 import org.linlinjava.litemall.db.domain.LitemallGroupon;
-import org.linlinjava.litemall.db.domain.LitemallStorage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
@@ -38,10 +37,10 @@ public class QCodeService {
             byte[] imageData = drawPicture(inputStream, goodPicUrl, goodName);
             ByteArrayInputStream inputStream2 = new ByteArrayInputStream(imageData);
             //存储分享图
-            LitemallStorage storageInfo = storageService.store(inputStream2, imageData.length, "image/jpeg",
-                    getKeyName(groupon.getId().toString()));
+//            LitemallStorage storageInfo = storageService.store(inputStream2, imageData.length, "image/jpeg",
+//                    getKeyName(groupon.getId().toString()));
 
-            return storageInfo.getUrl();
+//            return storageInfo.getUrl();
         } catch (WxErrorException e) {
             logger.error(e.getMessage(), e);
         } catch (FileNotFoundException e) {
@@ -73,10 +72,10 @@ public class QCodeService {
             byte[] imageData = drawPicture(inputStream, goodPicUrl, goodName);
             ByteArrayInputStream inputStream2 = new ByteArrayInputStream(imageData);
             //存储分享图
-            LitemallStorage litemallStorage = storageService.store(inputStream2, imageData.length, "image/jpeg",
-                    getKeyName(goodId));
-
-            return litemallStorage.getUrl();
+//            LitemallStorage litemallStorage = storageService.store(inputStream2, imageData.length, "image/jpeg",
+//                    getKeyName(goodId));
+//
+//            return litemallStorage.getUrl();
         } catch (WxErrorException e) {
             logger.error(e.getMessage(), e);
         } catch (FileNotFoundException e) {

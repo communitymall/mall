@@ -26,8 +26,8 @@ Page({
     checkedSpecPrice: 0,
     openAttr: false,
     openShare: false,
-    noCollectImage: '/static/images/icon_collect.png',
-    hasCollectImage: '/static/images/icon_collect_checked.png',
+    noCollectImage: '/static/images/001.png',
+    hasCollectImage: '/static/images/002.png',
     collectImage: '/static/images/icon_collect.png',
     shareImage: '',
     isGroupon: false, //标识是否是一个参团购买

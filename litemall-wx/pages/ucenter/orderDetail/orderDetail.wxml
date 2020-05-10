@@ -49,6 +49,7 @@
           <text class="name">{{orderInfo.consignee}}</text>
           <text class="mobile">{{orderInfo.mobile}}</text>
         </view>
+      
         <view class="b">{{orderInfo.address}}</view>
       </view>
       <view class="total">
@@ -76,7 +77,7 @@
   <view class="order-express" bindtap="expandDetail" wx:if="{{ handleOption.confirm }}">
     <view class="order-express">
       <view class="title">
-        <view class="t">快递公司：{{expressInfo.shipperName}}</view>
+        <view class="t">物流公司：{{expressInfo.shipperName}}</view>
         <view class="b">物流单号：{{expressInfo.logisticCode}}</view>
       </view>
       <image class="ti" src="/static/images/address_right.png" background-size="cover"></image>

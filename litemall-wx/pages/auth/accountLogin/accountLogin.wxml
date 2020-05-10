@@ -2,8 +2,8 @@
     <view class="form-box">
 
     	<view class="form-item">
-    		<input class="username" value="{{username}}" bindinput="bindUsernameInput" placeholder="账号"/>
-    		<image wx:if="{{ username.length > 0 }}" id="clear-username" class="clear" src="/static/images/clear_input.png" catchtap="clearInput"></image>
+    		<input class="mobile" value="{{mobile}}" bindinput="bindMobileInput" placeholder="手机号"/>
+    		<image wx:if="{{ mobile.length > 0 }}" id="clear-moblie" class="clear" src="/static/images/clear_input.png" catchtap="clearInput"></image>
     	</view>
 
     	<view class="form-item">

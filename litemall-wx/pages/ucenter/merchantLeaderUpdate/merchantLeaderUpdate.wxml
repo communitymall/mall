@@ -1,0 +1,20 @@
+<view class="add-address">
+  <view class="add-form">
+    <view class="form-item">
+      创建人姓名：
+      <input class="input" bindinput="bindinputMerchantLeaderName" placeholder="请输入名称" value="{{merchantLeaderInfo.merchantLeader}}" auto-focus/>
+    </view>
+    <view class="form-item">
+      创建人手机：
+      <input class="input" bindblur="bindinputMerchantLeaderMobile" placeholder="请输入手机号" value="{{merchantLeaderInfo.merchantPhone}}" auto-focus/>
+    </view>
+
+  </view>
+  <button class="save" bindtap="setConsignee">设置为默认收货人</button>
+  <view class="btns">
+    <button class="cannel" bindtap="cancelAddress">取消</button>
+    <button class="save" bindtap="saveMerchantLeader">保存</button>
+  </view>
+
+</view>
+<view class="bg-mask" bindtap="cancelSelectRegion" wx:if="{{openSelectRegion}}"></view>

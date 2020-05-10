@@ -2,8 +2,11 @@ package org.linlinjava.litemall.db.service;
 
 import com.github.pagehelper.PageHelper;
 import org.linlinjava.litemall.db.dao.LitemallAddressMapper;
+import org.linlinjava.litemall.db.dao.LitemallMerchantMapper;
 import org.linlinjava.litemall.db.domain.LitemallAddress;
 import org.linlinjava.litemall.db.domain.LitemallAddressExample;
+import org.linlinjava.litemall.db.domain.LitemallMerchant;
+import org.linlinjava.litemall.db.domain.LitemallMerchantExample;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
@@ -15,6 +18,9 @@ import java.util.List;
 public class LitemallAddressService {
     @Resource
     private LitemallAddressMapper addressMapper;
+
+    @Resource
+    private LitemallMerchantMapper merchantMapper;
 
     public List<LitemallAddress> queryByUid(Integer uid) {
         LitemallAddressExample example = new LitemallAddressExample();
@@ -77,4 +83,25 @@ public class LitemallAddressService {
         PageHelper.startPage(page, limit);
         return addressMapper.selectByExample(example);
     }
+
+
+    /*
+    门店收货信息
+     */
+    public List<LitemallMerchant> findAddress(String merchantName,String consigneeName, Integer page, Integer limit, String sort, String order) {
+        LitemallMerchantExample example = new LitemallMerchantExample();
+        LitemallMerchantExample.Criteria criteria = example.createCriteria();
+        if (!StringUtils.isEmpty(merchantName)) {
+            criteria.andMerchantNameLike("%" + merchantName + "%");
+        }
+        if (!StringUtils.isEmpty(consigneeName)) {
+            criteria.andMerchantConsigneeNameLike("%" + consigneeName + "%");
+        }
+        if (!StringUtils.isEmpty(sort) && !StringUtils.isEmpty(order)) {
+            example.setOrderByClause(sort + " " + order);
+        }
+        PageHelper.startPage(page, limit);
+        return merchantMapper.selectByExample(example);
+    }
+
 }

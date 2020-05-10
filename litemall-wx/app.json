@@ -7,6 +7,18 @@
     "pages/ucenter/index/index",
     "pages/ucenter/address/address",
     "pages/ucenter/addressAdd/addressAdd",
+
+    "pages/ucenter/merchant/merchant",
+    "pages/ucenter/merchantDetail/merchantDetail",
+    "pages/ucenter/merchantUpdate/merchantUpdate",
+    "pages/ucenter/merchantUserUpdate/merchantUserUpdate",
+    "pages/ucenter/merchantAdd/merchantAdd",
+    "pages/ucenter/merchantUserAdd/merchantUserAdd",
+    "pages/ucenter/selectMerchant/selectMerchant",
+    "pages/ucenter/payTypeSelect/payTypeSelect",
+    "pages/ucenter/merchantLeaderUpdate/merchantLeaderUpdate",
+    "pages/ucenter/merchantAudit/merchantAudit",
+
     "pages/ucenter/feedback/feedback",
     "pages/ucenter/footprint/footprint",
     "pages/ucenter/order/order",
@@ -41,7 +53,7 @@
   ],
   "window": {
     "navigationBarBackgroundColor": "#FFFFFF",
-    "navigationBarTitleText": "litemall小程序商城",
+    "navigationBarTitleText": "菜鸟易购",
     "enablePullDownRefresh": true,
     "navigationBarTextStyle": "black",
     "backgroundColor": "#FFFFFF",

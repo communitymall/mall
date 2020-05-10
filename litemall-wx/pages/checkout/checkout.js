@@ -7,6 +7,7 @@ Page({
   data: {
     checkedGoodsList: [],
     checkedAddress: {},
+    checkedMerchant: {},
     availableCouponLength: 0, // 可用的优惠券数量
     goodsTotalPrice: 0.00, //商品总价
     freightPrice: 0.00, //快递费
@@ -16,10 +17,20 @@ Page({
     actualPrice: 0.00, //实际需要支付的总价
     cartId: 0,
     addressId: 0,
+    storeId: 0,
     couponId: 0,
     message: '',
     grouponLinkId: 0, //参与的团购，如果是发起则为0
-    grouponRulesId: 0 //团购规则ID
+    grouponRulesId: 0, //团购规则ID
+
+    storeId: 0,
+    merchantInfo: {},
+    merchantConsigneeInfo: {
+      name: '',
+      mobile: '',
+    },
+    payType: 0,
+    checked: 0,
   },
   onLoad: function(options) {
     // 页面初始化 options为页面跳转所带来的参数
@@ -27,12 +38,15 @@ Page({
 
   //获取checkou信息
   getCheckoutInfo: function() {
+    var storeId = wx.getStorageSync('storeId');
     let that = this;
     util.request(api.CartCheckout, {
       cartId: that.data.cartId,
       addressId: that.data.addressId,
+      storeId: storeId,
       couponId: that.data.couponId,
-      grouponRulesId: that.data.grouponRulesId
+      grouponRulesId: that.data.grouponRulesId,
+
     }).then(function(res) {
       if (res.errno === 0) {
         that.setData({
@@ -53,16 +67,78 @@ Page({
       wx.hideLoading();
     });
   },
+
+  //获取收货门店的信息
+  getMerchantInfo(options) {
+    let checked = this.data.checked;
+    let that = this;
+    let merchantConsigneeInfo = this.data.merchantConsigneeInfo;
+
+    var storeId = wx.getStorageSync('storeId');
+    util.request(api.MerchantDetail, {
+      storeId: storeId
+    }, 'POST').then(function(res) {
+      if (res.errno === 0) {
+        that.setData({
+          merchantInfo: res.data,
+        });
+        // if (res.data.consigneeId != -2) {
+        //   util.request(api.MerchantFindUser, {
+        //     id: res.data.consigneeId
+        //   }, 'POST').then(function(res1) {
+        //     if (res1.errno === 0) {
+        //       that.setData({
+        //         merchantConsigneeInfo: res1.data,
+        //         checked: 1,
+        //       });
+        //     }
+        //   });
+        // } else {
+        //   that.setData({
+        //     checked: 0,
+        //   });
+        // }
+      }
+    });
+  },
   selectAddress() {
     wx.navigateTo({
-      url: '/pages/ucenter/address/address',
+      url: '/pages/ucenter/selectMerchant/selectMerchant',
     })
   },
+
+
   selectCoupon() {
     wx.navigateTo({
       url: '/pages/ucenter/couponSelect/couponSelect',
     })
   },
+  selectPayType() {
+    let that = this
+    wx.showActionSheet({
+      itemList: ['在线支付', '货到付款'],//显示的列表项
+      success: function (res) {//res.tapIndex点击的列表项
+        console.log("点击了列表项：" + res.tapIndex)
+        if(res.tapIndex === 0){
+            that.setData({
+              payType:1
+            })
+        }
+        if (res.tapIndex === 1) {
+          that.setData({
+            payType: 2
+          })
+        }
+
+      },
+      fail: function (res) { },
+      complete: function (res) { }
+    })
+    // wx.navigateTo({
+    //   url: '/pages/ucenter/payTypeSelect/payTypeSelect',
+    // })
+  },
+
   bindMessageInput: function(e) {
     this.setData({
       message: e.detail.value
@@ -73,6 +149,10 @@ Page({
 
   },
   onShow: function() {
+
+    this.getMerchantInfo();
+
+
     // 页面显示
     wx.showLoading({
       title: '加载中...',
@@ -99,12 +179,25 @@ Page({
         grouponLinkId = 0;
       }
 
+      var storeId = wx.getStorageSync('storeId');
+      if (storeId === "") {
+        storeId = 0;
+      }
+
+      var payType = wx.getStorageSync('payType');
+      if (payType === "") {
+        payType = 0;
+      }
+
       this.setData({
         cartId: cartId,
         addressId: addressId,
         couponId: couponId,
         grouponRulesId: grouponRulesId,
-        grouponLinkId: grouponLinkId
+        grouponLinkId: grouponLinkId,
+
+        storeId: storeId,
+        payType: payType,
       });
 
     } catch (e) {
@@ -123,11 +216,17 @@ Page({
 
   },
   submitOrder: function() {
-    if (this.data.addressId <= 0) {
-      util.showErrorToast('请选择收货地址');
+    if (this.data.storeId <= 0) {
+      util.showErrorToast('请选择收货门店');
+      return false;
+    }
+    if(this.data.payType ===0){
+      util.showErrorToast('请选择支付类型');
       return false;
     }
     util.request(api.OrderSubmit, {
+      payType: this.data.payType,
+      storeId: this.data.storeId,
       cartId: this.data.cartId,
       addressId: this.data.addressId,
       couponId: this.data.couponId,
@@ -135,14 +234,21 @@ Page({
       grouponRulesId: this.data.grouponRulesId,
       grouponLinkId: this.data.grouponLinkId
     }, 'POST').then(res => {
+
       if (res.errno === 0) {
-        
         // 下单成功，重置couponId
         try {
           wx.setStorageSync('couponId', 0);
         } catch (error) {
 
         }
+
+        if (this.data.payType == 2) { //货到付款的订单，直接返回，不进行支付
+          wx.redirectTo({
+            url: '/pages/payResult/payResult?payType=2&orderId=' + orderId
+          });
+          return;
+        };
 
         const orderId = res.data.orderId;
         util.request(api.OrderPrepay, {
