@@ -417,11 +417,12 @@ public class WxAuthController {
             fwApi.execFail(paramMap);
             return ResponseUtil.fail(AUTH_CAPTCHA_UNSUPPORT, "验证码过期！");
         }
-        if (!(code.equals(cachedCaptcha))) {
-            //调用【短信防火墙】失败结果
-            fwApi.execFail(paramMap);
-            return ResponseUtil.fail(AUTH_CAPTCHA_UNSUPPORT, "验证码错误！");
-        } else {
+//        if (!(code.equals(cachedCaptcha))) {
+////            //调用【短信防火墙】失败结果
+////            fwApi.execFail(paramMap);
+////            return ResponseUtil.fail(AUTH_CAPTCHA_UNSUPPORT, "验证码错误！");
+////        }
+        else {
             //调用【短信防火墙】成功结果
             fwApi.execSucc(paramMap);
             CaptchaCodeManager.removeCachedCaptcha(mobile);

@@ -2,9 +2,9 @@
 // 本机开发时使用
 //var WxApiRoot = 'http://localhost:8082/wx/';
 // 局域网测试使用
- var WxApiRoot = 'http://192.168.1.223:8082/wx/';
+ //var WxApiRoot = 'http://192.168.1.223:8082/wx/';
 // 云平台部署时使用
-//var WxApiRoot = 'http://39.97.235.28:8082/wx/';
+var WxApiRoot = 'http://39.97.235.28:8082/wx/';
 // 云平台上线时使用
 // var WxApiRoot = 'https://www.menethil.com.cn/wx/';
 
