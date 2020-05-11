@@ -93,13 +93,18 @@ public class LitemallOrderService {
         return litemallOrderMapper.selectByExample(example);
     }
 
-    public List<LitemallOrder> querySelective(Integer userId, String orderSn, List<Short> orderStatusArray, Integer page, Integer limit, String sort, String order) {
+    public List<LitemallOrder> querySelective(String mobile,String name, String orderSn, List<Short> orderStatusArray, Integer page, Integer limit, String sort, String order) {
         LitemallOrderExample example = new LitemallOrderExample();
         LitemallOrderExample.Criteria criteria = example.createCriteria();
 
-        if (userId != null) {
-            criteria.andUserIdEqualTo(userId);
+        if (!StringUtils.isEmpty(mobile)) {
+            criteria.andMobileEqualTo(mobile);
         }
+
+        if (!StringUtils.isEmpty(name)) {
+            criteria.andConsigneeEqualTo(name);
+        }
+
         if (!StringUtils.isEmpty(orderSn)) {
             criteria.andOrderSnEqualTo(orderSn);
         }

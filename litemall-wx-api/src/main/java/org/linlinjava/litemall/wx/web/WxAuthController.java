@@ -417,11 +417,11 @@ public class WxAuthController {
             fwApi.execFail(paramMap);
             return ResponseUtil.fail(AUTH_CAPTCHA_UNSUPPORT, "验证码过期！");
         }
-//        if (!(code.equals(cachedCaptcha))) {
-////            //调用【短信防火墙】失败结果
-////            fwApi.execFail(paramMap);
-////            return ResponseUtil.fail(AUTH_CAPTCHA_UNSUPPORT, "验证码错误！");
-////        }
+        if (!(code.equals(cachedCaptcha))) {
+           //调用【短信防火墙】失败结果
+            fwApi.execFail(paramMap);
+           return ResponseUtil.fail(AUTH_CAPTCHA_UNSUPPORT, "验证码错误！");
+        }
         else {
             //调用【短信防火墙】成功结果
             fwApi.execSucc(paramMap);
@@ -582,12 +582,14 @@ public class WxAuthController {
             return ResponseUtil.fail(409, "发送验证码过于频繁！");
         } else {
             String code = CharUtil.getRandomNum(6);
+            boolean successful = CaptchaCodeManager.addToCache(mobile, code);
+            if (!successful) {
+                return ResponseUtil.fail(AUTH_CAPTCHA_FREQUENCY, "验证码未超时2分钟，不能发送");
+            }
+
             SmsRetMsg smsRetMsg = smsUtil.send(mobile, code);
             if (smsRetMsg.getRet() == 0) {
-                boolean successful = CaptchaCodeManager.addToCache(mobile, code);
-                if (!successful) {
-                    return ResponseUtil.fail(AUTH_CAPTCHA_FREQUENCY, "验证码未超时2分钟，不能发送");
-                }
+
             }
             if (smsRetMsg != null && smsRetMsg.getRet() == 0) {
                 // 2 调用【短信防火墙】成功结果

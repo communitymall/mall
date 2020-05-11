@@ -45,7 +45,7 @@
 
       <el-table-column align="center" label="广告位置" prop="position"/>
 
-      <el-table-column align="center" label="活动链接" prop="link"/>
+      <el-table-column align="center" label="专题id" prop="link"/>
 
       <el-table-column align="center" label="是否启用" prop="enabled">
         <template slot-scope="scope">
@@ -113,7 +113,7 @@
             <el-option :value="1" label="首页"/>
           </el-select>
         </el-form-item>
-        <el-form-item label="活动链接" prop="link">
+        <el-form-item label="专题id" prop="link">
           <el-input v-model="dataForm.link"/>
         </el-form-item>
         <el-form-item label="是否启用" prop="enabled">

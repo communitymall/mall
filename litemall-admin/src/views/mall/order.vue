@@ -3,7 +3,8 @@
 
     <!-- 查询和其他操作 -->
     <div class="filter-container">
-      <el-input v-model="listQuery.userId" clearable class="filter-item" style="width: 200px;" placeholder="请输入用户ID"/>
+      <el-input v-model="listQuery.name" clearable class="filter-item" style="width: 200px;" placeholder="请输入收货人名称"/>
+      <el-input v-model="listQuery.mobile" clearable class="filter-item" style="width: 200px;" placeholder="请输入收货人手机"/>
       <el-input v-model="listQuery.orderSn" clearable class="filter-item" style="width: 200px;" placeholder="请输入订单编号"/>
       <el-select
         v-model="listQuery.orderStatusArray"
@@ -27,7 +28,9 @@
 
       <van-checkbox :key="orderSn" :name="orderSn" v-model="orderSn"/>
 
-      <el-table-column align="center" label="用户ID" prop="userId"/>
+      <el-table-column align="center" label="收货人名称" prop="consignee"/>
+
+      <el-table-column align="center" label="收货人电话" prop="mobile"/>
 
       <el-table-column align="center" label="订单状态" prop="orderStatus">
         <template slot-scope="scope">
@@ -256,7 +259,7 @@ export default {
       listQuery: {
         page: 1,
         limit: 20,
-        id: undefined,
+        mobile: undefined,
         name: undefined,
         orderStatusArray: [],
         sort: 'add_time',

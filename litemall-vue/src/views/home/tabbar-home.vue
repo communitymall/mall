@@ -8,10 +8,12 @@
     <van-swipe :autoplay="3000"
                indicator-color="white">
       <van-swipe-item v-for="(banner, index) in shopInfos.banner"
-                      @click="goTopic(banner.link)"
                       :key="index">
-        <img :src="banner.url"
-             style="height:230px">
+          <router-link :to="{path:'/items/topic/'+banner.link}">
+              <img :src="banner.url"
+                   style="height:230px">
+          </router-link>
+
       </van-swipe-item>
     </van-swipe>
 
@@ -180,6 +182,10 @@
       </div>
     </van-panel>
 
+    <van-panel>
+
+    </van-panel>
+
   </div>
 </template>
 
@@ -230,7 +236,9 @@ export default {
     },
     goTopic(id) {
       return `#/items/topic/${id}`;
-    },    
+    },
+
+
     getCoupon(id) {
       couponReceive({ couponId: id }).then(res => {
         Toast.success('领取成功');

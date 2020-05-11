@@ -99,6 +99,18 @@ export const asyncRouterMap = [
           noCache: true
         }
       },
+
+      {
+        path: 'merchant',
+        component: () => import('@/views/mall/merchant'),
+        name: 'merchant',
+        meta: {
+          perms: ['GET /admin/merchant/list', 'GET /admin/merchant/detail', 'POST /admin/merchant/ordership', 'POST /admin/merchant/orderrefund', 'POST /admin/merchant/orderreply'],
+          title: '门店管理',
+          noCache: true
+        }
+      },
+
       {
         path: 'address',
         component: () => import('@/views/user/address'),
@@ -159,20 +171,10 @@ export const asyncRouterMap = [
     alwaysShow: true,
     name: 'mallManage',
     meta: {
-      title: '商场管理',
+      title: '订单管理',
       icon: 'chart'
     },
     children: [
-      {
-        path: 'merchant',
-        component: () => import('@/views/mall/merchant'),
-        name: 'merchant',
-        meta: {
-          perms: ['GET /admin/merchant/list', 'GET /admin/merchant/detail', 'POST /admin/merchant/ordership', 'POST /admin/merchant/orderrefund', 'POST /admin/merchant/orderreply'],
-          title: '门店管理',
-          noCache: true
-        }
-      },
 
       {
         path: 'region',
@@ -183,26 +185,7 @@ export const asyncRouterMap = [
           noCache: true
         }
       },
-      {
-        path: 'brand',
-        component: () => import('@/views/mall/brand'),
-        name: 'brand',
-        meta: {
-          perms: ['GET /admin/brand/list', 'POST /admin/brand/create', 'GET /admin/brand/read', 'POST /admin/brand/update', 'POST /admin/brand/delete'],
-          title: '品牌制造商',
-          noCache: true
-        }
-      },
-      {
-        path: 'category',
-        component: () => import('@/views/mall/category'),
-        name: 'category',
-        meta: {
-          perms: ['GET /admin/category/list', 'POST /admin/category/create', 'GET /admin/category/read', 'POST /admin/category/update', 'POST /admin/category/delete'],
-          title: '商品类目',
-          noCache: true
-        }
-      },
+
       {
         path: 'order',
         component: () => import('@/views/mall/order'),
@@ -213,26 +196,7 @@ export const asyncRouterMap = [
           noCache: true
         }
       },
-      {
-        path: 'issue',
-        component: () => import('@/views/mall/issue'),
-        name: 'issue',
-        meta: {
-          perms: ['GET /admin/issue/list', 'POST /admin/issue/create', 'GET /admin/issue/read', 'POST /admin/issue/update', 'POST /admin/issue/delete'],
-          title: '通用问题',
-          noCache: true
-        }
-      },
-      {
-        path: 'keyword',
-        component: () => import('@/views/mall/keyword'),
-        name: 'keyword',
-        meta: {
-          perms: ['GET /admin/keyword/list', 'POST /admin/keyword/create', 'GET /admin/keyword/read', 'POST /admin/keyword/update', 'POST /admin/keyword/delete'],
-          title: '关键词',
-          noCache: true
-        }
-      },
+
       {
         path: 'logisticsOrder',
         component: () => import('@/views/mall/logisticsOrder'),
@@ -269,6 +233,28 @@ export const asyncRouterMap = [
       icon: 'chart'
     },
     children: [
+      {
+        path: 'brand',
+        component: () => import('@/views/mall/brand'),
+        name: 'brand',
+        meta: {
+          perms: ['GET /admin/brand/list', 'POST /admin/brand/create', 'GET /admin/brand/read', 'POST /admin/brand/update', 'POST /admin/brand/delete'],
+          title: '品牌制造商',
+          noCache: true
+        }
+      },
+
+      {
+        path: 'category',
+        component: () => import('@/views/mall/category'),
+        name: 'category',
+        meta: {
+          perms: ['GET /admin/category/list', 'POST /admin/category/create', 'GET /admin/category/read', 'POST /admin/category/update', 'POST /admin/category/delete'],
+          title: '商品类目',
+          noCache: true
+        }
+      },
+
       {
         path: 'list',
         component: () => import('@/views/goods/list'),
@@ -385,27 +371,27 @@ export const asyncRouterMap = [
           noCache: true
         },
         hidden: true
-      },
-      {
-        path: 'groupon-rule',
-        component: () => import('@/views/promotion/grouponRule'),
-        name: 'grouponRule',
-        meta: {
-          perms: ['GET /admin/groupon/list', 'POST /admin/groupon/create', 'POST /admin/groupon/update', 'POST /admin/groupon/delete'],
-          title: '团购规则',
-          noCache: true
-        }
-      },
-      {
-        path: 'groupon-activity',
-        component: () => import('@/views/promotion/grouponActivity'),
-        name: 'grouponActivity',
-        meta: {
-          perms: ['GET /admin/groupon/listRecord'],
-          title: '团购活动',
-          noCache: true
-        }
       }
+      // {
+      //   path: 'groupon-rule',
+      //   component: () => import('@/views/promotion/grouponRule'),
+      //   name: 'grouponRule',
+      //   meta: {
+      //     perms: ['GET /admin/groupon/list', 'POST /admin/groupon/create', 'POST /admin/groupon/update', 'POST /admin/groupon/delete'],
+      //     title: '团购规则',
+      //     noCache: true
+      //   }
+      // },
+      // {
+      //   path: 'groupon-activity',
+      //   component: () => import('@/views/promotion/grouponActivity'),
+      //   name: 'grouponActivity',
+      //   meta: {
+      //     perms: ['GET /admin/groupon/listRecord'],
+      //     title: '团购活动',
+      //     noCache: true
+      //   }
+      // }
     ]
   },
 
@@ -447,6 +433,26 @@ export const asyncRouterMap = [
         meta: {
           perms: ['GET /admin/role/list', 'POST /admin/role/create', 'POST /admin/role/update', 'POST /admin/role/delete', 'GET /admin/role/permissions', 'POST /admin/role/permissions'],
           title: '角色管理',
+          noCache: true
+        }
+      },
+      {
+        path: 'issue',
+        component: () => import('@/views/mall/issue'),
+        name: 'issue',
+        meta: {
+          perms: ['GET /admin/issue/list', 'POST /admin/issue/create', 'GET /admin/issue/read', 'POST /admin/issue/update', 'POST /admin/issue/delete'],
+          title: '通用问题',
+          noCache: true
+        }
+      },
+      {
+        path: 'keyword',
+        component: () => import('@/views/mall/keyword'),
+        name: 'keyword',
+        meta: {
+          perms: ['GET /admin/keyword/list', 'POST /admin/keyword/create', 'GET /admin/keyword/read', 'POST /admin/keyword/update', 'POST /admin/keyword/delete'],
+          title: '关键词',
           noCache: true
         }
       },

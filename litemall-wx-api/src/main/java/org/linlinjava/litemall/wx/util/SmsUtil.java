@@ -2,25 +2,38 @@ package org.linlinjava.litemall.wx.util;
 
 import com.izton.sms.SmsApi;
 import com.izton.sms.entity.SmsRetMsg;
-import com.sms.SmsProvider;
+import com.tzhl.sms.impl.TzhlSmsImpl;
 import org.springframework.stereotype.Controller;
 
 @Controller
 public class SmsUtil {
+    public final static String autoLoginCode = "【新疆买菜网】,验证码是：$1， 或点击自动登录  http://www.yjjcai.com/ ";
+    public final static String autoRegCode = "【新疆买菜网】,点击自动登录 http://www.yjjcai.com/";
+
     public SmsRetMsg send(String phoneNumber, String code) {
-        SmsApi smsApi = SmsProvider.getSmsApi();
-        SmsRetMsg smsRetMsg = smsApi.sendSmsTp(phoneNumber,"【新疆买菜网】", code);
-//        SmsRetMsg smsRetMsg = getSmsRetMsg(code);
+        //     SmsApi smsApi = SmsProvider.getSmsApi();
+        //     SmsRetMsg smsRetMsg = smsApi.sendSmsTp(phoneNumber,"【新疆买菜网】", code);
+        //    SmsRetMsg smsRetMsg = smsApi.sendSms(phoneNumber, code);
+        //   SmsRetMsg smsRetMsg = getSmsRetMsg(code);
+
+
+        SmsApi smsImpl = new TzhlSmsImpl();
+        String autoLog = autoLoginCode.replace("$1", code).replace("$2", "1s0vfXx");
+        SmsRetMsg smsRetMsg = smsImpl.sendSms(phoneNumber, autoLog);
+//        String autoReg = autoRegCode.replace("$", "1s0vfXx");
+//        SmsRetMsg smsRetMsg = smsImpl.sendSms(phoneNumber, autoReg);
+
+
         return smsRetMsg;
     }
 
     private SmsRetMsg getSmsRetMsg(String code) {
         SmsRetMsg smsRetMsg = new SmsRetMsg();
-        if(code.startsWith("1")||code.startsWith("3")||code.startsWith("5")||code.startsWith("7")||code.startsWith("9")||code.startsWith("2")||code.startsWith("4")||code.startsWith("6")||code.startsWith("8")){
+        if (code.startsWith("1") || code.startsWith("3") || code.startsWith("5") || code.startsWith("7") || code.startsWith("9") || code.startsWith("2") || code.startsWith("4") || code.startsWith("6") || code.startsWith("8")) {
             smsRetMsg.setRet(0);
             smsRetMsg.setMsg(code);
             System.out.println(smsRetMsg);
-        }else{
+        } else {
             smsRetMsg.setRet(-1);
             smsRetMsg.setMsg("test");
         }
