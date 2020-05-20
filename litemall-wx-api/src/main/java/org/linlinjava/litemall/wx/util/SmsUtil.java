@@ -7,8 +7,8 @@ import org.springframework.stereotype.Controller;
 
 @Controller
 public class SmsUtil {
-    public final static String autoLoginCode = "【新疆买菜网】,验证码是：$1， 或点击自动登录  http://www.yjjcai.com/ ";
-    public final static String autoRegCode = "【新疆买菜网】,点击自动登录 http://www.yjjcai.com/";
+    public final static String autoLoginCode = "【新疆买菜网】提醒您的验证码为:$1,该验证码2分钟内有效，请勿泄露他人 ";
+    public final static String autoRegCode = "【新疆买菜网】";
 
     public SmsRetMsg send(String phoneNumber, String code) {
         //     SmsApi smsApi = SmsProvider.getSmsApi();
@@ -22,8 +22,6 @@ public class SmsUtil {
         SmsRetMsg smsRetMsg = smsImpl.sendSms(phoneNumber, autoLog);
 //        String autoReg = autoRegCode.replace("$", "1s0vfXx");
 //        SmsRetMsg smsRetMsg = smsImpl.sendSms(phoneNumber, autoReg);
-
-
         return smsRetMsg;
     }
 

@@ -30,11 +30,21 @@
         </van-popup>
 
         <van-cell-group>
-            <van-cell class="order-coupon" title="支付类型">
-                <van-dropdown-menu class="select-payType">
-                    <van-dropdown-item v-model="payType" :options="option"/>
-                </van-dropdown-menu>
-            </van-cell>
+            <van-cell class="order-coupon" title="支付类型" is-link :value="getPayType()" @click="getPay"/>
+            <van-popup v-model="payShow" position="top">
+                <van-cell-group>
+                    <van-cell title="在线支付" clickable @click="setPayType1">
+                    </van-cell>
+                    <van-cell title="货到付款" clickable @click="setPayType2">
+                    </van-cell>
+                </van-cell-group>
+                <!--                <van-cell class="order-coupon" title="支付类型">-->
+                <!--                    <van-dropdown-menu class="select-payType">-->
+                <!--                        <van-dropdown-item v-model="payType" :options="option"/>-->
+                <!--                    </van-dropdown-menu>-->
+                <!--                </van-cell>-->
+            </van-popup>
+
         </van-cell-group>
 
         <van-card
@@ -82,18 +92,14 @@
 </template>
 
 <script>
-
     import {Card, Tag, ard, Field, SubmitBar, Toast} from 'vant';
     import {CouponCell, CouponList, Popup} from 'vant';
-    import {cartCheckout, orderSubmit, couponSelectList, merchantDetail,findOneMerchantUser} from '@/api/api';
+    import {cartCheckout, orderSubmit, couponSelectList, merchantDetail, findOneMerchantUser} from '@/api/api';
     import {getLocalStorage, setLocalStorage} from '@/utils/local-storage';
     import dayjs from 'dayjs';
-
     import Vue from 'vue';
     import {DropdownMenu, DropdownItem} from 'vant';
-
     Vue.use(DropdownMenu).use(DropdownItem)
-
 
     export default {
         data() {
@@ -112,9 +118,10 @@
                 orderTotalPrice: 0, //订单总价
                 actualPrice: 0, //实际需要支付的总价
                 message: '',
-
+                show: '',
                 isDisabled: false,
                 showList: false,
+                payShow: false,
                 chosenCoupon: -1,
                 coupons: [],
                 disabledCoupons: [],
@@ -150,7 +157,7 @@
                 this.isDisabled = true;
                 orderSubmit({
                     //addressId: AddressId,
-                    storeId:this.$route.query.storeId,
+                    storeId: this.$route.query.storeId,
                     cartId: CartId,
                     couponId: CouponId,
                     grouponLinkId: 0,
@@ -162,13 +169,13 @@
                     // 下单成功，重置下单参数。
                     setLocalStorage({storeId: 0, CartId: 0, CouponId: 0});
                     //如果是货到付款的订单，直接跳转到相应的页面
-                    if(this.payType==2){
+                    if (this.payType == 2) {
                         this.$router.push({
                             name: 'payResult',
                             params: {orderId: orderId}
                         });
                         return;
-                    };
+                    }
                     let orderId = res.data.data.orderId;
                     this.$router.push({
                         name: 'payment',
@@ -202,6 +209,14 @@
                 }
                 return '请选择支付类型'
             },
+            setPayType1() {//设置支付类型
+                this.payType = 1;
+                this.payShow = false;
+            },
+            setPayType2() {//设置支付类型
+                this.payType = 2;
+                this.payShow = false;
+            },
             getCoupons() {
                 const {AddressId, CartId, CouponId} = getLocalStorage('AddressId', 'CartId', 'CouponId');
                 couponSelectList({cartId: CartId, grouponRulesId: 0}).then(res => {
@@ -229,6 +244,9 @@
                     this.showList = true
                 })
             },
+            getPay() {
+                this.payShow = true
+            },
             init() {
                 const {AddressId, CartId, CouponId} = getLocalStorage('AddressId', 'CartId', 'CouponId');
                 cartCheckout({
@@ -238,7 +256,6 @@
                     grouponRulesId: 0
                 }).then(res => {
                     var data = res.data.data
-
                     this.checkedGoodsList = data.checkedGoodsList;
                     this.checkedAddress = data.checkedAddress;
                     this.availableCouponLength = data.availableCouponLength;
@@ -248,7 +265,6 @@
                     this.freightPrice = data.freightPrice;
                     this.goodsTotalPrice = data.goodsTotalPrice;
                     this.orderTotalPrice = data.orderTotalPrice;
-
                     setLocalStorage({AddressId: data.addressId, CartId: data.cartId, CouponId: data.couponId});
                 });
 
@@ -258,8 +274,8 @@
                         storeId: storeId,
                     }).then(res => {
                         this.merchantInfo = res.data.data;
-                        this.consigneeId =res.data.data.consigneeId;
-                        if(this.consigneeId !=-1){
+                        this.consigneeId = res.data.data.consigneeId;
+                        if (this.consigneeId != -1) {
                             findOneMerchantUser({
                                 id: this.consigneeId,
                             }).then(res => {
@@ -273,7 +289,6 @@
                     }).catch(error => {
                     })
                 }
-
 
 
             },

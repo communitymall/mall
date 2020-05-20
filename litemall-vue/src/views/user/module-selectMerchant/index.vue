@@ -1,7 +1,7 @@
 <template>
   <div>
     <van-nav-bar title="选择门店" left-text="返回" left-arrow @click-left="goback"/>
-    <van-address-list v-model="chosenAddressId"   add-button-text="确定" :list="merchantList" @add="onAdd" @edit="onEdit" @select="onSelect"/>
+    <van-address-list v-model="chosenAddressId"   add-button-text="确定" :list="merchantList" @add="onAdd"  @select="onSelect"/>
   </div>
 </template>
 

@@ -14,6 +14,19 @@ export function merchantCodePicUpload(data) {
 }
 
 /*
+用户头像图片的上传
+ */
+const UserPicUpload='wx/wxImageUpload/userPicUpload';
+export function userPicUpload(data) {
+  return request({
+    url: UserPicUpload,
+    method: 'post',
+    headers: {'Content-Type': 'multipart/form-data'},
+    data
+  })
+}
+
+/*
 用户查看门店图片的上传
  */
 const MerchantPicVueUpload='wx/wxImageUpload/vueUpload';

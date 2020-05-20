@@ -2,7 +2,9 @@ package org.linlinjava.litemall.wx.web;
 
 import com.github.pagehelper.util.StringUtil;
 import org.linlinjava.litemall.core.util.ResponseUtil;
+import org.linlinjava.litemall.db.domain.LitemallUser;
 import org.linlinjava.litemall.db.service.LitemallMerchantService;
+import org.linlinjava.litemall.db.service.LitemallUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -25,6 +27,9 @@ import java.util.UUID;
 public class WxImageUpload {
     @Autowired
     private LitemallMerchantService litemallMerchantService;
+
+    @Autowired
+    private LitemallUserService litemallUserService;
 
     /*图片的保存路径*/
     public static String UPLOAD_FILE_BASE_PATH = "/data/pic/upload/";
@@ -49,15 +54,11 @@ public class WxImageUpload {
             }
 
             if (!StringUtil.isEmpty(merchantPic)) {
-
-                System.out.println("merchantPic=" + merchantPic);
                 String substring = merchantPic.substring(merchantPic.lastIndexOf("/"));
-                System.out.println("substring=" + substring);
                 fileName = substring.substring(1);
 
             }
             fileName = UUID.randomUUID() + suffixName; // 新图片进行生产
-
             //String filePath = "D://images/upload//"; // 上传后的路径
             File dest = new File(UPLOAD_FILE_BASE_PATH + fileName);
             if (!dest.getParentFile().exists()) {
@@ -109,8 +110,9 @@ public class WxImageUpload {
             } else {
                 fileName = UUID.randomUUID() + suffixName; // 新图片进行生产
             }
-            String filePath = "D://images/upload//"; // 上传后的路径
-            File dest = new File(UPLOAD_FILE_BASE_PATH + fileName);
+            //String filePath = "D://images/upload//"; // 上传后的路径
+            String filePath = UPLOAD_FILE_BASE_PATH+storeId+"/"; // 上传后的路径
+            File dest = new File(filePath + fileName);
             if (!dest.getParentFile().exists()) {
                 dest.getParentFile().mkdirs();
             }
@@ -119,10 +121,11 @@ public class WxImageUpload {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+            fileName = "http://39.97.235.28:8080/pictures/"+storeId+"/" + fileName;
             if (!StringUtil.isEmpty(storeId)) {
-                litemallMerchantService.updateMerchantPic(Integer.parseInt(storeId), merchantPic);
+                litemallMerchantService.updateMerchantPic(Integer.parseInt(storeId), fileName);
             }
-            fileName = "http://39.97.235.28:8080/pictures/" + fileName;
+
             return ResponseUtil.ok(fileName);
         } catch (Exception e) {
             return "上传失败";
@@ -160,8 +163,8 @@ public class WxImageUpload {
             } else {
                 fileName = UUID.randomUUID() + suffixName; // 新图片进行生产
             }
-            //String filePath = "D://images/upload//"; // 上传后的路径
-            File dest = new File(UPLOAD_FILE_BASE_PATH + fileName);
+            String filePath = UPLOAD_FILE_BASE_PATH+storeId+"/"; // 上传后的路径
+            File dest = new File(filePath + fileName);
             if (!dest.getParentFile().exists()) {
                 dest.getParentFile().mkdirs();
             }
@@ -170,11 +173,62 @@ public class WxImageUpload {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            fileName = "http://39.97.235.28:8080/pictures/" + fileName;
-//            fileName = filePath + fileName;
-            System.out.println("merchantPic="+merchantPic);
+            fileName = "http://39.97.235.28:8080/pictures/"+storeId+"/" + fileName;
             if (!StringUtil.isEmpty(storeId)) {
                 litemallMerchantService.updateMerchantCodePic(Integer.parseInt(storeId), fileName);
+            }
+            return ResponseUtil.ok(fileName);
+        } catch (Exception e) {
+            return "上传失败";
+        }
+    };
+
+    @PostMapping("/userPicUpload")
+    public Object userPicUpload(HttpServletRequest request, HttpServletResponse response,
+                                            @RequestParam(value = "imagefile", required = false) MultipartFile imagefile,
+                                            @RequestParam(value = "avatar", required = false) String avatar,
+                                            @RequestParam(value = "userId", required = false) String userId
+    ) throws Exception {
+        try {
+            String fileName = imagefile.getOriginalFilename();  // 文件名
+            String suffixName = fileName.substring(fileName.lastIndexOf("."));  // 后缀
+            if (!suffixName.equals(".jpg") && !suffixName.equals(".png")) {
+                return ResponseUtil.fail(401, "请上传正确格式的图片！");
+            }
+            BufferedImage bufferedImage = ImageIO.read(imagefile.getInputStream());
+            int height = bufferedImage.getHeight();
+            int width = bufferedImage.getWidth();
+            if (height == 0 || width == 0) {
+                return ResponseUtil.fail(401, "请上传正确的图片文件！");
+            }
+
+            if (!StringUtil.isEmpty(avatar)) {
+                if (avatar.equals("undefined")) {
+                    fileName = UUID.randomUUID() + suffixName; // 新图片进行生产
+                } else {
+                    String substring = avatar.substring(avatar.lastIndexOf("/"));
+                    fileName = substring.substring(1);
+                }
+            } else {
+                fileName = UUID.randomUUID() + suffixName; // 新图片进行生产
+            }
+            String filePath = UPLOAD_FILE_BASE_PATH+userId+"/"; // 上传后的路径
+            File dest = new File(filePath + fileName);
+            if (!dest.getParentFile().exists()) {
+                dest.getParentFile().mkdirs();
+            }
+            try {
+                imagefile.transferTo(dest);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            fileName = "http://39.97.235.28:8080/pictures/"+userId+"/" + fileName;
+//            fileName = filePath + fileName;
+            if (!StringUtil.isEmpty(userId)) {
+                LitemallUser user = new LitemallUser();
+                user.setAvatar(fileName);
+                user.setId(Integer.parseInt(userId));
+                litemallUserService.updateById(user);
             }
             return ResponseUtil.ok(fileName);
         } catch (Exception e) {

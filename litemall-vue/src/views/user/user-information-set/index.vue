@@ -5,15 +5,14 @@
                 <van-uploader :afterRead="avatarAfterRead">
                     <div class="user_avatar_upload">
                         <img
-                                :src="avatar + '?x-oss-process=image/resize,m_fill,h_50,w_50'"
+                                :src="pic + '?x-oss-process=image/resize,m_fill,h_80,w_50'"
                                 alt="你的头像"
-                                v-if="avatar"
+                                v-if="pic"
                         >
                         <van-icon name="camera_full" v-else></van-icon>
                     </div>
                 </van-uploader>
             </van-cell>
-
             <van-cell title="昵称" to="/user/information/setNickname" :value="nickName" isLink/>
             <van-cell title="性别" :value="genderText" @click="showSex = true" isLink/>
             <van-cell title="密码设置" to='/user/information/setPassword'  isLink/>
@@ -37,8 +36,8 @@
 <script>
     import {Uploader, Picker, Popup, Button} from 'vant';
     import {removeLocalStorage} from '@/utils/local-storage';
-    import {getLocalStorage} from '@/utils/local-storage';
-    import {authInfo, authLogout, authProfile} from '@/api/api';
+    import {} from '@/utils/local-storage';
+    import {authInfo, authLogout, authProfile ,userPicUpload} from '@/api/api';
 
     export default {
         data() {
@@ -53,7 +52,9 @@
                 avatar: '',
                 nickName: '',
                 gender: 2,
-                mobile: ''
+                mobile: '',
+                userId:'',
+                pic:'',
             };
         },
 
@@ -61,7 +62,6 @@
             genderText() {
                 const text = ['保密', '男', '女'];
                 return text[this.gender] || '';
-
             }
         },
 
@@ -71,10 +71,29 @@
 
         methods: {
             avatarAfterRead(file) {
-                console.log(file);
+                var isFlag = (file.file.type == 'image/jpeg' || file.file.type == 'image/png')? true : false;
+                if(!isFlag){
+                    this.$message({
+                        type: 'warning',
+                        message: '上传图片只能是 JPG、PNG 格式!'
+                    })
+                    return false
+                }
+                // 此时可以自行将文件上传至服务器
+                let userId = this.userId;
+                let content = file.file;
+                let avatar = this.avatar
+                let data = new FormData();
+                data.append('imagefile', content);
+                data.append('userId', userId);
+                data.append('avatar', avatar);
+                userPicUpload(data).then(res => {
+                    this.pic = res.data.data + "?" + Math.random();
+                    //this.$router.go(0)
+                })
             },
             onSexConfirm(value, index) {
-                authProfile({gender: index[0]})
+                authProfile({gender: index[0]});
                 this.showSex = false;
 
             },
@@ -84,6 +103,8 @@
                     this.nickName = res.data.data.nickName;
                     this.gender = res.data.data.gender;
                     this.mobile = res.data.data.mobile;
+                    this.userId = res.data.data.userId;
+                    this.pic =res.data.data.avatar+ "?" + Math.random();
                 })
             },
             loginOut() {

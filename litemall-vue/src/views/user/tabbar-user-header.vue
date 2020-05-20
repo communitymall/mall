@@ -12,6 +12,7 @@
 import avatar_default from '@/assets/images/avatar_default.png';
 import bg_default from '@/assets/images/user_head_bg.png';
 import { getLocalStorage } from '@/utils/local-storage';
+import {authInfo} from '@/api/api';
 
 export default {
   name: 'user-header',
@@ -37,6 +38,10 @@ export default {
 
   methods: {
     getUserInfo() {
+      authInfo().then(res => {
+        this.avatar = res.data.data.avatar;
+        this.nickName = res.data.data.nickName;
+      })
       const infoData = getLocalStorage(
         'nickName',
         'avatar'
