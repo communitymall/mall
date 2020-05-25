@@ -6,22 +6,27 @@
   <component name="ChangeListManager">
     <list default="true" id="01e2c81c-d496-482c-9309-2fadd2852134" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/litemall-core/src/main/resources/application-core.yml" beforeDir="false" afterPath="$PROJECT_DIR$/litemall-core/src/main/resources/application-core.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/litemall-vue/h5/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/litemall-vue/h5/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/litemall-vue/h5/static/css/chunk-3b4597c3.08ccca56.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/litemall-vue/h5/static/css/chunk-4bd1e847.0bd45667.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/litemall-vue/h5/static/css/chunk-6fed4134.2159f1b4.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/litemall-vue/h5/static/css/chunk-ad4f1622.b9931259.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/litemall-vue/h5/static/js/app.771bd8d1.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/litemall-vue/h5/static/js/chunk-3b4597c3.97a42ac8.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/litemall-vue/h5/static/js/chunk-4bd1e847.0ef9619c.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/litemall-vue/h5/static/js/chunk-6fed4134.bc809b8d.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/litemall-vue/h5/static/js/chunk-ad4f1622.d1aa38ee.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/litemall-vue/h5/static/js/runtime~app.6166e080.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/litemall-vue/src/router/items.js" beforeDir="false" afterPath="$PROJECT_DIR$/litemall-vue/src/router/items.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/litemall-vue/h5/static/css/chunk-0e2a050e.7b2edc18.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/litemall-vue/h5/static/css/chunk-14d84acd.2de63f52.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/litemall-vue/h5/static/css/chunk-3d9d2675.3b40b69b.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/litemall-vue/h5/static/css/chunk-5a27668c.0f56420d.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/litemall-vue/h5/static/css/chunk-5b034036.dc0f3972.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/litemall-vue/h5/static/css/chunk-88cdf27a.2af8d986.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/litemall-vue/h5/static/css/chunk-d001fd74.cc4f0a86.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/litemall-vue/h5/static/js/app.527e85d9.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/litemall-vue/h5/static/js/chunk-0e2a050e.d036cd1d.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/litemall-vue/h5/static/js/chunk-14d84acd.420b2714.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/litemall-vue/h5/static/js/chunk-3d9d2675.3ac05ec2.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/litemall-vue/h5/static/js/chunk-5a27668c.a6a615f4.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/litemall-vue/h5/static/js/chunk-5b034036.a0732755.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/litemall-vue/h5/static/js/chunk-88cdf27a.dc11813b.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/litemall-vue/h5/static/js/chunk-d001fd74.4d393e0d.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/litemall-vue/h5/static/js/runtime~app.ee0b505c.js" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/litemall-vue/src/views/home/tabbar-home.vue" beforeDir="false" afterPath="$PROJECT_DIR$/litemall-vue/src/views/home/tabbar-home.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/litemall-vue/src/views/items/tabbar-catalog.vue" beforeDir="false" afterPath="$PROJECT_DIR$/litemall-vue/src/views/items/tabbar-catalog.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/litemall-vue/src/views/order/payment/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/litemall-vue/src/views/order/payment/index.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/litemall-wx-api/src/main/java/org/linlinjava/litemall/wx/util/SmsUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/litemall-wx-api/src/main/java/org/linlinjava/litemall/wx/util/SmsUtil.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/litemall-vue/src/views/order/checkout.vue" beforeDir="false" afterPath="$PROJECT_DIR$/litemall-vue/src/views/order/checkout.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/litemall-wx/app.json" beforeDir="false" afterPath="$PROJECT_DIR$/litemall-wx/app.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/litemall-wx/config/api.js" beforeDir="false" afterPath="$PROJECT_DIR$/litemall-wx/config/api.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/litemall-wx/pages/about/about.js" beforeDir="false" afterPath="$PROJECT_DIR$/litemall-wx/pages/about/about.js" afterDir="false" />
@@ -129,34 +134,39 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/litemall-vue/src/views/home/tabbar-home.vue">
+        <entry file="file://$PROJECT_DIR$/litemall-admin-api/src/main/java/org/linlinjava/litemall/admin/web/AdminRoleController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state>
-              <caret line="258" column="21" selection-start-line="258" selection-start-column="21" selection-end-line="258" selection-end-column="21" />
+            <state relative-caret-position="324">
+              <caret line="151" column="49" selection-start-line="151" selection-start-column="49" selection-end-line="151" selection-end-column="49" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/litemall-wx-api/src/main/java/org/linlinjava/litemall/wx/util/SmsUtil.java">
+        <entry file="file://$PROJECT_DIR$/litemall-core/src/main/resources/application-core.yml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="402">
-              <caret line="18" column="38" selection-start-line="18" selection-start-column="25" selection-end-line="18" selection-end-column="38" />
+            <state relative-caret-position="135">
+              <caret line="5" column="4" lean-forward="true" selection-start-line="5" selection-start-column="4" selection-end-line="5" selection-end-column="14" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/litemall-admin/src/router/index.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-729">
               <folding>
-                <element signature="imports" expanded="true" />
+                <element signature="e#0#21#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/litemall-vue/src/views/items/tabbar-catalog.vue">
+        <entry file="file://$PROJECT_DIR$/litemall-admin-api/src/main/java/org/linlinjava/litemall/admin/util/PermissionUtil.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="27">
-              <caret line="52" column="20" selection-start-line="52" selection-start-column="20" selection-end-line="52" selection-end-column="20" />
-              <folding>
-                <element signature="e#1141#1197#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="1953">
+              <caret line="87" column="76" selection-start-line="87" selection-start-column="69" selection-end-line="87" selection-end-column="76" />
             </state>
           </provider>
         </entry>
@@ -175,21 +185,12 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>merchantCodePicUpload</find>
-      <find>showSex</find>
-      <find>onSexConfirm</find>
-      <find>genderText</find>
-      <find>vueUpload</find>
-      <find>exception</find>
-      <find>show</find>
       <find>getpay</find>
       <find>showList</find>
       <find>option</find>
       <find>name</find>
-      <find>merchantInfo</find>
       <find>onEdit</find>
       <find>新</find>
-      <find>storeId</find>
       <find>consigneeData</find>
       <find>current</find>
       <find>catalogCurrent</find>
@@ -205,6 +206,15 @@
       <find>index</find>
       <find>catalog/index</find>
       <find>catalogList</find>
+      <find>storeId</find>
+      <find>merchantInfo</find>
+      <find>checkedGoodsList</find>
+      <find>val</find>
+      <find>setCheckAll</find>
+      <find>class_tree_all</find>
+      <find>categoryList</find>
+      <find>currentCategory</find>
+      <find>PermissionUtil</find>
     </findStrings>
     <dirStrings>
       <dir>$PROJECT_DIR$/litemall-admin</dir>
@@ -219,8 +229,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/litemall-admin/src/views/mall/merchant.vue" />
-        <option value="$PROJECT_DIR$/litemall-admin/src/api/order.js" />
         <option value="$PROJECT_DIR$/litemall-db/src/main/java/org/linlinjava/litemall/db/service/LitemallMerchantService.java" />
         <option value="$PROJECT_DIR$/litemall-admin-api/src/main/java/org/linlinjava/litemall/admin/service/AdminLogisticsService.java" />
         <option value="$PROJECT_DIR$/litemall-wx-api/src/main/java/org/linlinjava/litemall/wx/service/WxOrderService.java" />
@@ -262,14 +270,16 @@
         <option value="$PROJECT_DIR$/litemall-vue/src/views/user/user-information-set/index.vue" />
         <option value="$PROJECT_DIR$/litemall-wx-api/src/main/resources/newxtc.ini" />
         <option value="$PROJECT_DIR$/litemall-vue/src/views/user/module-selectMerchant/index.vue" />
-        <option value="$PROJECT_DIR$/litemall-vue/src/views/order/checkout.vue" />
         <option value="$PROJECT_DIR$/litemall-wx-api/src/main/java/org/linlinjava/litemall/wx/util/SmsUtil.java" />
-        <option value="$PROJECT_DIR$/litemall-vue/src/views/home/tabbar-home.vue" />
         <option value="$PROJECT_DIR$/litemall-vue/src/router/items.js" />
         <option value="$PROJECT_DIR$/litemall-vue/src/views/order/payment/index.vue" />
         <option value="$PROJECT_DIR$/litemall-vue/.env.development" />
         <option value="$PROJECT_DIR$/litemall-db/src/main/resources/application-db.yml" />
+        <option value="$PROJECT_DIR$/litemall-vue/src/views/home/tabbar-home.vue" />
+        <option value="$PROJECT_DIR$/litemall-vue/src/views/order/checkout.vue" />
+        <option value="$PROJECT_DIR$/litemall-vue/src/views/order/tabbar-cart.vue" />
         <option value="$PROJECT_DIR$/litemall-vue/src/views/items/tabbar-catalog.vue" />
+        <option value="$PROJECT_DIR$/litemall-core/src/main/resources/application-core.yml" />
       </list>
     </option>
   </component>
@@ -313,11 +323,11 @@
       <select />
     </treeState>
   </component>
-  <component name="ProjectFrameBounds" extendedState="7">
-    <option name="x" value="342" />
-    <option name="y" value="147" />
+  <component name="ProjectFrameBounds" extendedState="1">
+    <option name="x" value="-102" />
+    <option name="y" value="239" />
     <option name="width" value="1680" />
-    <option name="height" value="1100" />
+    <option name="height" value="1037" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <ConfirmationsSetting value="2" id="Add" />
@@ -338,62 +348,124 @@
             <path>
               <item name="litemall" type="b2602c69:ProjectViewProjectNode" />
               <item name="mall" type="462c0819:PsiDirectoryNode" />
-              <item name="litemall-vue" type="462c0819:PsiDirectoryNode" />
+              <item name="litemall-admin" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="litemall" type="b2602c69:ProjectViewProjectNode" />
               <item name="mall" type="462c0819:PsiDirectoryNode" />
-              <item name="litemall-wx-api" type="462c0819:PsiDirectoryNode" />
+              <item name="litemall-admin-api" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="litemall" type="b2602c69:ProjectViewProjectNode" />
               <item name="mall" type="462c0819:PsiDirectoryNode" />
-              <item name="litemall-wx-api" type="462c0819:PsiDirectoryNode" />
+              <item name="litemall-admin-api" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="litemall" type="b2602c69:ProjectViewProjectNode" />
               <item name="mall" type="462c0819:PsiDirectoryNode" />
-              <item name="litemall-wx-api" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="litemall" type="b2602c69:ProjectViewProjectNode" />
-              <item name="mall" type="462c0819:PsiDirectoryNode" />
-              <item name="litemall-wx-api" type="462c0819:PsiDirectoryNode" />
+              <item name="litemall-admin-api" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="litemall" type="b2602c69:ProjectViewProjectNode" />
               <item name="mall" type="462c0819:PsiDirectoryNode" />
-              <item name="litemall-wx-api" type="462c0819:PsiDirectoryNode" />
+              <item name="litemall-admin-api" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="main" type="462c0819:PsiDirectoryNode" />
               <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="wx" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="litemall" type="b2602c69:ProjectViewProjectNode" />
               <item name="mall" type="462c0819:PsiDirectoryNode" />
-              <item name="litemall-wx-api" type="462c0819:PsiDirectoryNode" />
+              <item name="litemall-admin-api" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="main" type="462c0819:PsiDirectoryNode" />
               <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="wx" type="462c0819:PsiDirectoryNode" />
+              <item name="admin" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="litemall" type="b2602c69:ProjectViewProjectNode" />
+              <item name="mall" type="462c0819:PsiDirectoryNode" />
+              <item name="litemall-admin-api" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="admin" type="462c0819:PsiDirectoryNode" />
+              <item name="dto" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="litemall" type="b2602c69:ProjectViewProjectNode" />
+              <item name="mall" type="462c0819:PsiDirectoryNode" />
+              <item name="litemall-admin-api" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="admin" type="462c0819:PsiDirectoryNode" />
               <item name="util" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="litemall" type="b2602c69:ProjectViewProjectNode" />
               <item name="mall" type="462c0819:PsiDirectoryNode" />
-              <item name="litemall-wx-api" type="462c0819:PsiDirectoryNode" />
+              <item name="litemall-admin-api" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="main" type="462c0819:PsiDirectoryNode" />
               <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="wx" type="462c0819:PsiDirectoryNode" />
+              <item name="admin" type="462c0819:PsiDirectoryNode" />
               <item name="web" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="litemall" type="b2602c69:ProjectViewProjectNode" />
+              <item name="mall" type="462c0819:PsiDirectoryNode" />
+              <item name="litemall-core" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="litemall" type="b2602c69:ProjectViewProjectNode" />
+              <item name="mall" type="462c0819:PsiDirectoryNode" />
+              <item name="litemall-core" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="litemall" type="b2602c69:ProjectViewProjectNode" />
+              <item name="mall" type="462c0819:PsiDirectoryNode" />
+              <item name="litemall-core" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="litemall" type="b2602c69:ProjectViewProjectNode" />
+              <item name="mall" type="462c0819:PsiDirectoryNode" />
+              <item name="litemall-core" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="resources" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="litemall" type="b2602c69:ProjectViewProjectNode" />
+              <item name="mall" type="462c0819:PsiDirectoryNode" />
+              <item name="litemall-wx-api" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="litemall" type="b2602c69:ProjectViewProjectNode" />
+              <item name="mall" type="462c0819:PsiDirectoryNode" />
+              <item name="litemall-wx-api" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="litemall" type="b2602c69:ProjectViewProjectNode" />
+              <item name="mall" type="462c0819:PsiDirectoryNode" />
+              <item name="litemall-wx-api" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="litemall" type="b2602c69:ProjectViewProjectNode" />
+              <item name="mall" type="462c0819:PsiDirectoryNode" />
+              <item name="litemall-wx-api" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="resources" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -842,7 +914,7 @@
       <workItem from="1589161481005" duration="19970000" />
       <workItem from="1589945724799" duration="22573000" />
       <workItem from="1590026465747" duration="18849000" />
-      <workItem from="1590371949766" duration="1379000" />
+      <workItem from="1590371949766" duration="19023000" />
     </task>
     <servers />
   </component>
@@ -861,7 +933,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="1596838000" />
+    <option name="totallyTimeSpent" value="1614482000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -873,11 +945,11 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1056" extended-state="7" />
+    <frame x="-102" y="239" width="1680" height="1037" extended-state="1" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.8483207" visible="true" weight="0.22068231" />
-      <window_info id="Structure" order="1" sideWeight="0.1516793" side_tool="true" visible="true" weight="0.22068231" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.8472998" visible="true" weight="0.3067901" />
+      <window_info id="Structure" order="1" sideWeight="0.15270019" side_tool="true" visible="true" weight="0.3067901" />
       <window_info id="Designer" order="2" />
       <window_info id="Image Layers" order="3" />
       <window_info id="Capture Tool" order="4" />
@@ -887,7 +959,7 @@
       <window_info anchor="bottom" id="TypeScript" order="0" />
       <window_info anchor="bottom" id="Message" order="1" />
       <window_info anchor="bottom" id="Find" order="2" weight="0.32889965" />
-      <window_info anchor="bottom" id="Run" order="3" visible="true" weight="0.27410617" />
+      <window_info active="true" anchor="bottom" id="Run" order="3" visible="true" weight="0.40597346" />
       <window_info anchor="bottom" id="Debug" order="4" weight="0.5814978" />
       <window_info anchor="bottom" id="Cvs" order="5" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="6" weight="0.4" />
@@ -903,7 +975,7 @@
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
-      <window_info anchor="right" id="Maven" order="3" sideWeight="0.49805447" visible="true" weight="0.0826226" />
+      <window_info anchor="right" id="Maven" order="3" sideWeight="0.49805447" visible="true" weight="0.16604938" />
       <window_info anchor="right" id="Palette" order="4" />
       <window_info anchor="right" id="Capture Analysis" order="5" />
       <window_info anchor="right" id="Mybatis datasource" order="6" side_tool="true" />
@@ -981,113 +1053,6 @@
     <SUITE FILE_PATH="coverage/litemall$Application_admin.ic" NAME="Application_admin Coverage Results" MODIFIED="1566204041085" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/litemall-vue/src/views/user/module-help/index.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-291" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/litemall-vue/src/views/user/module-server/index.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="351">
-          <caret line="13" column="51" lean-forward="true" selection-start-line="13" selection-start-column="51" selection-end-line="13" selection-end-column="51" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/litemall-vue/src/views/user/refund-list/index.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-3261" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/litemall-vue/src/views/user/user-information-set/set-mobile/index.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-2262" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/litemall-vue/src/views/user/user-information-set/set-nickname/index.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-912" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/litemall-vue/src/views/user/user-information-set/set-password/index.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1404" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/litemall-admin/src/views/config/mall.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-405">
-          <caret line="6" column="47" selection-start-line="6" selection-start-column="39" selection-end-line="6" selection-end-column="47" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/litemall-admin/src/views/config/logisticsTrucks.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="281">
-          <caret line="290" column="19" selection-start-line="290" selection-start-column="11" selection-end-line="290" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/litemall-admin/src/views/config/logistics.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="281">
-          <caret line="211" column="19" selection-start-line="211" selection-start-column="11" selection-end-line="211" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/litemall-admin/src/views/config/express.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1101">
-          <caret line="4" column="67" selection-start-line="4" selection-start-column="67" selection-end-line="4" selection-end-column="67" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/litemall-vue/src/views/user/module-merchant-audit/index.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="216">
-          <caret line="17" column="42" selection-start-line="17" selection-start-column="10" selection-end-line="17" selection-end-column="42" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/litemall-db/src/main/java/org/linlinjava/litemall/db/dao/LitemallUserMapper.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1270">
-          <caret line="126" column="8" selection-start-line="126" selection-start-column="8" selection-end-line="126" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/litemall-db/src/main/java/org/linlinjava/litemall/db/service/LitemallUserService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="891">
-          <caret line="45" column="40" selection-start-line="45" selection-start-column="40" selection-end-line="45" selection-end-column="40" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/litemall-vue/src/views/user/user-information-set/index.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1561">
-          <caret line="95" column="48" selection-start-line="95" selection-start-column="48" selection-end-line="95" selection-end-column="48" />
-          <folding>
-            <element signature="n#style#0;n#!!top" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/litemall-wx-api/src/main/java/org/linlinjava/litemall/wx/web/WxImageUpload.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="832">
-          <caret line="224" column="81" selection-start-line="224" selection-start-column="73" selection-end-line="224" selection-end-column="81" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/litemall-vue/src/views/user/tabbar-user.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-27">
-          <folding>
-            <element signature="e#166#212#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/litemall-vue/src/views/user/tabbar-user-coupon.vue">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-27" />
@@ -1123,16 +1088,6 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/litemall-vue/h5/static/js/chunk-9459edbc.ada939cb.js" />
-    <entry file="file://$PROJECT_DIR$/litemall-vue/src/views/order/checkout.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2511">
-          <caret line="93" column="8" selection-start-line="93" selection-start-column="8" selection-end-line="93" selection-end-column="8" />
-          <folding>
-            <element signature="e#2905#2966#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/litemall-vue/src/views/user/module-selectMerchant/index.vue">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="81">
@@ -1234,16 +1189,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/litemall-core/src/main/resources/application-core.yml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="135">
-          <caret line="5" column="4" selection-start-line="5" selection-start-column="4" selection-end-line="5" selection-end-column="14" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/litemall-core/src/main/resources/application.yml">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/litemall-vue/src/views/order/payment/index.vue">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1384">
@@ -1251,28 +1196,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/litemall-wx-api/src/main/java/org/linlinjava/litemall/wx/web/WxOrderController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="405">
-          <caret line="93" column="31" selection-start-line="93" selection-start-column="31" selection-end-line="93" selection-end-column="31" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/litemall-wx-api/src/main/java/org/linlinjava/litemall/wx/service/WxOrderService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-461">
-          <caret line="587" column="13" selection-start-line="587" selection-start-column="13" selection-end-line="587" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/litemall-vue/h5/static/js/chunk-11daed7a.1783a949.js" />
-    <entry file="file://$PROJECT_DIR$/litemall-vue/src/views/home/tabbar-home.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret line="258" column="21" selection-start-line="258" selection-start-column="21" selection-end-line="258" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/litemall-vue/src/router/items.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="189">
@@ -1287,23 +1211,168 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/litemall-vue/src/views/items/tabbar-catalog.vue">
+    <entry file="file://$PROJECT_DIR$/litemall-wx-api/src/main/java/org/linlinjava/litemall/wx/util/SmsUtil.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="27">
-          <caret line="52" column="20" selection-start-line="52" selection-start-column="20" selection-end-line="52" selection-end-column="20" />
+          <caret line="1" selection-start-line="1" selection-end-line="1" />
           <folding>
-            <element signature="e#1141#1197#0" expanded="true" />
+            <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/litemall-wx-api/src/main/java/org/linlinjava/litemall/wx/util/SmsUtil.java">
+    <entry file="file://$PROJECT_DIR$/litemall-vue/src/components/field/index.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="402">
-          <caret line="18" column="38" selection-start-line="18" selection-start-column="25" selection-end-line="18" selection-end-column="38" />
+        <state relative-caret-position="-2100" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/litemall-vue/src/components/is-empty/index.vue">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/litemall-vue/src/components/Tabbar/index.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-210" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/litemall-vue/src/components/field-group/index.vue">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/litemall-vue/src/views/order/checkout.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="401">
+          <caret line="57" selection-start-line="57" selection-end-line="57" />
           <folding>
-            <element signature="imports" expanded="true" />
+            <element signature="e#3450#3511#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/litemall-vue/src/views/order/tabbar-cart.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="266">
+          <caret line="152" column="31" selection-start-line="152" selection-start-column="7" selection-end-line="152" selection-end-column="31" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/litemall-vue/src/views/home/tabbar-home.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3888">
+          <caret line="275" selection-start-line="275" selection-end-line="275" />
+          <folding>
+            <element signature="e#7216#7282#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/litemall-vue/src/views/items/tabbar-catalog.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="513">
+          <caret line="19" column="23" selection-start-line="19" selection-start-column="23" selection-end-line="19" selection-end-column="23" />
+          <folding>
+            <element signature="e#1162#1218#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/litemall-all/src/main/resources/application.yml">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/litemall-all/src/main/resources/logback-spring.xml">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/litemall-core/src/main/resources/application.yml">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/com/github/binarywang/weixin-java-pay/3.3.0/weixin-java-pay-3.3.0.jar!/com/github/binarywang/wxpay/service/WxPayService.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1352">
+          <caret line="66" column="75" lean-forward="true" selection-start-line="66" selection-start-column="75" selection-end-line="66" selection-end-column="75" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/com/github/binarywang/weixin-java-pay/3.3.0/weixin-java-pay-3.3.0.jar!/com/github/binarywang/wxpay/bean/request/WxPayUnifiedOrderRequest.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="376">
+          <caret line="68" column="16" selection-start-line="68" selection-start-column="16" selection-end-line="68" selection-end-column="16" />
+          <folding>
+            <element signature="e#2067#2068#0" expanded="true" />
+            <element signature="e#2109#2110#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/litemall-db/src/main/java/org/linlinjava/litemall/db/service/LitemallUserFormIdService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="296">
+          <caret line="49" column="16" selection-start-line="49" selection-start-column="16" selection-end-line="49" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/litemall-wx-api/src/main/java/org/linlinjava/litemall/wx/web/WxOrderController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="405">
+          <caret line="93" column="31" selection-start-line="93" selection-start-column="31" selection-end-line="93" selection-end-column="31" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/litemall-wx-api/src/main/java/org/linlinjava/litemall/wx/service/WxOrderService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="322">
+          <caret line="604" selection-start-line="604" selection-end-line="604" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/litemall-admin-api/src/main/java/org/linlinjava/litemall/admin/dto/GoodsAllinone.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="108">
+          <caret line="7" column="13" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-context/5.1.7.RELEASE/spring-context-5.1.7.RELEASE.jar!/org/springframework/context/ApplicationContext.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="162">
+          <caret line="14" column="17" selection-start-line="14" selection-start-column="17" selection-end-line="14" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/litemall-admin/src/store/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="162">
+          <caret line="6" column="31" lean-forward="true" selection-start-line="6" selection-start-column="31" selection-end-line="6" selection-end-column="31" />
+          <folding>
+            <element signature="e#0#21#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/litemall-admin-api/src/main/java/org/linlinjava/litemall/admin/util/PermissionUtil.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1953">
+          <caret line="87" column="76" selection-start-line="87" selection-start-column="69" selection-end-line="87" selection-end-column="76" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/litemall-admin/src/router/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-729">
+          <folding>
+            <element signature="e#0#21#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/litemall-admin-api/src/main/java/org/linlinjava/litemall/admin/web/AdminRoleController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="324">
+          <caret line="151" column="49" selection-start-line="151" selection-start-column="49" selection-end-line="151" selection-end-column="49" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/litemall-core/src/main/resources/application-core.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="135">
+          <caret line="5" column="4" lean-forward="true" selection-start-line="5" selection-start-column="4" selection-end-line="5" selection-end-column="14" />
         </state>
       </provider>
     </entry>

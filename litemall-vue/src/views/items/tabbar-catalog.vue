@@ -16,11 +16,14 @@
     </ul>
     <div class="class_tree_content">
       <div class="class_tree_all">
-        <img style="width:250px" v-lazy="currentCategory.picUrl">
+<!--        <img style="width:250px"   v-lazy="currentCategory.picUrl">-->
+        ---------------{{currentCategory.name}}---------------
       </div>
-      <div class="box">
-        <span>{{currentCategory.desc}}</span>
-      </div>
+
+
+<!--      <div class="box">-->
+<!--        <span>{{currentCategory.desc}}</span>-->
+<!--      </div>-->
       <div class="class_tree_items_wrap clearfix">
         <div @click="toItemList(item.id)" :key="i" v-for="(item, i) in currentSubCategoryList">
           <div class="class_tree_item_img">
@@ -40,12 +43,18 @@ import { catalogList, catalogCurrent } from '@/api/api';
 
 import { Search } from 'vant';
 
+import Vue from 'vue';
+import { Image as VanImage } from 'vant';
+
+Vue.use(VanImage);
+
 export default {
   data() {
     return {
       categoryList: [],
       currentCategory: {},
-      currentSubCategoryList: []
+      currentSubCategoryList: [] ,
+      nameList: []
     };
   },
 
@@ -57,6 +66,7 @@ export default {
       catalogList().then(res => {
         let data = res.data.data;
         this.categoryList = data.categoryList;
+        this.nameList = data.categoryList;
         // this.currentCategory = res.data.data.currentCategory;
         // this.currentSubCategoryList = data.currentSubCategory;
       });
@@ -67,6 +77,7 @@ export default {
           let data = res.data.data;
           this.currentCategory = data.currentCategory;
           this.currentSubCategoryList = data.currentSubCategory;
+          this.nameList = data.currentCategory;
         });
       }
     },
@@ -164,7 +175,7 @@ export default {
   overflow-x: hidden;
   overflow-y: scroll;
   .class_tree_all {
-    text-align: right;
+    text-align: center;
     padding-right: 10px;
     height: 40px;
     line-height: 40px;
@@ -177,7 +188,8 @@ export default {
   .class_tree_items_wrap {
     padding: 10px 20px;
     margin-right: -3%;
-    margin-top: 70px;
+    /*margin-top: 70px;*/
+    margin-top: 1px;
     text-align: center;
     > div {
       float: left;

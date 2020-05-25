@@ -55,13 +55,7 @@
                 :price="item.price +'.00'"
                 :thumb="item.picUrl"
         >
-            <div slot="desc">
-                <div class="van-card__desc">
-                    <van-tag plain style="margin-right:6px;" v-for="(spec, index) in item.specifications" :key="index">
-                        {{spec}}
-                    </van-tag>
-                </div>
-            </div>
+
         </van-card>
 
         <van-cell-group>
@@ -149,6 +143,12 @@
                     Toast.fail('请选择支付类型');
                     return;
                 }
+
+                if(this.merchantInfo.merchantAddress===undefined){
+                    Toast.fail('该门店没有设置收货地址');
+                    return;
+                }
+
                 const {storeId} = getLocalStorage('storeId');
                 if (storeId === null) {
                     Toast.fail('请设置收货门店');
