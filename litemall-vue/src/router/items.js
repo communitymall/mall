@@ -5,13 +5,15 @@ export default [
     path: '/items',
     name: 'class',
     meta: {
-      keepAlive: true
+      keepAlive: false
     },
     components: {
       default:  () => import('@/views/items/tabbar-catalog'),
       tabbar: Tabbar
     }
   },
+
+
   {
     path: '/items/search',
     name: 'search',

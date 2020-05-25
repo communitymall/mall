@@ -49,25 +49,33 @@ export default {
     };
   },
 
-  created() {
+  created:function() {
     this.initData();
   },
-
-  methods: {
+    methods: {
     initData() {
       catalogList().then(res => {
         let data = res.data.data;
         this.categoryList = data.categoryList;
-        this.currentCategory = res.data.data.currentCategory;
-        this.currentSubCategoryList = data.currentSubCategory;
+        // this.currentCategory = res.data.data.currentCategory;
+        // this.currentSubCategoryList = data.currentSubCategory;
       });
+
+      let id = localStorage.getItem('categoryId');
+      if(id!==null){
+        catalogCurrent({ id: id}).then(res => {
+          let data = res.data.data;
+          this.currentCategory = data.currentCategory;
+          this.currentSubCategoryList = data.currentSubCategory;
+        });
+      }
     },
     changeCatalog(id) {
-      catalogCurrent({ id: id}).then(res => {
-        let data = res.data.data;
-        this.currentCategory = data.currentCategory;        
-        this.currentSubCategoryList = data.currentSubCategory;
-      });
+        catalogCurrent({ id: id}).then(res => {
+          let data = res.data.data;
+          this.currentCategory = data.currentCategory;
+          this.currentSubCategoryList = data.currentSubCategory;
+        });
     },
     toItemList(id) {
       this.$router.push({

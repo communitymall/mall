@@ -68,7 +68,6 @@ export default {
       });
     },
     pay() {
-      
       Dialog.alert({
         message: '你选择了' + (this.payWay === 'wx' ? '微信支付' : '支付宝支付')
       }).then(() => {

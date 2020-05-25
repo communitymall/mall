@@ -15,8 +15,6 @@ public class SmsUtil {
         //     SmsRetMsg smsRetMsg = smsApi.sendSmsTp(phoneNumber,"【新疆买菜网】", code);
         //    SmsRetMsg smsRetMsg = smsApi.sendSms(phoneNumber, code);
         //   SmsRetMsg smsRetMsg = getSmsRetMsg(code);
-
-
         SmsApi smsImpl = new TzhlSmsImpl();
         String autoLog = autoLoginCode.replace("$1", code).replace("$2", "1s0vfXx");
         SmsRetMsg smsRetMsg = smsImpl.sendSms(phoneNumber, autoLog);

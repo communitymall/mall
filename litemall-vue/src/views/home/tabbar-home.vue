@@ -257,13 +257,15 @@ export default {
       });
     },
     changeTabbar(o) {
-      goodsCategory({ id: o.id }).then(res => {
-        let categoryId = res.data.data.currentCategory.id;
-        this.$router.replace({
-          name: 'category',
-          query: { itemClass: categoryId }
-        });
-      });
+      let categoryId = o.id
+      localStorage.setItem('categoryId',categoryId);
+      localStorage.setItem('isReload',1);
+      this.$router.push({ path: '/items' })
+      // goodsCategory({ id: o.id }).then(res => {
+      //   let categoryId = res.data.data.currentCategory.id;
+      //   localStorage.setItem('categoryId',categoryId)
+      //   this.$router.push({ path: '/items' })
+      // });
     },
     initViews() {
       getHome().then(res => {
@@ -271,6 +273,8 @@ export default {
       });
     }
   },
+
+
 
   components: {
     [Row.name]: Row,
