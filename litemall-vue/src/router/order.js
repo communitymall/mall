@@ -38,4 +38,9 @@ export default [
     name: 'payResult',
     component: () => import('@/views/order/payResult')
   },
+  {
+    path: '/order/linePayResult',
+    name: 'linePayResult',
+    component: () => import('@/views/order/linePayResult')
+  },
 ];

@@ -7,7 +7,7 @@ import org.springframework.stereotype.Controller;
 
 @Controller
 public class SmsUtil {
-    public final static String autoLoginCode = "【新疆买菜网】提醒您的验证码为:$1,该验证码2分钟内有效，请勿泄露他人 ";
+    public final static String autoLoginCode = "【楼兰买菜网】提醒您的验证码为:$1,该验证码2分钟内有效，请勿泄露他人 ";
     public final static String autoRegCode = "【新疆买菜网】";
 
     public SmsRetMsg send(String phoneNumber, String code) {

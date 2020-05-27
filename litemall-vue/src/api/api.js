@@ -508,7 +508,7 @@ export function orderSubmit(data) {
     data
   })
 }
-const OrderPrepay='wx/order/prepay'; // 订单的预支付会话
+const OrderPrepay='wx/order/H5Prepay'; // 订单的预支付会话
 export function orderPrepay(data) {
   return request({
     url: OrderPrepay,
@@ -532,6 +532,16 @@ export function orderDetail(query) {
     params: query
   })
 }
+
+const CheckOrderDetail='wx/order/checkDetail'; //查询订单详情
+export function checkOrderDetail(query) {
+  return request({
+    url: CheckOrderDetail,
+    method: 'get',
+    params: query
+  })
+}
+
 const OrderCancel='wx/order/cancel'; //取消订单
 export function orderCancel(data) {
   return request({

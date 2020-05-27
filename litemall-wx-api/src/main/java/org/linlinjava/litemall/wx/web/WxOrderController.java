@@ -8,6 +8,7 @@ import org.linlinjava.litemall.core.validator.Order;
 import org.linlinjava.litemall.core.validator.Sort;
 import org.linlinjava.litemall.wx.annotation.LoginUser;
 import org.linlinjava.litemall.wx.service.PayService;
+import org.linlinjava.litemall.wx.service.WxH5Pay;
 import org.linlinjava.litemall.wx.service.WxOrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
@@ -25,6 +26,9 @@ public class WxOrderController {
 
     @Autowired
     private WxOrderService wxOrderService;
+
+    @Autowired
+    private WxH5Pay wxH5Pay;
 
     /**
      * 订单列表
@@ -56,6 +60,18 @@ public class WxOrderController {
     @GetMapping("detail")
     public Object detail(@LoginUser Integer userId, @NotNull Integer orderId) {
         return wxOrderService.detail(userId, orderId);
+    }
+
+    /**
+     * 查询订单详情，支付成功的跳转
+     *
+     * @param userId  用户ID
+     * @param orderId 订单ID
+     * @return 订单详情
+     */
+    @GetMapping("checkDetail")
+    public Object checkDetail(@LoginUser Integer userId, @NotNull Integer orderId) {
+        return wxOrderService.checkDetail(userId, orderId);
     }
 
     /**
@@ -92,6 +108,28 @@ public class WxOrderController {
     @PostMapping("prepay")
     public Object prepay(@LoginUser Integer userId, @RequestBody String body, HttpServletRequest request) {
         return wxOrderService.prepay(userId, body, request);
+    }
+
+    /**
+     * 付款订单的预支付会话标识
+     *
+     * @param userId 用户ID
+     * @param body   订单信息，{ orderId：xxx }
+     * @return 支付订单ID
+     */
+    @PostMapping("H5Prepay")
+    public Object H5Prepay(@LoginUser Integer userId, @RequestBody String body, HttpServletRequest request) {
+        Object obj=null;
+        try {
+            System.out.println("H5Prepay==开始");
+            obj = wxH5Pay.DounifiedOrder(userId, body,request);
+
+        }catch (Exception e){
+
+        }finally {
+
+        }
+        return obj;
     }
 
     /**

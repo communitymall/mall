@@ -6,7 +6,7 @@
                 :title="item.goodsName"
                 desc="暂无描述"
                 :num="item.number"
-                :price="item.price +'.00'"
+                :price="item.price"
                 :thumb="item.picUrl"></van-card>
 
       <van-cell-group>

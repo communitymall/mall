@@ -52,7 +52,7 @@
                 :key="item.id"
                 :title="item.goodsName"
                 :num="item.number"
-                :price="item.price +'.00'"
+                :price="item.price "
                 :thumb="item.picUrl"
         >
 

@@ -21,6 +21,7 @@ module.exports = {
   AuthCaptcha: WxApiRoot + 'auth/captcha', //账号密码重置请求的验证码
   AuthRegisterCaptcha: WxApiRoot + 'auth/wxRegCaptcha', //验证码
   AuthBindPhone: WxApiRoot + 'auth/bindPhone', //绑定微信手机号
+  AuthSetPwd: WxApiRoot + '',//设置登录密码
 
   GoodsCount: WxApiRoot + 'goods/count', //统计商品总数
   GoodsList: WxApiRoot + 'goods/list', //获得商品列表

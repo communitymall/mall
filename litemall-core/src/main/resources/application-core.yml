@@ -3,7 +3,7 @@ litemall:
 
   wx:
     app-id: wx68f04348d9abb716
-    app-secret: 9f47282d6e343dfce384ac3eee525181
+    app-secret: 311434a2d9190c79175d985b233d462f
     mch-id: 1593550941
     mch-key: JheB2GFdauhDnYe4pbP5MZBLUoZA2e5D
     notify-url: http://39.97.235.28:8082/wx/order/pay-notify

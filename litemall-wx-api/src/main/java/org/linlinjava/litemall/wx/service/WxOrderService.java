@@ -238,6 +238,27 @@ public class WxOrderService {
 
     }
 
+
+    /**
+     * 查询订单详情
+     *
+     * @param userId  用户ID
+     * @param orderId 订单ID
+     * @return 订单详情
+     */
+    public Object checkDetail(Integer userId, Integer orderId) {
+        if (userId == null) {
+            return ResponseUtil.unlogin();
+        }
+        // 订单信息
+        LitemallOrder order = orderService.findById(orderId);
+        Short orderStatus = order.getOrderStatus();
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("orderStatus",orderStatus);
+        return ResponseUtil.ok(map);
+    }
+
+
     /**
      * 提交订单
      * <p>
@@ -589,7 +610,10 @@ public class WxOrderService {
             WxPayUnifiedOrderRequest orderRequest = new WxPayUnifiedOrderRequest();
             //判断是否为H5支付
             if(H5!=null){
+
                 orderRequest.setTradeType("MWEB");
+                orderRequest.setNotifyUrl("http://39.97.235.28:8082/wx/order/pay-notify");
+                orderRequest.setSceneInfo( "'h5_info':{'type':'Wap','wap_url':'www.yjjcai.com/','wap_name': '楼兰买菜网'}");
             }
             orderRequest.setOutTradeNo(order.getOrderSn());
             orderRequest.setOpenid(openid);
@@ -605,6 +629,11 @@ public class WxOrderService {
 
             result = wxPayService.createOrder(orderRequest);
 
+
+
+
+
+            System.out.println("result=="+result);
             //缓存prepayID用于后续模版通知
             String prepayId = result.getPackageValue();
             prepayId = prepayId.replace("prepay_id=", "");
@@ -617,6 +646,7 @@ public class WxOrderService {
             formIdService.addUserFormid(userFormid);
 
         } catch (Exception e) {
+            System.out.println("error=="+e);
             e.printStackTrace();
             return ResponseUtil.fail(ORDER_PAY_FAIL, "订单不能支付");
         }
@@ -626,6 +656,9 @@ public class WxOrderService {
         }
         return ResponseUtil.ok(result);
     }
+
+
+
 
     /**
      * 微信付款成功或失败回调接口
@@ -690,7 +723,7 @@ public class WxOrderService {
 
         order.setPayId(payId);
         order.setPayTime(LocalDateTime.now());
-        order.setOrderStatus(OrderUtil.STATUS_APPROVED);
+        order.setOrderStatus(OrderUtil.STATUS_STOCK_UP);
         if (orderService.updateWithOptimisticLocker(order) == 0) {
             // 这里可能存在这样一个问题，用户支付和系统自动取消订单发生在同时
             // 如果数据库首先因为系统自动取消订单而更新了订单状态；

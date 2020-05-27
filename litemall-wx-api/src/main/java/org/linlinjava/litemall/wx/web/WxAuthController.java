@@ -243,7 +243,7 @@ public class WxAuthController {
             userService.add(user);
 
             // 新用户发送注册优惠券
-            couponAssignService.assignForRegister(user.getId());
+//            couponAssignService.assignForRegister(user.getId());
         } else {
             user.setLastLoginTime(LocalDateTime.now());
             user.setLastLoginIp(IpUtil.getIpAddr(request));
@@ -325,6 +325,10 @@ public class WxAuthController {
         }
         List<LitemallUser> users = userService.queryByMobile(phoneNumber);
         if (users.size() > 0) {
+            LitemallUser user = users.get(0);
+            String mobile = user.getMobile();
+            String pwd = user.getPassword();
+            if(StringUtil.isEmpty(mobile)){}
             return ResponseUtil.fail(701, "该手机号不可用！");
         }
 
@@ -586,10 +590,9 @@ public class WxAuthController {
             if (!successful) {
                 return ResponseUtil.fail(AUTH_CAPTCHA_FREQUENCY, "验证码未超时2分钟，不能发送");
             }
-
             SmsRetMsg smsRetMsg = smsUtil.send(mobile, code);
             if (smsRetMsg.getRet() == 0) {
-
+                System.out.println("code====="+code);
             }
             if (smsRetMsg != null && smsRetMsg.getRet() == 0) {
                 // 2 调用【短信防火墙】成功结果
