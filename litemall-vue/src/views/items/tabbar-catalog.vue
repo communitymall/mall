@@ -24,18 +24,30 @@
 <!--      <div class="box">-->
 <!--        <span>{{currentCategory.desc}}</span>-->
 <!--      </div>-->
-      <div class="class_tree_items_wrap clearfix">
-        <div @click="toItemList(item.id)" :key="i" v-for="(item, i) in currentSubCategoryList">
-          <div class="class_tree_item_img">
-            <img :src="item.picUrl" :alt="item.name">
-          </div>
-          <div class="class_tree_item_name">{{item.name}}</div>
-        </div>
-      </div>
+<!--      <div class="class_tree_items_wrap clearfix">-->
+<!--        <div @click="toItemList(item.id)" :key="i" v-for="(item, i) in currentSubCategoryList">-->
+<!--          <div class="class_tree_item_img">-->
+<!--            <img :src="item.picUrl" :alt="item.name">-->
+<!--          </div>-->
+<!--          <div class="class_tree_item_name">{{item.name}}</div>-->
+<!--        </div>-->
+<!--      </div>-->
+
+        <van-card @click="toItemList(item.id)" :key="i" v-for="(item, i) in currentSubCategoryList"
+                :desc="item.desc"
+                :title="item.name"
+                :thumb="item.picUrl"
+                 centered="true"
+        />
+        <van-card
+        />
     </div>
   </div>
 
+
+
   </div>
+
 </template>
 
 <script>
@@ -47,6 +59,11 @@ import Vue from 'vue';
 import { Image as VanImage } from 'vant';
 
 Vue.use(VanImage);
+
+
+import { Card } from 'vant';
+
+Vue.use(Card);
 
 export default {
   data() {

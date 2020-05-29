@@ -123,11 +123,9 @@ public class WxOrderController {
         try {
             System.out.println("H5Prepay==开始");
             obj = wxH5Pay.DounifiedOrder(userId, body,request);
-
         }catch (Exception e){
-
+            e.printStackTrace();
         }finally {
-
         }
         return obj;
     }
