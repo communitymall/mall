@@ -16,38 +16,23 @@
     </ul>
     <div class="class_tree_content">
       <div class="class_tree_all">
-<!--        <img style="width:250px"   v-lazy="currentCategory.picUrl">-->
-        ---------------{{currentCategory.name}}---------------
+        <img style="width:250px" v-lazy="currentCategory.picUrl">
       </div>
-
-
-<!--      <div class="box">-->
-<!--        <span>{{currentCategory.desc}}</span>-->
-<!--      </div>-->
-<!--      <div class="class_tree_items_wrap clearfix">-->
-<!--        <div @click="toItemList(item.id)" :key="i" v-for="(item, i) in currentSubCategoryList">-->
-<!--          <div class="class_tree_item_img">-->
-<!--            <img :src="item.picUrl" :alt="item.name">-->
-<!--          </div>-->
-<!--          <div class="class_tree_item_name">{{item.name}}</div>-->
-<!--        </div>-->
-<!--      </div>-->
-
-        <van-card @click="toItemList(item.id)" :key="i" v-for="(item, i) in currentSubCategoryList"
-                :desc="item.desc"
-                :title="item.name"
-                :thumb="item.picUrl"
-                 centered="true"
-        />
-        <van-card
-        />
+      <div class="box">
+        <span>{{currentCategory.desc}}</span>
+      </div>
+      <div class="class_tree_items_wrap clearfix">
+        <div @click="toItemList(item.id)" :key="i" v-for="(item, i) in currentSubCategoryList">
+          <div class="class_tree_item_img">
+            <img :src="item.picUrl" :alt="item.name">
+          </div>
+          <div class="class_tree_item_name">{{item.name}}</div>
+        </div>
+      </div>
     </div>
   </div>
 
-
-
   </div>
-
 </template>
 
 <script>
@@ -55,55 +40,34 @@ import { catalogList, catalogCurrent } from '@/api/api';
 
 import { Search } from 'vant';
 
-import Vue from 'vue';
-import { Image as VanImage } from 'vant';
-
-Vue.use(VanImage);
-
-
-import { Card } from 'vant';
-
-Vue.use(Card);
-
 export default {
   data() {
     return {
       categoryList: [],
       currentCategory: {},
-      currentSubCategoryList: [] ,
-      nameList: []
+      currentSubCategoryList: []
     };
   },
 
-  created:function() {
+  created() {
     this.initData();
   },
-    methods: {
+
+  methods: {
     initData() {
       catalogList().then(res => {
         let data = res.data.data;
         this.categoryList = data.categoryList;
-        this.nameList = data.categoryList;
-        // this.currentCategory = res.data.data.currentCategory;
-        // this.currentSubCategoryList = data.currentSubCategory;
+        this.currentCategory = res.data.data.currentCategory;
+        this.currentSubCategoryList = data.currentSubCategory;
       });
-
-      let id = localStorage.getItem('categoryId');
-      if(id!==null){
-        catalogCurrent({ id: id}).then(res => {
-          let data = res.data.data;
-          this.currentCategory = data.currentCategory;
-          this.currentSubCategoryList = data.currentSubCategory;
-          this.nameList = data.currentCategory;
-        });
-      }
     },
     changeCatalog(id) {
-        catalogCurrent({ id: id}).then(res => {
-          let data = res.data.data;
-          this.currentCategory = data.currentCategory;
-          this.currentSubCategoryList = data.currentSubCategory;
-        });
+      catalogCurrent({ id: id}).then(res => {
+        let data = res.data.data;
+        this.currentCategory = data.currentCategory;
+        this.currentSubCategoryList = data.currentSubCategory;
+      });
     },
     toItemList(id) {
       this.$router.push({
@@ -184,7 +148,7 @@ export default {
     background-color: #fff;
     border-left: 2px solid $red;
     color: $red;
-  }  
+  }
 }
 .class_tree_content {
   margin-left: 100px;
@@ -192,7 +156,7 @@ export default {
   overflow-x: hidden;
   overflow-y: scroll;
   .class_tree_all {
-    text-align: center;
+    text-align: right;
     padding-right: 10px;
     height: 40px;
     line-height: 40px;
@@ -205,8 +169,7 @@ export default {
   .class_tree_items_wrap {
     padding: 10px 20px;
     margin-right: -3%;
-    /*margin-top: 70px;*/
-    margin-top: 1px;
+    margin-top: 70px;
     text-align: center;
     > div {
       float: left;

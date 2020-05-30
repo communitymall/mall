@@ -5,39 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="01e2c81c-d496-482c-9309-2fadd2852134" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/litemall-vue/h5/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/litemall-vue/h5/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/litemall-vue/h5/static/css/chunk-3c7dcb5e.ab77e6e2.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/litemall-vue/h5/static/js/app.40a47451.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/litemall-vue/h5/static/js/chunk-3c7dcb5e.3c0f39e4.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/litemall-vue/h5/static/js/runtime~app.40585475.js" beforeDir="false" />
+      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_qiniu_qiniu_java_sdk_7_2_27.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_qiniu_qiniu_java_sdk_7_2_29.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/litemall-vue/src/views/items/tabbar-catalog.vue" beforeDir="false" afterPath="$PROJECT_DIR$/litemall-vue/src/views/items/tabbar-catalog.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/litemall-wx-api/src/main/java/org/linlinjava/litemall/wx/web/WxOrderController.java" beforeDir="false" afterPath="$PROJECT_DIR$/litemall-wx-api/src/main/java/org/linlinjava/litemall/wx/web/WxOrderController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/litemall-wx/app.json" beforeDir="false" afterPath="$PROJECT_DIR$/litemall-wx/app.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/litemall-wx/config/api.js" beforeDir="false" afterPath="$PROJECT_DIR$/litemall-wx/config/api.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/litemall-wx/pages/about/about.js" beforeDir="false" afterPath="$PROJECT_DIR$/litemall-wx/pages/about/about.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/litemall-wx/pages/about/about.wxml" beforeDir="false" afterPath="$PROJECT_DIR$/litemall-wx/pages/about/about.wxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/litemall-wx/pages/auth/register/register.js" beforeDir="false" afterPath="$PROJECT_DIR$/litemall-wx/pages/auth/register/register.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/litemall-wx/pages/checkout/checkout.js" beforeDir="false" afterPath="$PROJECT_DIR$/litemall-wx/pages/checkout/checkout.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/litemall-wx/pages/checkout/checkout.wxml" beforeDir="false" afterPath="$PROJECT_DIR$/litemall-wx/pages/checkout/checkout.wxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/litemall-wx/pages/goods/goods.js" beforeDir="false" afterPath="$PROJECT_DIR$/litemall-wx/pages/goods/goods.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/litemall-wx/pages/index/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/litemall-wx/pages/index/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/litemall-wx/pages/index/index.wxml" beforeDir="false" afterPath="$PROJECT_DIR$/litemall-wx/pages/index/index.wxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/litemall-wx/pages/ucenter/index/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/litemall-wx/pages/ucenter/index/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/litemall-wx/pages/ucenter/index/index.wxml" beforeDir="false" afterPath="$PROJECT_DIR$/litemall-wx/pages/ucenter/index/index.wxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/litemall-wx/pages/ucenter/merchant/merchant.wxml" beforeDir="false" afterPath="$PROJECT_DIR$/litemall-wx/pages/ucenter/merchant/merchant.wxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/litemall-wx/pages/ucenter/merchant/merchant.wxss" beforeDir="false" afterPath="$PROJECT_DIR$/litemall-wx/pages/ucenter/merchant/merchant.wxss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/litemall-wx/pages/ucenter/merchantAdd/merchantAdd.js" beforeDir="false" afterPath="$PROJECT_DIR$/litemall-wx/pages/ucenter/merchantAdd/merchantAdd.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/litemall-wx/pages/ucenter/merchantAdd/merchantAdd.wxml" beforeDir="false" afterPath="$PROJECT_DIR$/litemall-wx/pages/ucenter/merchantAdd/merchantAdd.wxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/litemall-wx/pages/ucenter/merchantDetail/merchantDetail.js" beforeDir="false" afterPath="$PROJECT_DIR$/litemall-wx/pages/ucenter/merchantDetail/merchantDetail.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/litemall-wx/pages/ucenter/merchantDetail/merchantDetail.wxml" beforeDir="false" afterPath="$PROJECT_DIR$/litemall-wx/pages/ucenter/merchantDetail/merchantDetail.wxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/litemall-wx/pages/ucenter/merchantDetail/merchantDetail.wxss" beforeDir="false" afterPath="$PROJECT_DIR$/litemall-wx/pages/ucenter/merchantDetail/merchantDetail.wxss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/litemall-wx/pages/ucenter/merchantUpdate/merchantUpdate.js" beforeDir="false" afterPath="$PROJECT_DIR$/litemall-wx/pages/ucenter/merchantUpdate/merchantUpdate.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/litemall-wx/pages/ucenter/merchantUpdate/merchantUpdate.wxml" beforeDir="false" afterPath="$PROJECT_DIR$/litemall-wx/pages/ucenter/merchantUpdate/merchantUpdate.wxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/litemall-wx/pages/ucenter/merchantUserUpdate/merchantUserUpdate.js" beforeDir="false" afterPath="$PROJECT_DIR$/litemall-wx/pages/ucenter/merchantUserUpdate/merchantUserUpdate.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/litemall-wx/pages/ucenter/payTypeSelect/payTypeSelect.js" beforeDir="false" afterPath="$PROJECT_DIR$/litemall-wx/pages/ucenter/payTypeSelect/payTypeSelect.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/litemall-wx/pages/ucenter/selectMerchant/selectMerchant.js" beforeDir="false" afterPath="$PROJECT_DIR$/litemall-wx/pages/ucenter/selectMerchant/selectMerchant.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/litemall-wx/project.config.json" beforeDir="false" afterPath="$PROJECT_DIR$/litemall-wx/project.config.json" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/classes/" />
     <ignored path="$PROJECT_DIR$/litemall-all/target/" />
@@ -51,9 +22,6 @@
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
-  </component>
-  <component name="CodeInsightWorkspaceSettings">
-    <option name="optimizeImportsOnTheFly" value="true" />
   </component>
   <component name="CoverageViewManager">
     <option name="myElementSize" value="20" />
@@ -123,7 +91,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/litemall-admin-api/src/main/java/org/linlinjava/litemall/admin/web/AdminRoleController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="181">
+            <state relative-caret-position="1905">
               <caret line="155" column="49" selection-start-line="155" selection-start-column="49" selection-end-line="155" selection-end-column="49" />
               <folding>
                 <element signature="imports" expanded="true" />
@@ -135,8 +103,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/litemall-admin-api/src/main/java/org/linlinjava/litemall/admin/util/PermissionUtil.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1056">
-              <caret line="48" column="55" lean-forward="true" selection-start-line="48" selection-start-column="55" selection-end-line="48" selection-end-column="55" />
+            <state relative-caret-position="510">
+              <caret line="48" column="55" selection-start-line="48" selection-start-column="55" selection-end-line="48" selection-end-column="55" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -144,11 +112,20 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/litemall-admin-api/src/main/java/org/linlinjava/litemall/admin/web/AdminGrouponController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-2558">
+            <state relative-caret-position="15">
               <caret line="29" column="13" selection-start-line="29" selection-start-column="13" selection-end-line="29" selection-end-column="13" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/litemall-vue/src/views/items/tabbar-catalog.vue">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="272">
+              <caret line="198" selection-start-line="198" selection-end-line="198" />
             </state>
           </provider>
         </entry>
@@ -156,7 +133,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/litemall-admin-api/src/main/java/org/linlinjava/litemall/admin/web/AdminGoodsController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="189">
+            <state relative-caret-position="105">
               <caret line="20" column="13" selection-start-line="20" selection-start-column="13" selection-end-line="20" selection-end-column="13" />
             </state>
           </provider>
@@ -165,8 +142,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/litemall-admin-api/src/main/java/org/linlinjava/litemall/admin/vo/PermVo.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="135">
-              <caret line="5" column="22" lean-forward="true" selection-start-line="5" selection-start-column="22" selection-end-line="5" selection-end-column="22" />
+            <state relative-caret-position="75">
+              <caret line="5" column="22" selection-start-line="5" selection-start-column="22" selection-end-line="5" selection-end-column="22" />
             </state>
           </provider>
         </entry>
@@ -174,7 +151,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/litemall-admin-api/src/main/java/org/linlinjava/litemall/admin/shiro/AdminWebSessionManager.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="108">
+            <state relative-caret-position="60">
               <caret line="11" column="13" selection-start-line="11" selection-start-column="13" selection-end-line="11" selection-end-column="13" />
             </state>
           </provider>
@@ -337,10 +314,9 @@
     </treeState>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="-8" />
-    <option name="y" value="-8" />
-    <option name="width" value="1940" />
-    <option name="height" value="1100" />
+    <option name="y" value="23" />
+    <option name="width" value="1280" />
+    <option name="height" value="694" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <ConfirmationsSetting value="2" id="Add" />
@@ -350,8 +326,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
-      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -362,212 +336,45 @@
             <path>
               <item name="litemall" type="b2602c69:ProjectViewProjectNode" />
               <item name="mall" type="462c0819:PsiDirectoryNode" />
-              <item name="litemall-admin-api" type="462c0819:PsiDirectoryNode" />
+              <item name="litemall-vue" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="litemall" type="b2602c69:ProjectViewProjectNode" />
               <item name="mall" type="462c0819:PsiDirectoryNode" />
-              <item name="litemall-admin-api" type="462c0819:PsiDirectoryNode" />
+              <item name="litemall-vue" type="462c0819:PsiDirectoryNode" />
+              <item name="h5" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="litemall" type="b2602c69:ProjectViewProjectNode" />
+              <item name="mall" type="462c0819:PsiDirectoryNode" />
+              <item name="litemall-vue" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="litemall" type="b2602c69:ProjectViewProjectNode" />
               <item name="mall" type="462c0819:PsiDirectoryNode" />
-              <item name="litemall-admin-api" type="462c0819:PsiDirectoryNode" />
+              <item name="litemall-vue" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="views" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="litemall" type="b2602c69:ProjectViewProjectNode" />
               <item name="mall" type="462c0819:PsiDirectoryNode" />
-              <item name="litemall-admin-api" type="462c0819:PsiDirectoryNode" />
+              <item name="litemall-vue" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="litemall" type="b2602c69:ProjectViewProjectNode" />
-              <item name="mall" type="462c0819:PsiDirectoryNode" />
-              <item name="litemall-admin-api" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="admin" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="litemall" type="b2602c69:ProjectViewProjectNode" />
-              <item name="mall" type="462c0819:PsiDirectoryNode" />
-              <item name="litemall-admin-api" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="admin" type="462c0819:PsiDirectoryNode" />
-              <item name="dto" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="litemall" type="b2602c69:ProjectViewProjectNode" />
-              <item name="mall" type="462c0819:PsiDirectoryNode" />
-              <item name="litemall-admin-api" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="admin" type="462c0819:PsiDirectoryNode" />
-              <item name="shiro" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="litemall" type="b2602c69:ProjectViewProjectNode" />
-              <item name="mall" type="462c0819:PsiDirectoryNode" />
-              <item name="litemall-admin-api" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="admin" type="462c0819:PsiDirectoryNode" />
-              <item name="web" type="462c0819:PsiDirectoryNode" />
+              <item name="views" type="462c0819:PsiDirectoryNode" />
+              <item name="items" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="litemall" type="b2602c69:ProjectViewProjectNode" />
               <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
-            </path>
-            <path>
-              <item name="litemall" type="b2602c69:ProjectViewProjectNode" />
-              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
-              <item name="Maven: com.github.binarywang:weixin-java-pay:3.3.0" type="70bed36:NamedLibraryElementNode" />
-            </path>
-            <path>
-              <item name="litemall" type="b2602c69:ProjectViewProjectNode" />
-              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
-              <item name="Maven: com.github.binarywang:weixin-java-pay:3.3.0" type="70bed36:NamedLibraryElementNode" />
-              <item name="weixin-java-pay-3.3.0.jar" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="litemall" type="b2602c69:ProjectViewProjectNode" />
-              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
-              <item name="Maven: com.github.binarywang:weixin-java-pay:3.3.0" type="70bed36:NamedLibraryElementNode" />
-              <item name="weixin-java-pay-3.3.0.jar" type="462c0819:PsiDirectoryNode" />
-              <item name="wxpay" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="litemall" type="b2602c69:ProjectViewProjectNode" />
-              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
-              <item name="Maven: com.github.binarywang:weixin-java-pay:3.3.0" type="70bed36:NamedLibraryElementNode" />
-              <item name="weixin-java-pay-3.3.0.jar" type="462c0819:PsiDirectoryNode" />
-              <item name="wxpay" type="462c0819:PsiDirectoryNode" />
-              <item name="bean" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="litemall" type="b2602c69:ProjectViewProjectNode" />
-              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
-              <item name="Maven: com.github.binarywang:weixin-java-pay:3.3.0" type="70bed36:NamedLibraryElementNode" />
-              <item name="weixin-java-pay-3.3.0.jar" type="462c0819:PsiDirectoryNode" />
-              <item name="wxpay" type="462c0819:PsiDirectoryNode" />
-              <item name="bean" type="462c0819:PsiDirectoryNode" />
-              <item name="coupon" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="litemall" type="b2602c69:ProjectViewProjectNode" />
-              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
-              <item name="Maven: com.github.binarywang:weixin-java-pay:3.3.0" type="70bed36:NamedLibraryElementNode" />
-              <item name="weixin-java-pay-3.3.0.jar" type="462c0819:PsiDirectoryNode" />
-              <item name="wxpay" type="462c0819:PsiDirectoryNode" />
-              <item name="bean" type="462c0819:PsiDirectoryNode" />
-              <item name="entpay" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="litemall" type="b2602c69:ProjectViewProjectNode" />
-              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
-              <item name="Maven: com.github.binarywang:weixin-java-pay:3.3.0" type="70bed36:NamedLibraryElementNode" />
-              <item name="weixin-java-pay-3.3.0.jar" type="462c0819:PsiDirectoryNode" />
-              <item name="wxpay" type="462c0819:PsiDirectoryNode" />
-              <item name="bean" type="462c0819:PsiDirectoryNode" />
-              <item name="notify" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="litemall" type="b2602c69:ProjectViewProjectNode" />
-              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
-              <item name="Maven: com.github.binarywang:weixin-java-pay:3.3.0" type="70bed36:NamedLibraryElementNode" />
-              <item name="weixin-java-pay-3.3.0.jar" type="462c0819:PsiDirectoryNode" />
-              <item name="wxpay" type="462c0819:PsiDirectoryNode" />
-              <item name="bean" type="462c0819:PsiDirectoryNode" />
-              <item name="order" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="litemall" type="b2602c69:ProjectViewProjectNode" />
-              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
-              <item name="Maven: com.github.binarywang:weixin-java-pay:3.3.0" type="70bed36:NamedLibraryElementNode" />
-              <item name="weixin-java-pay-3.3.0.jar" type="462c0819:PsiDirectoryNode" />
-              <item name="wxpay" type="462c0819:PsiDirectoryNode" />
-              <item name="bean" type="462c0819:PsiDirectoryNode" />
-              <item name="request" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="litemall" type="b2602c69:ProjectViewProjectNode" />
-              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
-              <item name="Maven: com.github.binarywang:weixin-java-pay:3.3.0" type="70bed36:NamedLibraryElementNode" />
-              <item name="weixin-java-pay-3.3.0.jar" type="462c0819:PsiDirectoryNode" />
-              <item name="wxpay" type="462c0819:PsiDirectoryNode" />
-              <item name="bean" type="462c0819:PsiDirectoryNode" />
-              <item name="result" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="litemall" type="b2602c69:ProjectViewProjectNode" />
-              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
-              <item name="Maven: com.github.binarywang:weixin-java-pay:3.3.0" type="70bed36:NamedLibraryElementNode" />
-              <item name="weixin-java-pay-3.3.0.jar" type="462c0819:PsiDirectoryNode" />
-              <item name="wxpay" type="462c0819:PsiDirectoryNode" />
-              <item name="config" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="litemall" type="b2602c69:ProjectViewProjectNode" />
-              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
-              <item name="Maven: com.github.binarywang:weixin-java-pay:3.3.0" type="70bed36:NamedLibraryElementNode" />
-              <item name="weixin-java-pay-3.3.0.jar" type="462c0819:PsiDirectoryNode" />
-              <item name="wxpay" type="462c0819:PsiDirectoryNode" />
-              <item name="constant" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="litemall" type="b2602c69:ProjectViewProjectNode" />
-              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
-              <item name="Maven: com.github.binarywang:weixin-java-pay:3.3.0" type="70bed36:NamedLibraryElementNode" />
-              <item name="weixin-java-pay-3.3.0.jar" type="462c0819:PsiDirectoryNode" />
-              <item name="wxpay" type="462c0819:PsiDirectoryNode" />
-              <item name="service" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="litemall" type="b2602c69:ProjectViewProjectNode" />
-              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
-              <item name="Maven: com.github.binarywang:weixin-java-pay:3.3.0" type="70bed36:NamedLibraryElementNode" />
-              <item name="weixin-java-pay-3.3.0.jar" type="462c0819:PsiDirectoryNode" />
-              <item name="wxpay" type="462c0819:PsiDirectoryNode" />
-              <item name="service" type="462c0819:PsiDirectoryNode" />
-              <item name="impl" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="litemall" type="b2602c69:ProjectViewProjectNode" />
-              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
-              <item name="Maven: com.github.binarywang:weixin-java-pay:3.3.0" type="70bed36:NamedLibraryElementNode" />
-              <item name="weixin-java-pay-3.3.0.jar" type="462c0819:PsiDirectoryNode" />
-              <item name="wxpay" type="462c0819:PsiDirectoryNode" />
-              <item name="util" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="litemall" type="b2602c69:ProjectViewProjectNode" />
-              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
-              <item name="Maven: com.github.binarywang:weixin-java-pay:3.3.0" type="70bed36:NamedLibraryElementNode" />
-              <item name="weixin-java-pay-3.3.0.jar" type="462c0819:PsiDirectoryNode" />
-              <item name="META-INF" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="litemall" type="b2602c69:ProjectViewProjectNode" />
-              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
-              <item name="Maven: com.github.binarywang:weixin-java-pay:3.3.0" type="70bed36:NamedLibraryElementNode" />
-              <item name="weixin-java-pay-3.3.0.jar" type="462c0819:PsiDirectoryNode" />
-              <item name="META-INF" type="462c0819:PsiDirectoryNode" />
-              <item name="weixin-java-pay" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
+      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -1032,7 +839,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="1675825000" />
+    <option name="totallyTimeSpent" value="1675890000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1044,10 +851,11 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
+    <frame x="0" y="23" width="1280" height="728" extended-state="6" />
+    <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.89382446" visible="true" weight="0.22921109" />
-      <window_info id="Structure" order="1" sideWeight="0.10617551" side_tool="true" visible="true" weight="0.22921109" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.72727275" visible="true" weight="0.42961165" />
+      <window_info id="Structure" order="1" sideWeight="0.27272728" side_tool="true" visible="true" weight="0.42961165" />
       <window_info id="Designer" order="2" />
       <window_info id="Image Layers" order="3" />
       <window_info id="Capture Tool" order="4" />
@@ -1073,7 +881,7 @@
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
-      <window_info anchor="right" id="Maven" order="3" sideWeight="0.49805447" visible="true" weight="0.11247335" />
+      <window_info anchor="right" id="Maven" order="3" sideWeight="0.49805447" visible="true" weight="0.11245955" />
       <window_info anchor="right" id="Palette" order="4" />
       <window_info anchor="right" id="Capture Analysis" order="5" />
       <window_info anchor="right" id="Mybatis datasource" order="6" side_tool="true" />
@@ -1294,13 +1102,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="jar://C:/Program Files/Java/jdk1.8.0_131/src.zip!/java/util/Map.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="742">
-          <caret line="257" column="20" lean-forward="true" selection-start-line="257" selection-start-column="20" selection-end-line="257" selection-end-column="20" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="jar://C:/Program Files/Java/jdk1.8.0_131/src.zip!/java/util/Map.java" />
     <entry file="jar://$MAVEN_REPOSITORY$/com/github/binarywang/weixin-java-pay/3.3.0/weixin-java-pay-3.3.0.jar!/com/github/binarywang/wxpay/bean/notify/WxPayNotifyResponse.class">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="108">
@@ -1440,11 +1242,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/litemall-vue/src/views/items/tabbar-catalog.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1134">
-          <caret line="42" column="10" selection-start-line="42" selection-start-column="10" selection-end-line="42" selection-end-column="10" />
-          <folding>
-            <element signature="e#1236#1292#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="272">
+          <caret line="198" selection-start-line="198" selection-end-line="198" />
         </state>
       </provider>
     </entry>
@@ -1478,7 +1277,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/litemall-admin-api/src/main/java/org/linlinjava/litemall/admin/web/AdminRoleController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="181">
+        <state relative-caret-position="1905">
           <caret line="155" column="49" selection-start-line="155" selection-start-column="49" selection-end-line="155" selection-end-column="49" />
           <folding>
             <element signature="imports" expanded="true" />
@@ -1488,15 +1287,15 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/litemall-admin-api/src/main/java/org/linlinjava/litemall/admin/shiro/AdminWebSessionManager.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="108">
+        <state relative-caret-position="60">
           <caret line="11" column="13" selection-start-line="11" selection-start-column="13" selection-end-line="11" selection-end-column="13" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/litemall-admin-api/src/main/java/org/linlinjava/litemall/admin/vo/PermVo.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="135">
-          <caret line="5" column="22" lean-forward="true" selection-start-line="5" selection-start-column="22" selection-end-line="5" selection-end-column="22" />
+        <state relative-caret-position="75">
+          <caret line="5" column="22" selection-start-line="5" selection-start-column="22" selection-end-line="5" selection-end-column="22" />
         </state>
       </provider>
     </entry>
@@ -1527,8 +1326,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/litemall-admin-api/src/main/java/org/linlinjava/litemall/admin/util/PermissionUtil.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1056">
-          <caret line="48" column="55" lean-forward="true" selection-start-line="48" selection-start-column="55" selection-end-line="48" selection-end-column="55" />
+        <state relative-caret-position="510">
+          <caret line="48" column="55" selection-start-line="48" selection-start-column="55" selection-end-line="48" selection-end-column="55" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -1537,14 +1336,14 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/litemall-admin-api/src/main/java/org/linlinjava/litemall/admin/web/AdminGoodsController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="189">
+        <state relative-caret-position="105">
           <caret line="20" column="13" selection-start-line="20" selection-start-column="13" selection-end-line="20" selection-end-column="13" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/litemall-admin-api/src/main/java/org/linlinjava/litemall/admin/web/AdminGrouponController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-2558">
+        <state relative-caret-position="15">
           <caret line="29" column="13" selection-start-line="29" selection-start-column="13" selection-end-line="29" selection-end-column="13" />
         </state>
       </provider>
