@@ -14,38 +14,38 @@
             </van-cell>
         </van-cell-group>
 
-        <van-cell-group>
-            <van-cell class="order-coupon" title="优惠券" is-link :value="getCouponValue()" @click="getCoupons"/>
-        </van-cell-group>
+<!--        <van-cell-group>-->
+<!--            <van-cell class="order-coupon" title="优惠券" is-link :value="getCouponValue()" @click="getCoupons"/>-->
+<!--        </van-cell-group>-->
 
         <!-- 优惠券列表 -->
-        <van-popup v-model="showList" position="bottom">
-            <van-coupon-list
-                    :coupons="coupons"
-                    :chosen-coupon="chosenCoupon"
-                    :disabled-coupons="disabledCoupons"
-                    @change="onChange"
-                    @exchange="onExchange"
-            />
-        </van-popup>
+<!--        <van-popup v-model="showList" position="bottom">-->
+<!--            <van-coupon-list-->
+<!--                    :coupons="coupons"-->
+<!--                    :chosen-coupon="chosenCoupon"-->
+<!--                    :disabled-coupons="disabledCoupons"-->
+<!--                    @change="onChange"-->
+<!--                    @exchange="onExchange"-->
+<!--            />-->
+<!--        </van-popup>-->
 
-        <van-cell-group>
-            <van-cell class="order-coupon" title="支付类型" is-link :value="getPayType()" @click="getPay"/>
-            <van-popup v-model="payShow" position="top">
-                <van-cell-group>
-                    <van-cell title="在线支付" clickable @click="setPayType1">
-                    </van-cell>
-                    <van-cell title="货到付款" clickable @click="setPayType2">
-                    </van-cell>
-                </van-cell-group>
-                <!--                <van-cell class="order-coupon" title="支付类型">-->
-                <!--                    <van-dropdown-menu class="select-payType">-->
-                <!--                        <van-dropdown-item v-model="payType" :options="option"/>-->
-                <!--                    </van-dropdown-menu>-->
-                <!--                </van-cell>-->
-            </van-popup>
+<!--        <van-cell-group>-->
+<!--            <van-cell class="order-coupon" title="支付类型" is-link :value="getPayType()" @click="getPay"/>-->
+<!--            <van-popup v-model="payShow" position="top">-->
+<!--                <van-cell-group>-->
+<!--                    <van-cell title="在线支付" clickable @click="setPayType1">-->
+<!--                    </van-cell>-->
+<!--                    <van-cell title="货到付款" clickable @click="setPayType2">-->
+<!--                    </van-cell>-->
+<!--                </van-cell-group>-->
+<!--                &lt;!&ndash;                <van-cell class="order-coupon" title="支付类型">&ndash;&gt;-->
+<!--                &lt;!&ndash;                    <van-dropdown-menu class="select-payType">&ndash;&gt;-->
+<!--                &lt;!&ndash;                        <van-dropdown-item v-model="payType" :options="option"/>&ndash;&gt;-->
+<!--                &lt;!&ndash;                    </van-dropdown-menu>&ndash;&gt;-->
+<!--                &lt;!&ndash;                </van-cell>&ndash;&gt;-->
+<!--            </van-popup>-->
 
-        </van-cell-group>
+<!--        </van-cell-group>-->
 
         <van-card
                 v-for="item in checkedGoodsList"
@@ -139,10 +139,10 @@
                 // }
                 const {CartId, CouponId} = getLocalStorage('CartId', 'CouponId');
 
-                if (this.payType === 0) {
-                    Toast.fail('请选择支付类型');
-                    return;
-                }
+                // if (this.payType === 0) {
+                //     Toast.fail('请选择支付类型');
+                //     return;
+                // }
 
                 if(this.merchantInfo.merchantAddress===undefined){
                     Toast.fail('该门店没有设置收货地址');

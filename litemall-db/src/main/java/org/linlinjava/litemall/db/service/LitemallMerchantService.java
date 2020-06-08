@@ -97,7 +97,7 @@ public class LitemallMerchantService {
             }
             merchant.setConsigneePhone(merchantPhone);
             merchant.setConsigneeName(merchantLeader);
-            merchant.setMerchantStatus(0); //门店创建的时候，设置门店的状态是未审核
+            merchant.setMerchantStatus(2); //门店创建的时候，设置门店的状态是审核
 
             litemallMerchantMapper.insertSelective(merchant);//添加门店的信息
             Integer storeId = merchant.getId();
@@ -141,13 +141,13 @@ public class LitemallMerchantService {
                 }
             }
             merchant.setMerchantName(merchantName);
-            merchant.setMerchantStatus(0);
+            merchant.setMerchantStatus(2);
         }
         if (!StringUtil.isEmpty(merchantCode)) {
             LitemallMerchant merchant1 = litemallMerchantMapper.selectByPrimaryKey(id);
             if(!(merchantCode.equals(merchant1.getMerchantCode()))){
                 merchant.setMerchantCode(merchantCode);
-                merchant.setMerchantStatus(0);//如果修改门店的营业执照编号，就要重新审核门店
+                merchant.setMerchantStatus(2);//如果修改门店的营业执照编号，就要重新审核门店
             }
         }
         if (!StringUtil.isEmpty(merchantAddress)) {
@@ -219,7 +219,7 @@ public class LitemallMerchantService {
         }
         //设置更新时间
         merchant.setEditTime(LocalDateTime.now());
-        merchant.setMerchantStatus(0);
+        merchant.setMerchantStatus(2);
         try{
             return litemallMerchantMapper.updateByExampleSelective(merchant, example);
         }catch (Exception e){

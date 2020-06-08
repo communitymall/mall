@@ -21,8 +21,8 @@ Page({
 
   onShareAppMessage: function() {
     return {
-      title: '菜鸟易购',
-      desc: '菜鸟易购小商城',
+      title: '楼兰买菜网',
+      desc: '楼兰买菜网小商城',
       path: '/pages/index/index'
     }
   },

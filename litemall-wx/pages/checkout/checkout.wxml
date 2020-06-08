@@ -2,7 +2,7 @@
   <view class="address-box">
     <view class="address-item" bindtap="selectAddress" wx:if="{{merchantInfo.id > 0}}">
       <view class="l">
-        <text class="name">收货门店：</text>
+        <text class="name">收货门店</text>
         <text class="default" wx:if="{{checkedAddress.isDefault}}">默认</text>
       </view>
       <view class="m">
@@ -46,7 +46,7 @@
     </view>
   </view> -->
 
-   <view class="coupon-box">
+   <!-- <view class="coupon-box">
     <view class="coupon-item" bindtap="selectPayType">
       <view class="l" wx:if="{{payType == 0}}">
         <text class="name">请选择支付类型</text>
@@ -61,8 +61,8 @@
       <view class="r">
         <image src="/static/images/address_right.png"></image>
       </view>
-    </view>
-  </view>
+    </view> -->
+  <!-- </view> -->
 
 
   <view class="message-box">

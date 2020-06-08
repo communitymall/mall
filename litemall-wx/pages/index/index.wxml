@@ -20,7 +20,7 @@
     </navigator>
   </view>
 
-  <view class="a-section a-coupon" wx:if="{{coupon.length > 0}}">
+  <!-- <view class="a-section a-coupon" wx:if="{{coupon.length > 0}}">
     <view class="h">
       <view class="title">
         <view>
@@ -47,7 +47,7 @@
         </view>
       </view>
     </view>
-  </view>
+  </view> -->
 
   <view class="a-section a-groupon" wx:if="{{groupons.length > 0}}">
     <view class="h">
@@ -108,7 +108,7 @@
     <view class="h">
       <view>
         <navigator url="../newGoods/newGoods">
-          <text class="txt">周一周四 · 新品首发</text>
+          <text class="txt">新品首发</text>
         </navigator>
       </view>
     </view>
