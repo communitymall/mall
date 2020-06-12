@@ -97,7 +97,7 @@ public class LitemallMerchantService {
             }
             merchant.setConsigneePhone(merchantPhone);
             merchant.setConsigneeName(merchantLeader);
-            merchant.setMerchantStatus(0); //门店创建的时候，设置门店的状态是未审核
+            merchant.setMerchantStatus(2); //门店创建的时候，设置门店的状态是未审核
 
             litemallMerchantMapper.insertSelective(merchant);//添加门店的信息
             Integer storeId = merchant.getId();

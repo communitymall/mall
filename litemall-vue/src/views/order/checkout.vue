@@ -35,8 +35,8 @@
                 <van-cell-group>
                     <van-cell title="在线支付" clickable @click="setPayType1">
                     </van-cell>
-                    <van-cell title="货到付款" clickable @click="setPayType2">
-                    </van-cell>
+                <!--    <van-cell title="货到付款" clickable @click="setPayType2"> -->
+                <!--    </van-cell> -->
                 </van-cell-group>
                 <!--                <van-cell class="order-coupon" title="支付类型">-->
                 <!--                    <van-dropdown-menu class="select-payType">-->
@@ -122,7 +122,7 @@
                 option: [
                     {text: '请选择支付类型', value: 0},
                     {text: '在线支付', value: 1},
-                    {text: '货到付款', value: 2},
+                   // {text: '货到付款', value: 2},
                 ],
             };
         },

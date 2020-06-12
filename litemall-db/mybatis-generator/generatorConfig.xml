@@ -195,8 +195,8 @@
 <!--            <table tableName="litemall_logistics_trucks">-->
 <!--                <generatedKey column="id" sqlStatement="MySql" identity="true"/>-->
 <!--            </table>-->
-            <table tableName="litemall_sms_status_report">
-                <generatedKey column="id" sqlStatement="MySql" identity="true"/>
-            </table>
+<!--            <table tableName="litemall_sms_status_report">-->
+<!--                <generatedKey column="id" sqlStatement="MySql" identity="true"/>-->
+<!--            </table>-->
     </context>
 </generatorConfiguration>
